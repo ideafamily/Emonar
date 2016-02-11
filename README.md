@@ -29,7 +29,7 @@ Recoding-IO : Zhen Chen
 UI - Sketch
 
 02/11:
-<img src='02/11.jpg' title='First UI'/>
+<img src='02:11.jpg' title='First UI'/>
 
 The following **additional** features are implemented:
 
