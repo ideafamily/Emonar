@@ -19,11 +19,17 @@ The following **optional** features are implemented:
 - [ ] User can use this for app-app call
 - [ ] User can use this for app-phone call
 
-Work Splite:
+Work Assignment:
 
 Main-UI : Jintao Zeng
 API-Integration : Gelei Chen
 Recoding-IO : Zhen Chen
+
+
+UI - Sketch
+
+02/11:
+<img src='02/11.jpg' title='First UI'/>
 
 The following **additional** features are implemented:
 
