@@ -29,7 +29,7 @@ Recoding-IO : Zhen Chen
 UI - Sketch
 
 02/11:
-<img src='first.JPEG' title='First UI' width='' alt='Video Walkthrough'/>
+<img src='first.jpg' title='First UI' width='' alt='Video Walkthrough'/>
 
 The following **additional** features are implemented:
 
