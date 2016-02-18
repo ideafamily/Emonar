@@ -32,6 +32,11 @@ UI - Sketch
 
 <img src='first.JPG' title='First UI' width='' alt='Video Walkthrough'/>
 
+
+02/18 :
+
+<img src='UI_Mockup.png' title='First UI' width='' alt='Video Walkthrough'/>
+
 The following **additional** features are implemented:
 
 - [ ] List anything else that you can get done to improve the app functionality!
