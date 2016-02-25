@@ -1,6 +1,6 @@
 # Group Project  - *Emonar*
 
-**Emonar** is a audio emotion analystics app that understands decodes speakers emotion while one is speaking [Beyond Verbal API](http://www.beyondverbal.com).
+**Emonar** is a audio emotion analystics app that understands decodes speakers emotion while one is speaking [Beyond Verbal API](http://www.beyondverbal.com/emotions-analytics-api/).
 
 Time spent: **X** hours spent in total
 
@@ -21,9 +21,9 @@ The following **optional** features are implemented:
 
 Work Assignment:
 
-Main-UI : Jintao Zeng
-API-Integration : Gelei Chen
-Recoding-IO : Zhen Chen
+- Main-UI : Jintao Zeng
+- API-Integration : Gelei Chen
+- Recoding-IO : Zhen Chen
 
 
 UI - Sketch
@@ -45,6 +45,14 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 1. 
 2. 
+
+
+## Model Class
+
+- LoginToken
+- User
+- Analysis
+
 
 
 
