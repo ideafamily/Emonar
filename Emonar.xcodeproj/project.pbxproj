@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C01CC5431C88D9C60058CAC5 /* ApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C01CC5421C88D9C60058CAC5 /* ApiManager.m */; };
+		C01CC5491C88DE940058CAC5 /* sample.wav in Resources */ = {isa = PBXBuildFile; fileRef = C01CC5481C88DE940058CAC5 /* sample.wav */; };
+		C01CC54B1C88E2160058CAC5 /* APIWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01CC54A1C88E2160058CAC5 /* APIWrapper.swift */; };
 		F72A26761C8644550053F3DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72A26751C8644550053F3DC /* AppDelegate.swift */; };
 		F72A26781C8644550053F3DC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72A26771C8644550053F3DC /* ViewController.swift */; };
 		F72A267B1C8644550053F3DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F72A26791C8644550053F3DC /* Main.storyboard */; };
@@ -15,6 +18,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C01CC5401C88D9C60058CAC5 /* Emonar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Emonar-Bridging-Header.h"; sourceTree = "<group>"; };
+		C01CC5411C88D9C60058CAC5 /* ApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiManager.h; sourceTree = "<group>"; };
+		C01CC5421C88D9C60058CAC5 /* ApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiManager.m; sourceTree = "<group>"; };
+		C01CC5481C88DE940058CAC5 /* sample.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sample.wav; sourceTree = "<group>"; };
+		C01CC54A1C88E2160058CAC5 /* APIWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIWrapper.swift; sourceTree = "<group>"; };
 		F72A26721C8644550053F3DC /* Emonar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emonar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F72A26751C8644550053F3DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F72A26771C8644550053F3DC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,6 +43,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C01CC53E1C88D98E0058CAC5 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				C01CC5401C88D9C60058CAC5 /* Emonar-Bridging-Header.h */,
+				F72A26751C8644550053F3DC /* AppDelegate.swift */,
+				F72A26791C8644550053F3DC /* Main.storyboard */,
+				F72A267C1C8644550053F3DC /* Assets.xcassets */,
+				F72A267E1C8644550053F3DC /* LaunchScreen.storyboard */,
+				F72A26811C8644550053F3DC /* Info.plist */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+		C01CC53F1C88D9AC0058CAC5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F72A26771C8644550053F3DC /* ViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		C01CC5441C88D9CE0058CAC5 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				C01CC5481C88DE940058CAC5 /* sample.wav */,
+				C01CC5411C88D9C60058CAC5 /* ApiManager.h */,
+				C01CC5421C88D9C60058CAC5 /* ApiManager.m */,
+				C01CC54A1C88E2160058CAC5 /* APIWrapper.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
+		C01CC5451C88D9D80058CAC5 /* AudioI/O */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = AudioI/O;
+			sourceTree = "<group>";
+		};
 		F72A26691C8644550053F3DC = {
 			isa = PBXGroup;
 			children = (
@@ -54,12 +101,10 @@
 		F72A26741C8644550053F3DC /* Emonar */ = {
 			isa = PBXGroup;
 			children = (
-				F72A26751C8644550053F3DC /* AppDelegate.swift */,
-				F72A26771C8644550053F3DC /* ViewController.swift */,
-				F72A26791C8644550053F3DC /* Main.storyboard */,
-				F72A267C1C8644550053F3DC /* Assets.xcassets */,
-				F72A267E1C8644550053F3DC /* LaunchScreen.storyboard */,
-				F72A26811C8644550053F3DC /* Info.plist */,
+				C01CC5451C88D9D80058CAC5 /* AudioI/O */,
+				C01CC5441C88D9CE0058CAC5 /* API */,
+				C01CC53F1C88D9AC0058CAC5 /* Controller */,
+				C01CC53E1C88D98E0058CAC5 /* Other */,
 			);
 			path = Emonar;
 			sourceTree = "<group>";
@@ -123,6 +168,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C01CC5491C88DE940058CAC5 /* sample.wav in Resources */,
 				F72A26801C8644550053F3DC /* LaunchScreen.storyboard in Resources */,
 				F72A267D1C8644550053F3DC /* Assets.xcassets in Resources */,
 				F72A267B1C8644550053F3DC /* Main.storyboard in Resources */,
@@ -138,6 +184,8 @@
 			files = (
 				F72A26781C8644550053F3DC /* ViewController.swift in Sources */,
 				F72A26761C8644550053F3DC /* AppDelegate.swift in Sources */,
+				C01CC54B1C88E2160058CAC5 /* APIWrapper.swift in Sources */,
+				C01CC5431C88D9C60058CAC5 /* ApiManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,10 +298,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Emonar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PurdueIdeaFamily.Emonar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Emonar/Emonar-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -261,10 +312,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Emonar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PurdueIdeaFamily.Emonar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Emonar/Emonar-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -287,6 +340,7 @@
 				F72A26861C8644550053F3DC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
