@@ -47,11 +47,34 @@ Please list two areas of the assignment you'd like to **discuss further with you
 2. 
 
 
-## Model Class
+## Model Class/ Data Schema
 
-- LoginToken
-- User
-- Analysis
+- LoginToken:NSObject
+  1.access_token:String
+  2.token_type:String
+  3.expires_in:NSNumber
+
+- User:NSObject
+  1.session:String
+  2.username:String
+  3.password:String
+
+- Analysis:NSObject
+  1.recordingId:String
+  2.result:Analysis_result
+  3.status:String
+
+- Analysis_result:NSDictionary
+  1.analysisSegments:Analysis_result_analysisSegments
+  2.analysisSummary:NSDictionary
+  3.duration:String
+  4.sessionStatus:String
+
+- Analysis_result_analysisSegments:NSDictionary
+  1.analysis:NSDictionary
+  2.duration:NSNumber
+  3.offset:NSNumber
+
 
 
 
