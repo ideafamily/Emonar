@@ -38,7 +38,7 @@ final public class APIWrapper : NSObject{
                     let analysisArray = analysis.result.analysisSegments
                     for element in analysisArray {
                         let elementObject = Analysis_result_analysisSegments.mj_objectWithKeyValues(element)
-                        print(elementObject.duration)
+                        print(elementObject.analysis.Arousal.Value)
                     }
                 })
                 
