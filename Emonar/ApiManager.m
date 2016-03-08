@@ -47,7 +47,7 @@ NSString *const kRecording_URL = @"https://apiv3.beyondverbal.com/v3/recording/"
                                                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
     {
          NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-         NSLog(@"getAccessToken responseDictionary:\n%@",responseDictionary);
+//         NSLog(@"getAccessToken responseDictionary:\n%@",responseDictionary);
          accessToken = [responseDictionary objectForKey:@"access_token"];
         
          success(data);
@@ -70,7 +70,7 @@ NSString *const kRecording_URL = @"https://apiv3.beyondverbal.com/v3/recording/"
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request
                                                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
          NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-         NSLog(@"startSession responseDictionary:\n%@",responseDictionary);
+//         NSLog(@"startSession responseDictionary:\n%@",responseDictionary);
          recordingId = [responseDictionary objectForKey:@"recordingId"];
                                                                          
          success(data);
@@ -79,7 +79,7 @@ NSString *const kRecording_URL = @"https://apiv3.beyondverbal.com/v3/recording/"
 }
 
 
--(void)sendAudioFile:(NSString *)fileName fileType:(NSString *)fileType success:(void (^)(NSData *data))success
+-(void)sendAudioFile:(NSString *)fileName fileType:(NSString *)fileType success:(void (^)(NSDictionary *responseDictionary))success
 {
     NSLog(@"sendAudioFile started");
     NSString *stringURL = [NSString stringWithFormat:@"%@%@",kRecording_URL,recordingId];
@@ -92,9 +92,9 @@ NSString *const kRecording_URL = @"https://apiv3.beyondverbal.com/v3/recording/"
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request
                                                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
          NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-         NSLog(@"sendAudioFile ended, responseDictionary:\n%@",responseDictionary);
+//         NSLog(@"sendAudioFile ended, responseDictionary:\n%@",responseDictionary);
                                                                          
-         success(data);
+         success(responseDictionary);
      }];
     [dataTask resume];
 }
