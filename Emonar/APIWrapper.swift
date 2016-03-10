@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 private let _sharedInstance = APIWrapper()
 
 final public class APIWrapper : NSObject{
@@ -29,14 +30,22 @@ final public class APIWrapper : NSObject{
                 self.fileBeingSent = true
                 
                 // 3. Call sendAudioFile with sample.wav
-                ApiManager.sharedManager().sendAudioFile("sample", fileType: "wav", success: { (data:NSData!) -> Void in
+                ApiManager.sharedManager().sendAudioFile("sample", fileType: "wav", success: { (response:[NSObject : AnyObject]!) -> Void in
                     self.fileBeingSent = false
+//                    print(response)
+                    let analysis = Analysis.mj_objectWithKeyValues(response)
+//                    print(analysis.result.analysisSummary.AnalysisResult.Arousal.Mean)
+                    let analysisArray = analysis.result.analysisSegments
+                    for element in analysisArray {
+//                        let elementObject = Analysis_result_analysisSegments.mj_objectWithKeyValues(element)
+//                        print(elementObject.analysis.Arousal.Value)
+                    }
                 })
                 
                 // 4. Call sendForAnalysis for the 1st time after 3 seconds
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.performSelector("sendForAnalysis", withObject: nil, afterDelay: 3)
-                })
+//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                    self.performSelector("sendForAnalysis", withObject: nil, afterDelay: 3)
+//                })
                 
             })
         }
@@ -48,6 +57,8 @@ final public class APIWrapper : NSObject{
                 do {
                     let responseDictionary: [NSObject : AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) as! [NSObject : AnyObject]
                     NSLog("getAnalysis responseDictionary:\n%@", responseDictionary)
+//                    let analysis = Analysis.mj_objectWithKeyValues(responseDictionary)
+//                    print(analysis)
                     // Call sendForAnalysis after 1 second until send file is finished
                     if self.fileBeingSent == true {
                         dispatch_async(dispatch_get_main_queue(), {() -> Void in
