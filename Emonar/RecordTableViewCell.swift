@@ -7,16 +7,27 @@
 //
 
 import UIKit
+import Gifu
 
 class RecordTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var motionLabel: UILabel!
+    @IBOutlet weak var emotionLabel: UILabel!
     
     @IBOutlet weak var descriptionLabel: UILabel!
     
+    @IBOutlet weak var emotionImg: AnimatableImageView!
 
+    @IBOutlet weak var cardView: UIView!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        emotionImg.layer.cornerRadius = 3
+        emotionImg.layer.masksToBounds = true
+        
+        cardView.layer.cornerRadius = 5
+        cardView.layer.masksToBounds = true
         // Initialization code
     }
 
