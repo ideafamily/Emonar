@@ -21,6 +21,9 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBarHidden = true
+        
         recordTableView.delegate = self
         recordTableView.dataSource = self
 //        recordTableView.rowHeight = UITableViewAutomaticDimension

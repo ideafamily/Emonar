@@ -22,7 +22,7 @@
                                 <rect key="frame" x="20" y="180" width="49" height="30"/>
                                 <state key="normal" title="Record"/>
                                 <connections>
-                                    <segue destination="EqE-Mu-srM" kind="presentation" id="Ngh-3F-CwF"/>
+                                    <segue destination="YWI-XW-T7L" kind="presentation" id="Ngh-3F-CwF"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h2z-gh-XLx">
@@ -152,7 +152,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d1u-EI-g4j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2403" y="983"/>
+            <point key="canvasLocation" x="3215" y="983"/>
         </scene>
         <!--Record View Controller-->
         <scene sceneID="XEy-iQ-aWq">
@@ -185,7 +185,7 @@
                                     <action selector="recordPressed:" destination="EqE-Mu-srM" eventType="touchUpInside" id="rEU-ui-oYA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaZ-s7-4gL">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaZ-s7-4gL">
                                 <rect key="frame" x="20" y="20" width="48" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="OL9-3b-IiF"/>
@@ -196,7 +196,7 @@
                                     <action selector="cancelPressed:" destination="EqE-Mu-srM" eventType="touchUpInside" id="29t-AH-AiY"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="125" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pfu-s7-cMT">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="125" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pfu-s7-cMT">
                                 <rect key="frame" x="0.0" y="58" width="600" height="378"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -284,6 +284,7 @@
                             <constraint firstAttribute="trailing" secondItem="pfu-s7-cMT" secondAttribute="trailing" id="lfl-mk-dfX"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="LZU-Nb-ham"/>
                     <connections>
                         <outlet property="recordButton" destination="pGj-zp-khS" id="7le-dA-b5H"/>
                         <outlet property="recordTableView" destination="pfu-s7-cMT" id="w62-Wr-jni"/>
@@ -292,7 +293,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YaY-4S-eXC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1286" y="363"/>
+            <point key="canvasLocation" x="2098" y="363"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pea-aF-WFp">
@@ -311,6 +312,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X8w-GK-pYg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="953" y="1175"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="KB2-AV-C83">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YWI-XW-T7L" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Be2-DM-cID">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="EqE-Mu-srM" kind="relationship" relationship="rootViewController" id="qAs-xV-r0A"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4mb-hv-jCc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1286" y="363"/>
         </scene>
     </scenes>
     <resources>
