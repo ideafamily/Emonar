@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Gifu
 
 class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -20,9 +21,12 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBarHidden = true
+        
         recordTableView.delegate = self
         recordTableView.dataSource = self
-        recordTableView.rowHeight = UITableViewAutomaticDimension
+//        recordTableView.rowHeight = UITableViewAutomaticDimension
         recordTableView.estimatedRowHeight = 125
         recordTableView.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI))
 //        recordButton.setTitle("Start", forState: .Normal)
@@ -38,7 +42,20 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RecordTableViewCell", forIndexPath: indexPath) as! RecordTableViewCell
         cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
-        cell.motionLabel.text = data[indexPath.row]
+//        cell.emotionLabel.text = data[indexPath.row]
+        cell.emotionLabel.text = "Happy"
+        
+//        if indexPath.row == data.count - 1 {
+//            cell.emotionImg.animateWithImage(named: "loading4.gif")
+//            //        cell.emotionImg.image = UIImage.gifWithName("loading4")
+//            delay(5) { () -> () in
+//                cell.emotionImg.stopAnimatingGIF()
+//                cell.emotionImg.image = UIImage(named: "temp")
+//            }
+//        } else {
+            cell.emotionImg.image = UIImage(named: "temp")
+//        }
+        
         return cell
     }
     
@@ -61,7 +78,10 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBAction func recordPressed(sender: UIButton) {
         data.insert("WOWwww", atIndex: 0)
-        recordTableView.reloadData()
+//        recordTableView.reloadData()
+//        var a = NSIndexPath(forRow: 0, inSection: 0)
+        
+        recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
         if sender.selected == true {
             sender.selected = false
         } else {
@@ -69,7 +89,15 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
+    }
+
 
     /*
     // MARK: - Navigation
