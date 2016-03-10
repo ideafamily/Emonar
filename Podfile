@@ -9,5 +9,6 @@ target 'Emonar' do
     pod 'IQKeyboardManager'
     pod 'SDWebImage'
     pod 'MJExtension'
+    pod 'Gifu'
 end
 
