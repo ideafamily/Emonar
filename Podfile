@@ -5,9 +5,7 @@ use_frameworks!
 
 target 'Emonar' do
     
-    pod "AFNetworking", "~> 2.0"
     pod 'IQKeyboardManager'
-    pod 'SDWebImage'
     pod 'MJExtension'
     pod 'Gifu'
 end
