@@ -79,8 +79,11 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
+# API Integration
 <img src='./Gif/1_api.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+# Single File I/O
 <img src='./Gif/1_record.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+# UI Progress
 <img src='./Gif/1_ui.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
