@@ -8,7 +8,7 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-- [ ] User can record audio
+- [x] User can record audio
 - [ ] User can see emotion analystics every 20 seconds in real time.
 - [ ] User can view past cached audio recording
 - [ ] User can playback past audio recoding & seeing emotion analystics as well.
@@ -79,7 +79,9 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='./Gif/1_api.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='./Gif/1_record.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='./Gif/1_ui.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

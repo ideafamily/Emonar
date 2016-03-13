@@ -159,7 +159,7 @@
                                 <rect key="frame" x="14" y="3" width="64" height="64"/>
                                 <state key="normal" image="Tape Drive-64"/>
                                 <connections>
-                                    <segue destination="yQZ-oz-A5r" kind="presentation" modalTransitionStyle="flipHorizontal" id="Y9H-xa-Ynf"/>
+                                    <action selector="gotoArchive:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Udy-qp-SGx"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gBX-ak-TTa">
@@ -178,7 +178,7 @@
                                 </constraints>
                                 <state key="normal" image="Microphone-64"/>
                                 <connections>
-                                    <segue destination="YWI-XW-T7L" kind="presentation" id="Ngh-3F-CwF"/>
+                                    <action selector="gotoRecord:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rDe-yU-wqA"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -190,6 +190,10 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="RZp-d6-QL8" secondAttribute="bottom" constant="150" id="ysO-Pq-BLj"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="yQZ-oz-A5r" kind="presentation" identifier="gotoArchive" modalTransitionStyle="flipHorizontal" id="dYM-hf-gnv"/>
+                        <segue destination="YWI-XW-T7L" kind="presentation" identifier="toRecord" id="KuX-pN-NDs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -367,7 +371,7 @@
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ulp-gi-iQQ" customClass="AnimatableImageView" customModule="Gifu">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ulp-gi-iQQ">
                                                             <rect key="frame" x="8" y="10" width="90" height="90"/>
                                                             <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
@@ -375,7 +379,8 @@
                                                                 <constraint firstAttribute="width" constant="90" id="OaN-qR-GIh"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQJ-EU-c9N">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQJ-EU-c9N">
+                                                            <rect key="frame" x="106" y="46.5" width="438" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
