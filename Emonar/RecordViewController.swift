@@ -22,6 +22,9 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        recordTableView.backgroundColor = UIColor.blackColor()
+        
+        
         self.navigationController?.navigationBarHidden = true
         
         recordTableView.delegate = self
@@ -96,6 +99,9 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 Int64(delay * Double(NSEC_PER_SEC))
             ),
             dispatch_get_main_queue(), closure)
+    }
+    deinit {
+        self.recordTableView = nil
     }
 
 
