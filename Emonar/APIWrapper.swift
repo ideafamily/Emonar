@@ -32,13 +32,13 @@ final public class APIWrapper : NSObject{
                 // 3. Call sendAudioFile with sample.wav
                 ApiManager.sharedManager().sendAudioFile("sample", fileType: "wav", success: { (response:[NSObject : AnyObject]!) -> Void in
                     self.fileBeingSent = false
-//                    print(response)
+                    print(response)
                     let analysis = Analysis.mj_objectWithKeyValues(response)
 //                    print(analysis.result.analysisSummary.AnalysisResult.Arousal.Mean)
                     let analysisArray = analysis.result.analysisSegments
                     for element in analysisArray {
                         let elementObject = Analysis_result_analysisSegments.mj_objectWithKeyValues(element)
-                        print(elementObject.analysis.Arousal.Value)
+//                        print(elementObject.analysis.Arousal.Value)
                     }
                 })
                 
