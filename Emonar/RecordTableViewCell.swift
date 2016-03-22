@@ -15,7 +15,7 @@ class RecordTableViewCell: UITableViewCell {
     
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    @IBOutlet weak var emotionImg: AnimatableImageView!
+    @IBOutlet weak var emotionImg: UIImageView!
 
     @IBOutlet weak var cardView: UIView!
     
@@ -23,12 +23,20 @@ class RecordTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        // Initialization code
+    }
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         emotionImg.layer.cornerRadius = 3
         emotionImg.layer.masksToBounds = true
         
         cardView.layer.cornerRadius = 5
         cardView.layer.masksToBounds = true
-        // Initialization code
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

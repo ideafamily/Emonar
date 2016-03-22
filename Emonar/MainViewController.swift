@@ -10,9 +10,15 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    @IBAction func gotoRecord(sender: AnyObject) {
+        self.performSegueWithIdentifier("toRecord", sender: self)
+    }
+    @IBAction func gotoArchive(sender: AnyObject) {
+        self.performSegueWithIdentifier("gotoArchive", sender: self)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        APIWrapper.sharedInstance.LoginAndAnalysis()
         // Do any additional setup after loading the view.
     }
 
