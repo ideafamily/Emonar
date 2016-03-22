@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2D1877571275B81441A87E12 /* libPods-Emonar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C380D0197C5A5723C110C0C /* libPods-Emonar.a */; };
-		84EC100D1C8F76F300F5A848 /* RecordManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EC100C1C8F76F300F5A848 /* RecordManager.swift */; };
 		C01CC5431C88D9C60058CAC5 /* ApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C01CC5421C88D9C60058CAC5 /* ApiManager.m */; };
 		C01CC5491C88DE940058CAC5 /* sample.wav in Resources */ = {isa = PBXBuildFile; fileRef = C01CC5481C88DE940058CAC5 /* sample.wav */; };
 		C01CC54B1C88E2160058CAC5 /* APIWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01CC54A1C88E2160058CAC5 /* APIWrapper.swift */; };
@@ -50,16 +48,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-<<<<<<< Updated upstream
 		06680E6FB543DEC9D62E7AEC /* Pods_Emonar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Emonar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FFBAEC9A6466100777C6D5E /* Pods-Emonar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Emonar.release.xcconfig"; path = "Pods/Target Support Files/Pods-Emonar/Pods-Emonar.release.xcconfig"; sourceTree = "<group>"; };
 		790ABAB95F403B8CB6730D14 /* Pods-Emonar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Emonar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Emonar/Pods-Emonar.debug.xcconfig"; sourceTree = "<group>"; };
-=======
-		696C6473E9275356E61E6112 /* Pods-Emonar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Emonar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Emonar/Pods-Emonar.debug.xcconfig"; sourceTree = "<group>"; };
-		84EC100C1C8F76F300F5A848 /* RecordManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordManager.swift; sourceTree = "<group>"; };
-		9C380D0197C5A5723C110C0C /* libPods-Emonar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Emonar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A7BBA2E1ABB204C581768B1F /* Pods-Emonar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Emonar.release.xcconfig"; path = "Pods/Target Support Files/Pods-Emonar/Pods-Emonar.release.xcconfig"; sourceTree = "<group>"; };
->>>>>>> Stashed changes
 		C01CC5401C88D9C60058CAC5 /* Emonar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Emonar-Bridging-Header.h"; sourceTree = "<group>"; };
 		C01CC5411C88D9C60058CAC5 /* ApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiManager.h; sourceTree = "<group>"; };
 		C01CC5421C88D9C60058CAC5 /* ApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiManager.m; sourceTree = "<group>"; };
@@ -126,44 +117,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< Updated upstream
 				F41F60E154CBD5A963AB3C5E /* Pods_Emonar.framework in Frameworks */,
-=======
-				2D1877571275B81441A87E12 /* libPods-Emonar.a in Frameworks */,
->>>>>>> Stashed changes
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-<<<<<<< Updated upstream
 		76164C9B8C480B3CB47B42B0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				06680E6FB543DEC9D62E7AEC /* Pods_Emonar.framework */,
-=======
-		161B0DDEEBF35019ABCE9BC5 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9C380D0197C5A5723C110C0C /* libPods-Emonar.a */,
->>>>>>> Stashed changes
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-<<<<<<< Updated upstream
-=======
-		281EB9EFD0FC1B69C1EC9E49 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				696C6473E9275356E61E6112 /* Pods-Emonar.debug.xcconfig */,
-				A7BBA2E1ABB204C581768B1F /* Pods-Emonar.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
->>>>>>> Stashed changes
 		C01CC53E1C88D98E0058CAC5 /* Other */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,7 +173,6 @@
 		C01CC5451C88D9D80058CAC5 /* AudioI/O */ = {
 			isa = PBXGroup;
 			children = (
-				84EC100C1C8F76F300F5A848 /* RecordManager.swift */,
 			);
 			name = AudioI/O;
 			sourceTree = "<group>";
@@ -284,13 +251,8 @@
 			children = (
 				F72A26741C8644550053F3DC /* Emonar */,
 				F72A26731C8644550053F3DC /* Products */,
-<<<<<<< Updated upstream
 				DAB23DFC9B81A09E2847133B /* Pods */,
 				76164C9B8C480B3CB47B42B0 /* Frameworks */,
-=======
-				281EB9EFD0FC1B69C1EC9E49 /* Pods */,
-				161B0DDEEBF35019ABCE9BC5 /* Frameworks */,
->>>>>>> Stashed changes
 			);
 			sourceTree = "<group>";
 		};
@@ -333,20 +295,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F72A26841C8644550053F3DC /* Build configuration list for PBXNativeTarget "Emonar" */;
 			buildPhases = (
-<<<<<<< Updated upstream
 				7A2597C307D8DFA14D251D75 /* Check Pods Manifest.lock */,
 				F72A266E1C8644550053F3DC /* Sources */,
 				F72A266F1C8644550053F3DC /* Frameworks */,
 				F72A26701C8644550053F3DC /* Resources */,
 				F1B989E7139E75D0F54119D2 /* Embed Pods Frameworks */,
 				9FCE8FE1865EA901E3C27599 /* Copy Pods Resources */,
-=======
-				C915A6045BC979F0AA1D6DA3 /* Check Pods Manifest.lock */,
-				F72A266E1C8644550053F3DC /* Sources */,
-				F72A266F1C8644550053F3DC /* Frameworks */,
-				F72A26701C8644550053F3DC /* Resources */,
-				2FEF9E801013294267F2A83E /* Copy Pods Resources */,
->>>>>>> Stashed changes
 			);
 			buildRules = (
 			);
@@ -369,7 +323,7 @@
 				TargetAttributes = {
 					F72A26711C8644550053F3DC = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 4VX52VR8GM;
+						DevelopmentTeam = MYSFRJD98Y;
 					};
 				};
 			};
@@ -410,7 +364,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-<<<<<<< Updated upstream
 		7A2597C307D8DFA14D251D75 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -427,9 +380,6 @@
 			showEnvVarsInLog = 0;
 		};
 		9FCE8FE1865EA901E3C27599 /* Copy Pods Resources */ = {
-=======
-		2FEF9E801013294267F2A83E /* Copy Pods Resources */ = {
->>>>>>> Stashed changes
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -444,31 +394,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Emonar/Pods-Emonar-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-<<<<<<< Updated upstream
 		F1B989E7139E75D0F54119D2 /* Embed Pods Frameworks */ = {
-=======
-		C915A6045BC979F0AA1D6DA3 /* Check Pods Manifest.lock */ = {
->>>>>>> Stashed changes
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-<<<<<<< Updated upstream
 			name = "Embed Pods Frameworks";
-=======
-			name = "Check Pods Manifest.lock";
->>>>>>> Stashed changes
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-<<<<<<< Updated upstream
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Emonar/Pods-Emonar-frameworks.sh\"\n";
-=======
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
->>>>>>> Stashed changes
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -486,7 +424,6 @@
 				F774166A1C8F77ED000F4E74 /* RecordViewController.swift in Sources */,
 				C05B43391C9340380048F91E /* EZAudio.m in Sources */,
 				C01CC54B1C88E2160058CAC5 /* APIWrapper.swift in Sources */,
-<<<<<<< Updated upstream
 				C0367ACD1C8F781A00A39FCF /* Analysis_result_analysisSummary.swift in Sources */,
 				C05B433C1C9340380048F91E /* EZAudioFFT.m in Sources */,
 				C0367AC81C8F75FF00A39FCF /* Analysis.swift in Sources */,
@@ -494,9 +431,6 @@
 				C05B433D1C9340380048F91E /* EZAudioFile.m in Sources */,
 				C03AAA781C921DED00DE008F /* Analysis_result_analysisSegments.swift in Sources */,
 				C05B43481C9340380048F91E /* TPCircularBuffer.c in Sources */,
-=======
-				84EC100D1C8F76F300F5A848 /* RecordManager.swift in Sources */,
->>>>>>> Stashed changes
 				C01CC5431C88D9C60058CAC5 /* ApiManager.m in Sources */,
 				C05B43431C9340380048F91E /* EZAudioUtilities.m in Sources */,
 				C05B433E1C9340380048F91E /* EZAudioFloatConverter.m in Sources */,
@@ -621,22 +555,14 @@
 		};
 		F72A26851C8644550053F3DC /* Debug */ = {
 			isa = XCBuildConfiguration;
-<<<<<<< Updated upstream
 			baseConfigurationReference = 790ABAB95F403B8CB6730D14 /* Pods-Emonar.debug.xcconfig */;
-=======
-			baseConfigurationReference = 696C6473E9275356E61E6112 /* Pods-Emonar.debug.xcconfig */;
->>>>>>> Stashed changes
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Emonar/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PurdueIdeaFamily.Emonar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Emonar/Emonar-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -644,22 +570,14 @@
 		};
 		F72A26861C8644550053F3DC /* Release */ = {
 			isa = XCBuildConfiguration;
-<<<<<<< Updated upstream
 			baseConfigurationReference = 3FFBAEC9A6466100777C6D5E /* Pods-Emonar.release.xcconfig */;
-=======
-			baseConfigurationReference = A7BBA2E1ABB204C581768B1F /* Pods-Emonar.release.xcconfig */;
->>>>>>> Stashed changes
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Emonar/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PurdueIdeaFamily.Emonar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Emonar/Emonar-Bridging-Header.h";
 			};
 			name = Release;
