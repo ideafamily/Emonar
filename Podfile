@@ -7,6 +7,5 @@ target 'Emonar' do
     
     pod 'IQKeyboardManager'
     pod 'MJExtension'
-    pod 'Gifu'
 end
 
