@@ -11,12 +11,10 @@ import UIKit
 class ArchiveViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var archiveTableView: UITableView!
-    
+    var dataArray = [1,2,3,4,5,6,7,8]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        archiveTableView.dataSource = self
-        archiveTableView.delegate = self
 
         // Do any additional setup after loading the view.
     }
@@ -27,12 +25,25 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return dataArray.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ArchiveTableViewCell", forIndexPath: indexPath) as! ArchiveTableViewCell
         return cell
+    }
+
+    
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            // Delete the row from the data source
+            dataArray.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        }
     }
     
     @IBAction func mainPressed(sender: UIBarButtonItem) {

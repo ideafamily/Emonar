@@ -18,6 +18,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var recordButton: UIButton!
     
     var data = ["Happy"]
+
     var isRecording = false
     var microphone:EZMicrophone!
     var recorder: EZRecorder!
@@ -131,11 +132,12 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func recordPressed(sender: UIButton) {
-        data.insert("WOWwww", atIndex: 0)
+        
 //        recordTableView.reloadData()
 //        var a = NSIndexPath(forRow: 0, inSection: 0)
         
-        recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
+//        recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
+        
         if sender.selected == true {
             //stop recording
             sender.selected = false
@@ -164,6 +166,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let content = "\(self.applicationDocumentsDirectory()!)/test.m4a"
         print("content :\(content)")
         return NSURL.fileURLWithPath(content)
+
     }
     
     func delay(delay:Double, closure:()->()) {

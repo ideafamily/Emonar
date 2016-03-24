@@ -1,15 +1,12 @@
 PODS:
-  - Gifu (1.0.1)
   - IQKeyboardManager (4.0.0)
   - MJExtension (3.0.10)
 
 DEPENDENCIES:
-  - Gifu
   - IQKeyboardManager
   - MJExtension
 
 SPEC CHECKSUMS:
-  Gifu: bf7a99fe9f20a1dc18c3cb4289aebc922a2ad419
   IQKeyboardManager: b91928f7927ba55a5829b4dcf4b7a6736ac9fc22
   MJExtension: d86aacb740c87519d20e3cca55b6fa4be6cc7548
 
