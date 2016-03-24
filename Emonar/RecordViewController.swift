@@ -18,6 +18,8 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var recordButton: UIButton!
     
     var data = ["Happy"]
+    
+    var timer:NSTimer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,16 +82,28 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func recordPressed(sender: UIButton) {
-        data.insert("WOWwww", atIndex: 0)
+        
 //        recordTableView.reloadData()
 //        var a = NSIndexPath(forRow: 0, inSection: 0)
         
-        recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
+//        recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
+        
         if sender.selected == true {
             sender.selected = false
+            timer!.invalidate()
         } else {
             sender.selected = true
+            timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "timerFinished:", userInfo: nil, repeats: true)
         }
+    }
+    
+    func timerFinished(timer: NSTimer) {
+        data.insert("WOWwww", atIndex: 0)
+        recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
+//        recordTableView.reloadData()
+
+        //perform segue here
+        
     }
     
     func delay(delay:Double, closure:()->()) {
