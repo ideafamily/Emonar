@@ -18,7 +18,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var recordButton: UIButton!
     
     var data = ["Happy"]
-
+    let fileManager = FileManager.sharedInstance
     var isRecording = false
     var microphone:EZMicrophone!
     var recorder: EZRecorder!
@@ -136,7 +136,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //        recordTableView.reloadData()
 //        var a = NSIndexPath(forRow: 0, inSection: 0)
         
-//        recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
+        //recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
         
         if sender.selected == true {
             //stop recording
@@ -144,6 +144,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.isRecording = false;
             if (self.recorder != nil) {
                 self.recorder.closeAudioFile()
+                fileManager.insertFileToStorage(testFilePathURL())
             }
         } else {
             //start recording
@@ -163,7 +164,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //------------------------------------------------------------------------------
     
     func testFilePathURL() -> NSURL {
-        let content = "\(self.applicationDocumentsDirectory()!)/test.m4a"
+        let content = "\(self.applicationDocumentsDirectory()!)/\(fileManager.getCurrentFileIndex()).m4a"
         print("content :\(content)")
         return NSURL.fileURLWithPath(content)
 
