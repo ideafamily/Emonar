@@ -17,30 +17,30 @@ public class FileManager: NSObject {
     private let userDefault = NSUserDefaults.standardUserDefaults()
     private let storageKey = "AudioIO"
     private let fileIndexKey = "CurrentFileIndex"
-    private var sharedDictionary : [Int:NSURL] = [:]
+    private var sharedArray : [NSURL] = []
     
     func getCurrentFileIndex()->Int{
         return userDefault.integerForKey(fileIndexKey)
         
     }
     
-    func getAllLocalFileStorage()->[Int:NSURL]?{
+    func getAllLocalFileStorage()->[NSURL]?{
         readDictionaryFromStorage()
-        return sharedDictionary
+        return sharedArray
     }
     
     func insertFileToStorage(filePath:NSURL){
         readDictionaryFromStorage()
         var currentFileIndex = getCurrentFileIndex()
-        sharedDictionary.updateValue(filePath, forKey: currentFileIndex)
+        sharedArray.insert(filePath, atIndex: currentFileIndex)
         currentFileIndex += 1
         setCurrentFileIndex(currentFileIndex)
         syncDictionaryToStorage()
     }
     
-    func deleteFileFromStorate(fileName:Int){
+    func deleteFileFromStorate(index:Int){
         readDictionaryFromStorage()
-        sharedDictionary.removeValueForKey(fileName)
+        sharedArray.removeAtIndex(index)
         syncDictionaryToStorage()
     }
     
@@ -49,14 +49,15 @@ public class FileManager: NSObject {
     }
     
     private func readDictionaryFromStorage(){
-        if sharedDictionary.count == 0 {
+        if sharedArray.count == 0 {
             if let data = userDefault.objectForKey(storageKey) as? NSData {
-                self.sharedDictionary = (NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Int:NSURL])!
+                self.sharedArray = (NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [NSURL])!
             }
         }
     }
     private func syncDictionaryToStorage(){
-        userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedDictionary), forKey: storageKey)
+
+        userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedArray), forKey: storageKey)
         userDefault.synchronize()
     }
     
