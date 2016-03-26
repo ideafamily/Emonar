@@ -71,6 +71,11 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //        recordButton.setTitle("Start", forState: .Normal)
         recordButton.selected = false
         // Do any additional setup after loading the view.
+        fileManager.deleteFileFromStorate(1)
+        let array = fileManager.getAllLocalFileStorage()
+        for elemtn in array! {
+            print(elemtn)
+        }
     }
 
     func microphone(microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
