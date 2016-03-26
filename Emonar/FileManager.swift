@@ -19,7 +19,7 @@ public class FileManager: NSObject {
     private let fileIndexKey = "CurrentFileIndex"
     private var sharedArray : [NSURL] = []
     
-    func getCurrentFileIndex()->Int{
+    func getNumberOfFile()->Int{
         return userDefault.integerForKey(fileIndexKey)
         
     }
@@ -31,16 +31,24 @@ public class FileManager: NSObject {
     
     func insertFileToStorage(filePath:NSURL){
         readDictionaryFromStorage()
-        var currentFileIndex = getCurrentFileIndex()
-        sharedArray.insert(filePath, atIndex: currentFileIndex)
-        currentFileIndex += 1
-        setCurrentFileIndex(currentFileIndex)
+        var numberOfFile = getNumberOfFile()
+        sharedArray.append(filePath)
+        numberOfFile += 1
+        setCurrentFileIndex(numberOfFile)
         syncDictionaryToStorage()
     }
     
     func deleteFileFromStorate(index:Int){
         readDictionaryFromStorage()
+        
+        
+        var numberOfFile = getNumberOfFile()
+        if index >= numberOfFile || index < 0 {
+            return
+        }
         sharedArray.removeAtIndex(index)
+        numberOfFile -= 1
+        setCurrentFileIndex(numberOfFile)
         syncDictionaryToStorage()
     }
     

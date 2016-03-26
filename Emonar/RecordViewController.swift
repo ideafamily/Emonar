@@ -164,7 +164,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //------------------------------------------------------------------------------
     
     func testFilePathURL() -> NSURL {
-        let content = "\(self.applicationDocumentsDirectory()!)/\(fileManager.getCurrentFileIndex()).m4a"
+        let content = "\(self.applicationDocumentsDirectory()!)/\(fileManager.getNumberOfFile()).m4a"
         print("content :\(content)")
         return NSURL.fileURLWithPath(content)
 
