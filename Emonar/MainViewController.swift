@@ -19,20 +19,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        APIWrapper.sharedInstance.LoginAndAnalysis()
-        FileManager.sharedInstance.insertFileToStorage(NSURL(string: "1")!)
-        if let dict = FileManager.sharedInstance.getAllLocalFileStorage() {
-            print(dict)
-        }
-        FileManager.sharedInstance.deleteFileFromStorate(FileManager.sharedInstance.getNumberOfFile()-1)
-        if let dict = FileManager.sharedInstance.getAllLocalFileStorage() {
-            print(dict)
-        }
-        FileManager.sharedInstance.insertFileToStorage(NSURL(string: "2")!)
-        FileManager.sharedInstance.insertFileToStorage(NSURL(string: "3")!)
-        FileManager.sharedInstance.deleteFileFromStorate(FileManager.sharedInstance.getNumberOfFile())
-        if let dict = FileManager.sharedInstance.getAllLocalFileStorage() {
-            print(dict)
-        }
+
         // Do any additional setup after loading the view.
     }
 

@@ -64,7 +64,10 @@ public class FileManager: NSObject {
         }
     }
     private func syncDictionaryToStorage(){
+
+        print("about to sync \(self.sharedArray)")
         userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedArray), forKey: storageKey)
+        userDefault.synchronize()
     }
     
     
