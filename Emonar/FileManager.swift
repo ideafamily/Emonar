@@ -17,30 +17,38 @@ public class FileManager: NSObject {
     private let userDefault = NSUserDefaults.standardUserDefaults()
     private let storageKey = "AudioIO"
     private let fileIndexKey = "CurrentFileIndex"
-    private var sharedDictionary : [Int:NSURL] = [:]
+    private var sharedArray : [NSURL] = []
     
-    func getCurrentFileIndex()->Int{
+    func getNumberOfFile()->Int{
         return userDefault.integerForKey(fileIndexKey)
         
     }
     
-    func getAllLocalFileStorage()->[Int:NSURL]?{
+    func getAllLocalFileStorage()->[NSURL]?{
         readDictionaryFromStorage()
-        return sharedDictionary
+        return sharedArray
     }
     
     func insertFileToStorage(filePath:NSURL){
         readDictionaryFromStorage()
-        var currentFileIndex = getCurrentFileIndex()
-        sharedDictionary.updateValue(filePath, forKey: currentFileIndex)
-        currentFileIndex += 1
-        setCurrentFileIndex(currentFileIndex)
+        var numberOfFile = getNumberOfFile()
+        sharedArray.append(filePath)
+        numberOfFile += 1
+        setCurrentFileIndex(numberOfFile)
         syncDictionaryToStorage()
     }
     
-    func deleteFileFromStorate(fileName:Int){
+    func deleteFileFromStorate(index:Int){
         readDictionaryFromStorage()
-        sharedDictionary.removeValueForKey(fileName)
+        
+        
+        var numberOfFile = getNumberOfFile()
+        if index >= numberOfFile || index < 0 {
+            return
+        }
+        sharedArray.removeAtIndex(index)
+        numberOfFile -= 1
+        setCurrentFileIndex(numberOfFile)
         syncDictionaryToStorage()
     }
     
@@ -49,14 +57,14 @@ public class FileManager: NSObject {
     }
     
     private func readDictionaryFromStorage(){
-        if sharedDictionary.count == 0 {
+        if sharedArray.count == 0 {
             if let data = userDefault.objectForKey(storageKey) as? NSData {
-                self.sharedDictionary = (NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Int:NSURL])!
+                self.sharedArray = (NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [NSURL])!
             }
         }
     }
     private func syncDictionaryToStorage(){
-        userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedDictionary), forKey: storageKey)
+        userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedArray), forKey: storageKey)
     }
     
     
