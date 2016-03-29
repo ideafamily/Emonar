@@ -9,21 +9,57 @@
 import UIKit
 import Gifu
 
-class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EZMicrophoneDelegate, EZRecorderDelegate, EZAudioPlayerDelegate {
     
     @IBOutlet weak var recordTableView: UITableView!
     
-    @IBOutlet weak var soundWaveView: UIView!
+    @IBOutlet weak var soundWaveView: EZAudioPlotGL!
     
     @IBOutlet weak var recordButton: UIButton!
     
     var data = ["Happy"]
-    var temp = 1
+
+    let fileManager = FileManager.sharedInstance
+    var isRecording = false
+    var microphone:EZMicrophone!
+    var recorder: EZRecorder!
+    var player: EZAudioPlayer!
+    //var temp = 1
     
     var timer:NSTimer?
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let session: AVAudioSession = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+            try session.setActive(true)
+        } catch {
+            NSLog("Error setting up audio session category")
+            NSLog("Error setting up audio session active")
+        }
+        
+        self.soundWaveView.backgroundColor = UIColor(red: 0.984, green: 0.71, blue: 0.365, alpha: 1)
+        self.soundWaveView.color = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        self.soundWaveView.plotType = EZPlotType.Rolling
+        self.soundWaveView.shouldFill = true
+        self.soundWaveView.shouldMirror = true
+
+        self.microphone = EZMicrophone(delegate: self)
+        self.player = EZAudioPlayer(delegate: self)
+        //
+        // Override the output to the speaker. Do this after creating the EZAudioPlayer
+        do {
+            try session.overrideOutputAudioPort(AVAudioSessionPortOverride.Speaker)
+        } catch {
+            NSLog("Error overriding output to the speaker")
+        }
+        
+        
+        
+        
+        
         
 //        recordTableView.backgroundColor = UIColor.blackColor()
         
@@ -38,12 +74,33 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
 //        recordButton.setTitle("Start", forState: .Normal)
         recordButton.selected = false
         // Do any additional setup after loading the view.
+        fileManager.deleteFileFromStorate(1)
+        let array = fileManager.getAllLocalFileStorage()
+        for elemtn in array! {
+            print(elemtn)
+        }
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func microphone(microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
+        weak var weakSelf = self
+        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            //
+            // All the audio plot needs is the buffer data (float*) and the size.
+            // Internally the audio plot will handle all the drawing related code,
+            // history management, and freeing its own resources. Hence, one badass
+            // line of code gets you a pretty plot :)
+            //
+            weakSelf!.soundWaveView.updateBuffer(buffer[0], withBufferSize: bufferSize)
+        })
+        
     }
+    func microphone(microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
+        if self.isRecording {
+            self.recorder.appendDataFromBufferList(bufferList, withBufferSize: bufferSize)
+        }
+        
+    }
+
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RecordTableViewCell", forIndexPath: indexPath) as! RecordTableViewCell
@@ -75,23 +132,56 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func recordPressed(sender: UIButton) {
 
         if sender.selected == true {
+            //stop recording
             sender.selected = false
-            timer!.invalidate()
+            self.isRecording = false
+            self.microphone.stopFetchingAudio()
+            if (self.recorder != nil) {
+                self.recorder.closeAudioFile()
+                fileManager.insertFileToStorage(testFilePathURL())
+            }
+            timer?.invalidate()
         } else {
+            //start recording
             sender.selected = true
-            timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: "timerFinished:", userInfo: nil, repeats: true)
+            self.microphone.startFetchingAudio()
+            timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "timerFinished:", userInfo: nil, repeats: true)
+            self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
+            let a = 
+            self.isRecording = true;
         }
     }
     
-    func timerFinished(timer: NSTimer) {
-        var a = temp
-        delay(3) { () -> () in
-            self.data[a] = "changed\(a)"
-//            self.recordTableView.reloadData()
+
+    func applicationDocumentsDirectory() -> String? {
+        let paths: [AnyObject] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        if  paths.count > 0 {
+            return paths[0] as? String
         }
-        data.append("WOWwww\(temp++)")
-        print(data)
+        return nil
+    }
+    //------------------------------------------------------------------------------
+    
+    func testFilePathURL() -> NSURL {
+        let content = "\(self.applicationDocumentsDirectory()!)/\(fileManager.getNumberOfFile()).wav"
+        print("content :\(content)")
+        return NSURL.fileURLWithPath(content)
+    }
+    func timerFinished(timer: NSTimer) {
+//        let a = temp
+//        delay(3) { () -> () in
+//            self.data[a] = "changed\(a)"
+////            self.recordTableView.reloadData()
+//        }
+        data.append("WOWww")
+//        print(data)
         recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
+        //self.isRecording = false;
+        if (self.recorder != nil) {
+            self.recorder.closeAudioFile()
+            fileManager.insertFileToStorage(testFilePathURL())
+            self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
+        }
     }
     
     func delay(delay:Double, closure:()->()) {
@@ -116,5 +206,5 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
