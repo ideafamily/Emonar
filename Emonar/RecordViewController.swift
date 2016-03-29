@@ -24,7 +24,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var microphone:EZMicrophone!
     var recorder: EZRecorder!
     var player: EZAudioPlayer!
-    var temp = 1
+    //var temp = 1
     
     var timer:NSTimer?
     override func viewDidLoad() {
@@ -56,7 +56,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             NSLog("Error overriding output to the speaker")
         }
         
-        self.microphone.startFetchingAudio()
+        
         
         
         
@@ -134,15 +134,20 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if sender.selected == true {
             //stop recording
             sender.selected = false
-            self.isRecording = false;
+            self.isRecording = false
+            self.microphone.stopFetchingAudio()
             if (self.recorder != nil) {
                 self.recorder.closeAudioFile()
                 fileManager.insertFileToStorage(testFilePathURL())
             }
+            timer?.invalidate()
         } else {
             //start recording
             sender.selected = true
-            self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.M4A, delegate: self)
+            self.microphone.startFetchingAudio()
+            timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "timerFinished:", userInfo: nil, repeats: true)
+            self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
+            let a = 
             self.isRecording = true;
         }
     }
@@ -158,20 +163,25 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //------------------------------------------------------------------------------
     
     func testFilePathURL() -> NSURL {
-        let content = "\(self.applicationDocumentsDirectory()!)/\(fileManager.getNumberOfFile()).m4a"
+        let content = "\(self.applicationDocumentsDirectory()!)/\(fileManager.getNumberOfFile()).wav"
         print("content :\(content)")
         return NSURL.fileURLWithPath(content)
     }
     func timerFinished(timer: NSTimer) {
-        var a = temp
-        delay(3) { () -> () in
-            self.data[a] = "changed\(a)"
-//            self.recordTableView.reloadData()
-        }
-        data.append("WOWwww\(temp++)")
-        print(data)
+//        let a = temp
+//        delay(3) { () -> () in
+//            self.data[a] = "changed\(a)"
+////            self.recordTableView.reloadData()
+//        }
+        data.append("WOWww")
+//        print(data)
         recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
-
+        //self.isRecording = false;
+        if (self.recorder != nil) {
+            self.recorder.closeAudioFile()
+            fileManager.insertFileToStorage(testFilePathURL())
+            self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
+        }
     }
     
     func delay(delay:Double, closure:()->()) {
