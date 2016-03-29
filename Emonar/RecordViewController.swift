@@ -18,6 +18,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var recordButton: UIButton!
     
     var data = ["Happy"]
+    var temp = 1
     
     var timer:NSTimer?
 
@@ -47,19 +48,9 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RecordTableViewCell", forIndexPath: indexPath) as! RecordTableViewCell
         cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
-//        cell.emotionLabel.text = data[indexPath.row]
-        cell.emotionLabel.text = "Happy"
-        
-//        if indexPath.row == data.count - 1 {
-//            cell.emotionImg.animateWithImage(named: "loading4.gif")
-//            //        cell.emotionImg.image = UIImage.gifWithName("loading4")
-//            delay(5) { () -> () in
-//                cell.emotionImg.stopAnimatingGIF()
-//                cell.emotionImg.image = UIImage(named: "temp")
-//            }
-//        } else {
-            cell.emotionImg.image = UIImage(named: "temp")
-//        }
+        cell.emotionLabel.text = data[data.count-1-indexPath.row]
+
+        cell.emotionImg.image = UIImage(named: "temp")
         
         return cell
     }
@@ -82,12 +73,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func recordPressed(sender: UIButton) {
-        
-//        recordTableView.reloadData()
-//        var a = NSIndexPath(forRow: 0, inSection: 0)
-        
-//        recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
-        
+
         if sender.selected == true {
             sender.selected = false
             timer!.invalidate()
@@ -98,12 +84,14 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func timerFinished(timer: NSTimer) {
-        data.insert("WOWwww", atIndex: 0)
+        var a = temp
+        delay(3) { () -> () in
+            self.data[a] = "changed\(a)"
+//            self.recordTableView.reloadData()
+        }
+        data.append("WOWwww\(temp++)")
+        print(data)
         recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
-//        recordTableView.reloadData()
-
-        //perform segue here
-        
     }
     
     func delay(delay:Double, closure:()->()) {
