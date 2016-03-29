@@ -18,12 +18,15 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var recordButton: UIButton!
     
     var data = ["Happy"]
+
     let fileManager = FileManager.sharedInstance
     var isRecording = false
     var microphone:EZMicrophone!
     var recorder: EZRecorder!
     var player: EZAudioPlayer!
-
+    var temp = 1
+    
+    var timer:NSTimer?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -102,19 +105,9 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RecordTableViewCell", forIndexPath: indexPath) as! RecordTableViewCell
         cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
-//        cell.emotionLabel.text = data[indexPath.row]
-        cell.emotionLabel.text = "Happy"
-        
-//        if indexPath.row == data.count - 1 {
-//            cell.emotionImg.animateWithImage(named: "loading4.gif")
-//            //        cell.emotionImg.image = UIImage.gifWithName("loading4")
-//            delay(5) { () -> () in
-//                cell.emotionImg.stopAnimatingGIF()
-//                cell.emotionImg.image = UIImage(named: "temp")
-//            }
-//        } else {
-            cell.emotionImg.image = UIImage(named: "temp")
-//        }
+        cell.emotionLabel.text = data[data.count-1-indexPath.row]
+
+        cell.emotionImg.image = UIImage(named: "temp")
         
         return cell
     }
@@ -137,12 +130,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func recordPressed(sender: UIButton) {
-        
-//        recordTableView.reloadData()
-//        var a = NSIndexPath(forRow: 0, inSection: 0)
-        
-        //recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
-        
+
         if sender.selected == true {
             //stop recording
             sender.selected = false
@@ -159,6 +147,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+
     func applicationDocumentsDirectory() -> String? {
         let paths: [AnyObject] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         if  paths.count > 0 {
@@ -172,6 +161,16 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let content = "\(self.applicationDocumentsDirectory()!)/\(fileManager.getNumberOfFile()).m4a"
         print("content :\(content)")
         return NSURL.fileURLWithPath(content)
+    }
+    func timerFinished(timer: NSTimer) {
+        var a = temp
+        delay(3) { () -> () in
+            self.data[a] = "changed\(a)"
+//            self.recordTableView.reloadData()
+        }
+        data.append("WOWwww\(temp++)")
+        print(data)
+        recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
 
     }
     
@@ -197,5 +196,5 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Pass the selected object to the new view controller.
     }
     */
-
+    
 }

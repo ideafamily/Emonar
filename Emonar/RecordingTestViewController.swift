@@ -55,9 +55,8 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
             self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.M4A, delegate: self)
             self.playButton.enabled = true
         }
-        //self.isRecording = sender.
+        self.isRecording = sender.isOn
         self.recordingStatusLabel.text = self.isRecording ? "Recording" : "Not Recording"
-
     }
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var recordingStatusLabel: UILabel!
