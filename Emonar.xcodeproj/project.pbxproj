@@ -32,6 +32,8 @@
 		C05B434B1C9340D90048F91E /* RecordingTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05B434A1C9340D90048F91E /* RecordingTestViewController.swift */; };
 		C0CCFF851CA1E07C0076D5A4 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CCFF841CA1E07C0076D5A4 /* FileManager.swift */; };
 		F41F60E154CBD5A963AB3C5E /* Pods_Emonar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06680E6FB543DEC9D62E7AEC /* Pods_Emonar.framework */; };
+		F703D63B1CAB2A1700A2E430 /* AnalyzingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F703D63A1CAB2A1700A2E430 /* AnalyzingTableViewCell.swift */; };
+		F703D65B1CAB8F2200A2E430 /* InitialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F703D65A1CAB8F2200A2E430 /* InitialTableViewCell.swift */; };
 		F72A26761C8644550053F3DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72A26751C8644550053F3DC /* AppDelegate.swift */; };
 		F72A267B1C8644550053F3DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F72A26791C8644550053F3DC /* Main.storyboard */; };
 		F72A267D1C8644550053F3DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F72A267C1C8644550053F3DC /* Assets.xcassets */; };
@@ -96,6 +98,8 @@
 		C05B43381C9340380048F91E /* TPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCircularBuffer.h; sourceTree = "<group>"; };
 		C05B434A1C9340D90048F91E /* RecordingTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingTestViewController.swift; sourceTree = "<group>"; };
 		C0CCFF841CA1E07C0076D5A4 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		F703D63A1CAB2A1700A2E430 /* AnalyzingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyzingTableViewCell.swift; sourceTree = "<group>"; };
+		F703D65A1CAB8F2200A2E430 /* InitialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialTableViewCell.swift; sourceTree = "<group>"; };
 		F72A26721C8644550053F3DC /* Emonar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emonar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F72A26751C8644550053F3DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F72A267A1C8644550053F3DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -140,6 +144,8 @@
 				C01CC5401C88D9C60058CAC5 /* Emonar-Bridging-Header.h */,
 				F72A26751C8644550053F3DC /* AppDelegate.swift */,
 				F72A26791C8644550053F3DC /* Main.storyboard */,
+				F703D65A1CAB8F2200A2E430 /* InitialTableViewCell.swift */,
+				F703D63A1CAB2A1700A2E430 /* AnalyzingTableViewCell.swift */,
 				F72A267C1C8644550053F3DC /* Assets.xcassets */,
 				F72A267E1C8644550053F3DC /* LaunchScreen.storyboard */,
 				F72A26811C8644550053F3DC /* Info.plist */,
@@ -421,6 +427,7 @@
 			files = (
 				F72A26761C8644550053F3DC /* AppDelegate.swift in Sources */,
 				F774167F1C921734000F4E74 /* MainViewController.swift in Sources */,
+				F703D65B1CAB8F2200A2E430 /* InitialTableViewCell.swift in Sources */,
 				F77416701C8F7E55000F4E74 /* ArchiveTableViewCell.swift in Sources */,
 				C05B43411C9340380048F91E /* EZAudioPlot.m in Sources */,
 				F774166C1C8F780E000F4E74 /* RecordTableViewCell.swift in Sources */,
@@ -433,6 +440,7 @@
 				C05B43421C9340380048F91E /* EZAudioPlotGL.m in Sources */,
 				C05B433D1C9340380048F91E /* EZAudioFile.m in Sources */,
 				C03AAA781C921DED00DE008F /* Analysis_result_analysisSegments.swift in Sources */,
+				F703D63B1CAB2A1700A2E430 /* AnalyzingTableViewCell.swift in Sources */,
 				C05B43481C9340380048F91E /* TPCircularBuffer.c in Sources */,
 				C0CCFF851CA1E07C0076D5A4 /* FileManager.swift in Sources */,
 				C01CC5431C88D9C60058CAC5 /* ApiManager.m in Sources */,
