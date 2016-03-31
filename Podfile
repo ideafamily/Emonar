@@ -7,5 +7,6 @@ target 'Emonar' do
     
     pod 'IQKeyboardManager'
     pod 'MJExtension'
+    pod 'YLProgressBar'
 end
 
