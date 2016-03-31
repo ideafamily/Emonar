@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Gifu
+//import Gifu
 
 class RecordTableViewCell: UITableViewCell {
     

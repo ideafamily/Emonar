@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Gifu
+//import Gifu
 
 class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EZMicrophoneDelegate, EZRecorderDelegate, EZAudioPlayerDelegate {
     

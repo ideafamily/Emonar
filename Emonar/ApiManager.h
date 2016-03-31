@@ -10,7 +10,13 @@
 
 @interface ApiManager : NSObject
 
+
+
 + (instancetype)sharedManager;
+
+@property NSString * accessToken;
+
+@property NSString * recordingId;
 
 -(void)getAccessTokenSuccess:(void (^)(NSData *data))success;
 -(void)startSessionSuccess:(void (^)(NSData *data))success;

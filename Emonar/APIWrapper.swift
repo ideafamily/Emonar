@@ -18,6 +18,9 @@ final public class APIWrapper : NSObject{
         return _sharedInstance
         
     }
+    func hasLoggedin()->Bool{
+        return ApiManager.sharedManager().accessToken == nil
+    }
     
     func LoginAndAnalysis(){
         // 1. Call getAccessToken
