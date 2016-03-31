@@ -22,16 +22,16 @@ class RecordTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        emotionImg.layer.cornerRadius = 8
+        emotionImg.layer.masksToBounds = true
         
+        cardView.layer.cornerRadius = 10
+        cardView.layer.masksToBounds = true
         // Initialization code
     }
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        emotionImg.layer.cornerRadius = 3
-        emotionImg.layer.masksToBounds = true
         
-        cardView.layer.cornerRadius = 5
-        cardView.layer.masksToBounds = true
     }
 
     required init?(coder aDecoder: NSCoder) {
