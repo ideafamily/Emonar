@@ -183,7 +183,6 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 fileManager.insertFileToStorage(testFilePathURL())
             }
             recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
-            print("fff")
             showSaveAlert()
         } else {
 //            recordTableView.userInteractionEnabled = false
@@ -219,7 +218,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func timerFinished(timer: NSTimer) {
-        var localIndex = datasIndex
+        let localIndex = datasIndex
         delay(3) { () -> () in
             //MARK: change data and reload cell while api calls back
                 self.datas[localIndex].emotion = "changed\(localIndex)"
@@ -228,57 +227,15 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         datas.append(data(emotion: "Analyzing\(datasIndex++)", analyzed: false, startTime: NSDate()))
         print("add: \(datas)")
-//=======
-//            //stop recording
-//            sender.selected = false
-//            self.isRecording = false
-//            self.microphone.stopFetchingAudio()
-//            if (self.recorder != nil) {
-//                self.recorder.closeAudioFile()
-//                fileManager.insertFileToStorage(testFilePathURL())
-//            }
-//            timer?.invalidate()
-//        } else {
-//            //start recording
-//            sender.selected = true
-//            self.microphone.startFetchingAudio()
-//            timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "timerFinished:", userInfo: nil, repeats: true)
-//            self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
-//            let a = 
-//            self.isRecording = true;
-//        }
-//    }
-//    
-////
-////    func applicationDocumentsDirectory() -> String? {
-////        let paths: [AnyObject] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
-////        if  paths.count > 0 {
-////            return paths[0] as? String
-////        }
-////        return nil
-////    }
-//    //------------------------------------------------------------------------------
-//    
-////    func testFilePathURL() -> NSURL {
-////        let content = "\(self.applicationDocumentsDirectory()!)/\(fileManager.getNumberOfFile()).wav"
-////        print("content :\(content)")
-////        return NSURL.fileURLWithPath(content)
-////    }
-//    func timerFinished(timer: NSTimer) {
-////        let a = temp
-////        delay(3) { () -> () in
-////            self.data[a] = "changed\(a)"
-//////            self.recordTableView.reloadData()
-////        }
-//        data.append("WOWww")
-////        print(data)
-//>>>>>>> master
+
         recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
         //self.isRecording = false;
-        if (self.recorder != nil) {
+        if (self.recorder != nil && self.isRecording) {
+            self.isRecording = false
             self.recorder.closeAudioFile()
             fileManager.insertFileToStorage(testFilePathURL())
             self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
+            isRecording = true
         }
     }
     
