@@ -19,40 +19,54 @@ final public class APIWrapper : NSObject{
         
     }
     func hasLoggedin()->Bool{
-        return ApiManager.sharedManager().accessToken == nil
+        return NSUserDefaults.standardUserDefaults().objectForKey("access-token") != nil
     }
-    
-    func LoginAndAnalysis(){
-        // 1. Call getAccessToken
-        ApiManager.sharedManager().getAccessTokenSuccess { (data:NSData!) -> Void in
-            // When successful:
-            // 2. Call startSession
-            ApiManager.sharedManager().startSessionSuccess({ (data:NSData!) -> Void in
-                // When successful:
-                // BOOL fileBeingSent is used to stop sending Analysis requests after send file is finished
-                self.fileBeingSent = true
-                
-                // 3. Call sendAudioFile with sample.wav
-                ApiManager.sharedManager().sendAudioFile("sample", fileType: "wav", success: { (response:[NSObject : AnyObject]!) -> Void in
-                    self.fileBeingSent = false
-                    print(response)
-                    let analysis = Analysis.mj_objectWithKeyValues(response)
-//                    print(analysis.result.analysisSummary.AnalysisResult.Arousal.Mean)
-                    let analysisArray = analysis.result.analysisSegments
-                    for element in analysisArray {
-                        let elementObject = Analysis_result_analysisSegments.mj_objectWithKeyValues(element)
-//                        print(elementObject.analysis.Arousal.Value)
-                    }
-                })
-                
-                // 4. Call sendForAnalysis for the 1st time after 3 seconds
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    self.performSelector("sendForAnalysis", withObject: nil, afterDelay: 3)
-//                })
-                
+    func loginWithCallback(completion: () -> Void){
+        ApiManager.sharedManager().getAccessTokenSuccess { (data:NSData!) in
+            completion()
+        }
+    }
+    func startAnSession(fileName:String){
+        ApiManager.sharedManager().startSessionSuccess { (data:NSData!) in
+            self.fileBeingSent = true
+            ApiManager.sharedManager().sendAudioFile(fileName, fileType: "wav", success: { (response:[NSObject : AnyObject]!) in
+                self.fileBeingSent = false
+                print(response)
+                let analysis = Analysis.mj_objectWithKeyValues(response)
+//                                    print(analysis.result.analysisSummary.AnalysisResult.Arousal.Mean)
+                let analysisArray = analysis.result.analysisSegments
+                for element in analysisArray {
+                    let elementObject = Analysis_result_analysisSegments.mj_objectWithKeyValues(element)
+                    //                        print(elementObject.analysis.Arousal.Value)
+                }
+
             })
         }
     }
+    
+//    func LoginAndAnalysis(){
+//        // 1. Call getAccessToken
+//        ApiManager.sharedManager().getAccessTokenSuccess { (data:NSData!) -> Void in
+//            // When successful:
+//            // 2. Call startSession
+//            ApiManager.sharedManager().startSessionSuccess({ (data:NSData!) -> Void in
+//                // When successful:
+//                // BOOL fileBeingSent is used to stop sending Analysis requests after send file is finished
+//                self.fileBeingSent = true
+//                
+//                // 3. Call sendAudioFile with sample.wav
+//                ApiManager.sharedManager().sendAudioFile("sample", fileType: "wav", success: { (response:[NSObject : AnyObject]!) -> Void in
+//                    
+//                })
+//                
+//                // 4. Call sendForAnalysis for the 1st time after 3 seconds
+////                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+////                    self.performSelector("sendForAnalysis", withObject: nil, afterDelay: 3)
+////                })
+//                
+//            })
+//        }
+//    }
     func sendForAnalysis() {
         if fileBeingSent == true {
             NSLog("getAnalysis started")

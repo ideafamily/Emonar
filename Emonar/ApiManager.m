@@ -48,7 +48,9 @@ NSString *const kRecording_URL = @"https://apiv3.beyondverbal.com/v3/recording/"
          NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
 //         NSLog(@"getAccessToken responseDictionary:\n%@",responseDictionary);
          self.accessToken = [responseDictionary objectForKey:@"access_token"];
-        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:self.accessToken forKey:@"access-token"];
+        [defaults synchronize];
         
          success(data);
     }];
