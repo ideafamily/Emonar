@@ -9,6 +9,8 @@
 import UIKit
 //import Gifu
 
+var timeSpan = 10.0
+
 
 class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EZMicrophoneDelegate, EZRecorderDelegate, EZAudioPlayerDelegate {
 
@@ -194,7 +196,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             datasIndex = 0
             recordTableView.reloadData()
             
-            timer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "timerFinished:", userInfo: nil, repeats: true)
+            timer = NSTimer.scheduledTimerWithTimeInterval(timeSpan, target: self, selector: "timerFinished:", userInfo: nil, repeats: true)
         }
     }
     
@@ -221,7 +223,9 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         APIWrapper.sharedInstance.startAnSessionAndSendAFile(filePath(), completion: { (object:Analysis_result_analysisSegments?) in
             if object != nil {
-                self.updateData(localIndex, content: object!.analysis.Mood.Composite.Primary.Phrase, description: String.addString([object!.analysis.Mood.Composite.Secondary.Phrase,object!.analysis.Mood.Group11.Primary.Phrase,object!.analysis.Mood.Group11.Secondary.Phrase]))
+                let description = String.addString([object!.analysis.Mood.Composite.Secondary.Phrase,object!.analysis.Mood.Group11.Primary.Phrase,object!.analysis.Mood.Group11.Secondary.Phrase])
+                let modifiedDescription = description.substringFromIndex(description.startIndex.advancedBy(1))
+                self.updateData(localIndex, content: object!.analysis.Mood.Composite.Primary.Phrase, description: modifiedDescription)
             } else {
                 self.updateData(localIndex, content: "No Result", description: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low.")
             }
@@ -251,12 +255,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.recordTableView = nil
     }
     
-    func resetCellInRow(row: Int) {
-        let cell = recordTableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) as! AnalyzingTableViewCell
-        cell.progressPerc = 0
-        cell.progressBar.progress = 0
-        cell.infoLabel.text = "Recording"
-    }
+   
     
     func resetAllData() {
         //1. delete all previous data

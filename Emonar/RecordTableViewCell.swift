@@ -24,6 +24,7 @@ class RecordTableViewCell: UITableViewCell {
         
         cardView.layer.cornerRadius = 10
         cardView.layer.masksToBounds = true
+        
         // Initialization code
     }
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
