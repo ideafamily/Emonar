@@ -20,7 +20,7 @@
 
 -(void)getAccessTokenSuccess:(void (^)(NSData *data))success;
 -(void)startSessionSuccess:(void (^)(NSData *data))success;
--(void)sendAudioFile:(NSString *)fileName fileType:(NSString *)fileType success:(void (^)(NSDictionary *responseDictionary))success;
+-(void)sendAudioFile:(NSString *)filePath success:(void (^)(NSDictionary *responseDictionary))success;
 -(void)getAnalysisFromMs:(NSNumber *)fromMs success:(void (^)(NSData *))success;
 
 @end

@@ -26,20 +26,20 @@ final public class APIWrapper : NSObject{
             completion()
         }
     }
-    func startAnSession(fileName:String){
+    
+    func startAnSessionAndSendAFile(filePath:String,completion: (object:Analysis_result_analysisSegments?) -> Void){
         ApiManager.sharedManager().startSessionSuccess { (data:NSData!) in
             self.fileBeingSent = true
-            ApiManager.sharedManager().sendAudioFile(fileName, fileType: "wav", success: { (response:[NSObject : AnyObject]!) in
+            ApiManager.sharedManager().sendAudioFile(filePath, success: { (response:[NSObject : AnyObject]!) in
                 self.fileBeingSent = false
-                print(response)
+//                print(response)
                 let analysis = Analysis.mj_objectWithKeyValues(response)
-//                                    print(analysis.result.analysisSummary.AnalysisResult.Arousal.Mean)
-                let analysisArray = analysis.result.analysisSegments
-                for element in analysisArray {
-                    let elementObject = Analysis_result_analysisSegments.mj_objectWithKeyValues(element)
-                    //                        print(elementObject.analysis.Arousal.Value)
+                if let analysisArray = analysis.result.analysisSegments {
+                    let elementObject = Analysis_result_analysisSegments.mj_objectWithKeyValues(analysisArray[0])
+                    completion(object: elementObject)
+                } else {
+                    completion(object: nil)
                 }
-
             })
         }
     }
@@ -67,25 +67,25 @@ final public class APIWrapper : NSObject{
 //            })
 //        }
 //    }
-    func sendForAnalysis() {
-        if fileBeingSent == true {
-            NSLog("getAnalysis started")
-            ApiManager.sharedManager().getAnalysisFromMs(0, success: { (data:NSData!) -> Void in
-                do {
-                    let responseDictionary: [NSObject : AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) as! [NSObject : AnyObject]
-                    NSLog("getAnalysis responseDictionary:\n%@", responseDictionary)
-//                    let analysis = Analysis.mj_objectWithKeyValues(responseDictionary)
-//                    print(analysis)
-                    // Call sendForAnalysis after 1 second until send file is finished
-                    if self.fileBeingSent == true {
-                        dispatch_async(dispatch_get_main_queue(), {() -> Void in
-                            self.performSelector("sendForAnalysis", withObject: nil, afterDelay: 1)
-                        })
-                    }
-                } catch{
-                    
-                }
-            })
-        }
-    }
+//    func sendForAnalysis() {
+//        if fileBeingSent == true {
+//            NSLog("getAnalysis started")
+//            ApiManager.sharedManager().getAnalysisFromMs(0, success: { (data:NSData!) -> Void in
+//                do {
+//                    let responseDictionary: [NSObject : AnyObject] = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) as! [NSObject : AnyObject]
+//                    NSLog("getAnalysis responseDictionary:\n%@", responseDictionary)
+////                    let analysis = Analysis.mj_objectWithKeyValues(responseDictionary)
+////                    print(analysis)
+//                    // Call sendForAnalysis after 1 second until send file is finished
+//                    if self.fileBeingSent == true {
+//                        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+//                            self.performSelector("sendForAnalysis", withObject: nil, afterDelay: 1)
+//                        })
+//                    }
+//                } catch{
+//                    
+//                }
+//            })
+//        }
+//    }
 }

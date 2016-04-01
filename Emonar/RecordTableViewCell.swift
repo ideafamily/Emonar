@@ -15,15 +15,12 @@ class RecordTableViewCell: UITableViewCell {
     
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    @IBOutlet weak var emotionImg: UIImageView!
 
     @IBOutlet weak var cardView: UIView!
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        emotionImg.layer.cornerRadius = 8
-        emotionImg.layer.masksToBounds = true
         
         cardView.layer.cornerRadius = 10
         cardView.layer.masksToBounds = true

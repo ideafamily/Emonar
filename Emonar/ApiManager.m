@@ -46,7 +46,7 @@ NSString *const kRecording_URL = @"https://apiv3.beyondverbal.com/v3/recording/"
                                                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
     {
          NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-//         NSLog(@"getAccessToken responseDictionary:\n%@",responseDictionary);
+         NSLog(@"getAccessToken responseDictionary:\n%@",responseDictionary);
          self.accessToken = [responseDictionary objectForKey:@"access_token"];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:self.accessToken forKey:@"access-token"];
@@ -64,7 +64,9 @@ NSString *const kRecording_URL = @"https://apiv3.beyondverbal.com/v3/recording/"
     NSLog(@"startSession started");
     NSString *stringURL = [NSString stringWithFormat:@"%@start",kRecording_URL];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:stringURL]];
-    [request setValue:[NSString stringWithFormat:@"Bearer %@",self.accessToken] forHTTPHeaderField:@"Authorization"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token=[defaults objectForKey:@"access-token"];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@",token] forHTTPHeaderField:@"Authorization"];
     [request setHTTPMethod:@"POST"];
     NSDictionary *bodyDict = @{@"dataFormat":@{@"type":@"WAV"}};
     NSData *bodyJson = [NSJSONSerialization dataWithJSONObject:bodyDict options:kNilOptions error:nil];
@@ -72,7 +74,7 @@ NSString *const kRecording_URL = @"https://apiv3.beyondverbal.com/v3/recording/"
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request
                                                                      completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
          NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-//         NSLog(@"startSession responseDictionary:\n%@",responseDictionary);
+         NSLog(@"startSession responseDictionary:\n%@",responseDictionary);
          self.recordingId = [responseDictionary objectForKey:@"recordingId"];
                                                                          
          success(data);
@@ -81,14 +83,16 @@ NSString *const kRecording_URL = @"https://apiv3.beyondverbal.com/v3/recording/"
 }
 
 
--(void)sendAudioFile:(NSString *)fileName fileType:(NSString *)fileType success:(void (^)(NSDictionary *responseDictionary))success
+-(void)sendAudioFile:(NSString *)filePath success:(void (^)(NSDictionary *responseDictionary))success
 {
-    NSLog(@"sendAudioFile started");
+    NSLog(@"sendAudioFile started.Filepath:%@",filePath);
     NSString *stringURL = [NSString stringWithFormat:@"%@%@",kRecording_URL,self.recordingId];
+    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:stringURL]];
-    [request setValue:[NSString stringWithFormat:@"Bearer %@",self.accessToken] forHTTPHeaderField:@"Authorization"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *token=[defaults objectForKey:@"access-token"];
+    [request setValue:[NSString stringWithFormat:@"Bearer %@",token] forHTTPHeaderField:@"Authorization"];
     [request setHTTPMethod:@"POST"];
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:fileName ofType:fileType];
     NSData *data = [NSData dataWithContentsOfFile:filePath];
     [request setHTTPBody:data];
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithRequest:request
