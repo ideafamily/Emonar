@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "recording.png",
+      "filename" : "notRecording.png",
       "scale" : "1x"
     },
     {

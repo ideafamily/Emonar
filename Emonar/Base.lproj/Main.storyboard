@@ -363,13 +363,13 @@
                                     <constraint firstAttribute="height" constant="64" id="Vcp-63-vAo"/>
                                     <constraint firstAttribute="width" constant="64" id="Yrx-rp-D3M"/>
                                 </constraints>
-                                <state key="normal" image="play"/>
-                                <state key="selected" image="stop"/>
+                                <state key="normal" image="notRecording"/>
+                                <state key="selected" image="isRecording"/>
                                 <connections>
                                     <action selector="recordPressed:" destination="EqE-Mu-srM" eventType="touchUpInside" id="rEU-ui-oYA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaZ-s7-4gL">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaZ-s7-4gL">
                                 <rect key="frame" x="8" y="68" width="18" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="OL9-3b-IiF"/>
@@ -380,7 +380,7 @@
                                     <action selector="cancelPressed:" destination="EqE-Mu-srM" eventType="touchUpInside" id="29t-AH-AiY"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="125" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pfu-s7-cMT">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="125" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pfu-s7-cMT">
                                 <rect key="frame" x="0.0" y="97" width="600" height="738.5"/>
                                 <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -526,12 +526,12 @@
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's Start" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JS0-g2-kU6">
                                                             <rect key="frame" x="0.0" y="0.0" width="552" height="109"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="black" pointSize="25"/>
-                                                            <color key="textColor" red="0.87060053660000003" green="0.87060053660000003" blue="0.87060053660000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                                                            <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="JS0-g2-kU6" secondAttribute="bottom" id="Qsh-jF-ZFj"/>
                                                         <constraint firstAttribute="trailing" secondItem="JS0-g2-kU6" secondAttribute="trailing" id="Yet-aj-0jz"/>
@@ -554,7 +554,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NewFile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T4J-R2-hCD">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T4J-R2-hCD">
                                 <rect key="frame" x="20" y="64" width="560" height="25.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
@@ -648,8 +648,8 @@
         <image name="Microphone2" width="143" height="143"/>
         <image name="Phone2" width="103" height="103"/>
         <image name="Tape Drive2" width="103" height="103"/>
+        <image name="isRecording" width="57" height="57"/>
         <image name="main2" width="831" height="1211"/>
-        <image name="play" width="64" height="64"/>
-        <image name="stop" width="64" height="64"/>
+        <image name="notRecording" width="57" height="57"/>
     </resources>
 </document>
