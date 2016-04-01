@@ -31,6 +31,8 @@
 		C05B43481C9340380048F91E /* TPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = C05B43371C9340380048F91E /* TPCircularBuffer.c */; };
 		C05B434B1C9340D90048F91E /* RecordingTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05B434A1C9340D90048F91E /* RecordingTestViewController.swift */; };
 		C0CCFF851CA1E07C0076D5A4 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CCFF841CA1E07C0076D5A4 /* FileManager.swift */; };
+		C0E913131CADBF81001E1F2F /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E913121CADBF81001E1F2F /* Tool.swift */; };
+		C0E913161CADE71A001E1F2F /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E913151CADE71A001E1F2F /* StringExtension.swift */; };
 		F41F60E154CBD5A963AB3C5E /* Pods_Emonar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06680E6FB543DEC9D62E7AEC /* Pods_Emonar.framework */; };
 		F703D63B1CAB2A1700A2E430 /* AnalyzingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F703D63A1CAB2A1700A2E430 /* AnalyzingTableViewCell.swift */; };
 		F703D65B1CAB8F2200A2E430 /* InitialTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F703D65A1CAB8F2200A2E430 /* InitialTableViewCell.swift */; };
@@ -98,6 +100,8 @@
 		C05B43381C9340380048F91E /* TPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCircularBuffer.h; sourceTree = "<group>"; };
 		C05B434A1C9340D90048F91E /* RecordingTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingTestViewController.swift; sourceTree = "<group>"; };
 		C0CCFF841CA1E07C0076D5A4 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		C0E913121CADBF81001E1F2F /* Tool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
+		C0E913151CADE71A001E1F2F /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		F703D63A1CAB2A1700A2E430 /* AnalyzingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyzingTableViewCell.swift; sourceTree = "<group>"; };
 		F703D65A1CAB8F2200A2E430 /* InitialTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialTableViewCell.swift; sourceTree = "<group>"; };
 		F72A26721C8644550053F3DC /* Emonar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emonar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,6 +250,15 @@
 			name = EZAudio;
 			sourceTree = "<group>";
 		};
+		C0E913141CADE706001E1F2F /* Extension & Helper */ = {
+			isa = PBXGroup;
+			children = (
+				C0E913121CADBF81001E1F2F /* Tool.swift */,
+				C0E913151CADE71A001E1F2F /* StringExtension.swift */,
+			);
+			name = "Extension & Helper";
+			sourceTree = "<group>";
+		};
 		DAB23DFC9B81A09E2847133B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,6 +289,7 @@
 		F72A26741C8644550053F3DC /* Emonar */ = {
 			isa = PBXGroup;
 			children = (
+				C0E913141CADE706001E1F2F /* Extension & Helper */,
 				F77416791C8FCC90000F4E74 /* GIF */,
 				C0367AA31C8F752400A39FCF /* Library */,
 				C01CC5451C88D9D80058CAC5 /* AudioI/O */,
@@ -428,10 +442,12 @@
 				F72A26761C8644550053F3DC /* AppDelegate.swift in Sources */,
 				F774167F1C921734000F4E74 /* MainViewController.swift in Sources */,
 				F703D65B1CAB8F2200A2E430 /* InitialTableViewCell.swift in Sources */,
+				C0E913131CADBF81001E1F2F /* Tool.swift in Sources */,
 				F77416701C8F7E55000F4E74 /* ArchiveTableViewCell.swift in Sources */,
 				C05B43411C9340380048F91E /* EZAudioPlot.m in Sources */,
 				F774166C1C8F780E000F4E74 /* RecordTableViewCell.swift in Sources */,
 				F774166A1C8F77ED000F4E74 /* RecordViewController.swift in Sources */,
+				C0E913161CADE71A001E1F2F /* StringExtension.swift in Sources */,
 				C05B43391C9340380048F91E /* EZAudio.m in Sources */,
 				C01CC54B1C88E2160058CAC5 /* APIWrapper.swift in Sources */,
 				C0367ACD1C8F781A00A39FCF /* Analysis_result_analysisSummary.swift in Sources */,

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Gifu
+//import Gifu
 
 
 class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, EZMicrophoneDelegate, EZRecorderDelegate, EZAudioPlayerDelegate {
@@ -22,6 +22,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     struct data {
         var emotion = "Analyzing"
+        var description = "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low."
         var analyzed = false
         var startTime:NSDate?
     }
@@ -84,10 +85,6 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
         // Do any additional setup after loading the view.
         fileManager.deleteFileFromStorate(1)
-        let array = fileManager.getAllLocalFileStorage()
-        for elemtn in array! {
-            print(elemtn)
-        }
     }
 
     func microphone(microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
@@ -104,7 +101,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
     func microphone(microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
-        if self.isRecording {
+        if self.isRecording && self.recorder != nil {
             self.recorder.appendDataFromBufferList(bufferList, withBufferSize: bufferSize)
         }
         
@@ -125,15 +122,13 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let cell = tableView.dequeueReusableCellWithIdentifier("RecordTableViewCell", forIndexPath: indexPath) as! RecordTableViewCell
             cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
             cell.emotionLabel.text = datas[datas.count-1-indexPath.row].emotion
-            
-            cell.emotionImg.image = UIImage(named: "temp")
+            cell.descriptionLabel.text = datas[datas.count-1-indexPath.row].description
             return cell
         } else {
             //Recording and Analyzing cell
             let cell = tableView.dequeueReusableCellWithIdentifier("AnalyzingTableViewCell", forIndexPath: indexPath) as! AnalyzingTableViewCell
             cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
             cell.progressStart(datas[datas.count-1-indexPath.row].startTime!)
-            print("cell: \(cell.progressPerc)")
             return cell
         }
         
@@ -199,7 +194,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             datasIndex = 0
             recordTableView.reloadData()
             
-            timer = NSTimer.scheduledTimerWithTimeInterval(20, target: self, selector: "timerFinished:", userInfo: nil, repeats: true)
+            timer = NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: "timerFinished:", userInfo: nil, repeats: true)
         }
     }
     
@@ -210,26 +205,28 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         return nil
     }
-    
+    func filePath()->String{
+        return "\(self.applicationDocumentsDirectory()!)/\(fileManager.getNumberOfFile()).wav"
+    }
     func testFilePathURL() -> NSURL {
-        let content = "\(self.applicationDocumentsDirectory()!)/\(fileManager.getNumberOfFile()).wav"
-        print("content :\(content)")
-        return NSURL.fileURLWithPath(content)
+//        print("content :\(content)")
+        return NSURL.fileURLWithPath(filePath())
     }
     
     func timerFinished(timer: NSTimer) {
         let localIndex = datasIndex
-        delay(3) { () -> () in
-            //MARK: change data and reload cell while api calls back
-                self.datas[localIndex].emotion = "changed\(localIndex)"
-                self.datas[localIndex].analyzed = true
-                self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.datas.count - localIndex - 1, inSection: 0)], withRowAnimation: .Automatic)
-        }
-        datas.append(data(emotion: "Analyzing\(datasIndex++)", analyzed: false, startTime: NSDate()))
-        print("add: \(datas)")
-
+        datas.append(data(emotion: "Analyzing\(datasIndex)",description: "Description", analyzed: false, startTime: NSDate()))
+        datasIndex += 1
         recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
-        //self.isRecording = false;
+        
+        APIWrapper.sharedInstance.startAnSessionAndSendAFile(filePath(), completion: { (object:Analysis_result_analysisSegments?) in
+            if object != nil {
+                self.updateData(localIndex, content: object!.analysis.Mood.Composite.Primary.Phrase, description: String.addString([object!.analysis.Mood.Composite.Secondary.Phrase,object!.analysis.Mood.Group11.Primary.Phrase,object!.analysis.Mood.Group11.Secondary.Phrase]))
+            } else {
+                self.updateData(localIndex, content: "No Result", description: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low.")
+            }
+            
+        })
         if (self.recorder != nil && self.isRecording) {
             self.isRecording = false
             self.recorder.closeAudioFile()
@@ -237,17 +234,19 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
             isRecording = true
         }
+        
     }
-    
-    func delay(delay:Double, closure:()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
+    func updateData(localIndex:Int,content:String,description:String){
+        self.datas[localIndex].emotion = String.trimString(content)
+        self.datas[localIndex].analyzed = true
+        self.datas[localIndex].description = description
+        dispatch_async(dispatch_get_main_queue(), {
+            // code here
+            self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.datas.count - localIndex - 1, inSection: 0)], withRowAnimation: .Automatic)
+        })
+
     }
-    
+
     deinit {
         self.recordTableView = nil
     }
