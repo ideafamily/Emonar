@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import ProgressHUD
+
 
 class MainViewController: UIViewController {
 
@@ -18,6 +20,13 @@ class MainViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        if !APIWrapper.sharedInstance.hasLoggedin() {
+            Tool.showProgressHUD("Log in")
+            APIWrapper.sharedInstance.loginWithCallback({ 
+                Tool.dismissHUD()
+            })
+        }
+        
 //        APIWrapper.sharedInstance.LoginAndAnalysis()
 
         // Do any additional setup after loading the view.
