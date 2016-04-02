@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -363,14 +363,14 @@
                                     <constraint firstAttribute="height" constant="64" id="Vcp-63-vAo"/>
                                     <constraint firstAttribute="width" constant="64" id="Yrx-rp-D3M"/>
                                 </constraints>
-                                <state key="normal" image="play"/>
-                                <state key="selected" image="stop"/>
+                                <state key="normal" image="notRecording"/>
+                                <state key="selected" image="isRecording"/>
                                 <connections>
                                     <action selector="recordPressed:" destination="EqE-Mu-srM" eventType="touchUpInside" id="rEU-ui-oYA"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaZ-s7-4gL">
-                                <rect key="frame" x="8" y="68" width="18" height="18"/>
+                                <rect key="frame" x="8" y="68.5" width="18" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="OL9-3b-IiF"/>
                                     <constraint firstAttribute="width" constant="18" id="hgo-C6-nWp"/>
@@ -395,22 +395,27 @@
                                                     <rect key="frame" x="24" y="8" width="552" height="108.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RXs-DL-5q3">
-                                                            <rect key="frame" x="8" y="3" width="536" height="38.5"/>
+                                                            <rect key="frame" x="8" y="3" width="536" height="30"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="38.5" id="OXh-24-4A6"/>
+                                                                <constraint firstAttribute="height" constant="30" id="OXh-24-4A6"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQJ-EU-c9N">
-                                                            <rect key="frame" x="8" y="41" width="536" height="65"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low." lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="HQJ-EU-c9N">
+                                                            <rect key="frame" x="8" y="33" width="536" height="36"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="65" id="Ig2-bG-L7a"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
+                                                            <variation key="default">
+                                                                <mask key="constraints">
+                                                                    <exclude reference="Ig2-bG-L7a"/>
+                                                                </mask>
+                                                            </variation>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -521,12 +526,12 @@
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's Start" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JS0-g2-kU6">
                                                             <rect key="frame" x="0.0" y="0.0" width="552" height="109"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="black" pointSize="25"/>
-                                                            <color key="textColor" red="0.87060053660000003" green="0.87060053660000003" blue="0.87060053660000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
+                                                            <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="JS0-g2-kU6" secondAttribute="bottom" id="Qsh-jF-ZFj"/>
                                                         <constraint firstAttribute="trailing" secondItem="JS0-g2-kU6" secondAttribute="trailing" id="Yet-aj-0jz"/>
@@ -549,7 +554,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NewFile" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T4J-R2-hCD">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T4J-R2-hCD">
                                 <rect key="frame" x="20" y="64" width="560" height="25.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
@@ -643,8 +648,8 @@
         <image name="Microphone2" width="143" height="143"/>
         <image name="Phone2" width="103" height="103"/>
         <image name="Tape Drive2" width="103" height="103"/>
+        <image name="isRecording" width="57" height="57"/>
         <image name="main2" width="831" height="1211"/>
-        <image name="play" width="64" height="64"/>
-        <image name="stop" width="64" height="64"/>
+        <image name="notRecording" width="57" height="57"/>
     </resources>
 </document>

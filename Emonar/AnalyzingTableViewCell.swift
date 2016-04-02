@@ -44,13 +44,13 @@ class AnalyzingTableViewCell: UITableViewCell {
     
     func progressStart(startTime:NSDate) {
         currentTime = startTime
-        var timeIncrease = CGFloat((currentTime!.timeIntervalSinceNow * -1))
-        if timeIncrease > 20 {
+        let timeIncrease = CGFloat((currentTime!.timeIntervalSinceNow * -1))
+        if timeIncrease > CGFloat(timeSpan) {
             progressPerc = 1
             progressBar.progress = progressPerc!
             infoLabel.text = "Analyzing"
         } else {
-            progressPerc = timeIncrease * (1.03/20)
+            progressPerc = timeIncrease * CGFloat(1.03/timeSpan)
             progressBar.progress = progressPerc!
             timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "timerFinished:", userInfo: nil, repeats: true)
         }
@@ -66,9 +66,9 @@ class AnalyzingTableViewCell: UITableViewCell {
     
     func timerFinished(timer: NSTimer) {
 
-        var timeIncrease = CGFloat((currentTime!.timeIntervalSinceNow * -1))
+        let timeIncrease = CGFloat((currentTime!.timeIntervalSinceNow * -1))
         if progressPerc < 1 {
-            progressPerc = timeIncrease * (1.03/20)
+            progressPerc = timeIncrease * CGFloat(1.03/timeSpan)
             progressBar.progress = progressPerc!
             infoLabel.text = "Recording"
         } else {
