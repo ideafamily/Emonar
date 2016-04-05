@@ -1,16 +1,19 @@
 PODS:
   - IQKeyboardManager (4.0.0)
   - MJExtension (3.0.10)
+  - ProgressHUD (2.3)
   - YLProgressBar (3.8.0)
 
 DEPENDENCIES:
   - IQKeyboardManager
   - MJExtension
+  - ProgressHUD
   - YLProgressBar
 
 SPEC CHECKSUMS:
   IQKeyboardManager: b91928f7927ba55a5829b4dcf4b7a6736ac9fc22
   MJExtension: d86aacb740c87519d20e3cca55b6fa4be6cc7548
+  ProgressHUD: 0d2afb77bc41997dfff1aafb8617317d858834a9
   YLProgressBar: b6ec76bea4a1b8d6bdfd2995d828055a7e5f3e9a
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0
