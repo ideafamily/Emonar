@@ -11,10 +11,46 @@ import ProgressHUD
 
 
 class MainViewController: UIViewController {
+    //var player =  AVAudioPlayer()
     
     @IBAction func gotoRecord(sender: AnyObject) {
         self.performSegueWithIdentifier("toRecord", sender: self)
     }
+    @IBAction func phonePressed(sender: AnyObject) {
+        let session: AVAudioSession = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(AVAudioSessionCategoryPlayback)
+            try session.setActive(true)
+        } catch {
+            NSLog("Error setting up audio session category")
+            NSLog("Error setting up audio session active")
+        }
+        
+        
+
+        let files = FileManager.sharedInstance.getAllLocalFileStorage()
+        print(files![0])
+        let path = NSBundle.mainBundle().pathForResource("sample", ofType:"wav")!
+        let url = NSURL(fileURLWithPath: path)
+        
+        let player = EZAudioPlayer()
+        player.playAudioFile(EZAudioFile(URL: url))
+//        print(url)
+//        do {
+//            //let sound = try AVAudioPlayer(contentsOfURL: files![0])
+//            
+//            //sound.play()
+//            let player = try AVAudioPlayer(contentsOfURL: url)
+//            player.prepareToPlay()
+//            player.play()
+//        } catch {
+//            print("bao le");
+//            // couldn't load file :(
+//        }
+    }
+    
+    
+    
     @IBAction func gotoArchive(sender: AnyObject) {
         self.performSegueWithIdentifier("gotoArchive", sender: self)
     }

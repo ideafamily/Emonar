@@ -28,6 +28,7 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
             self.recorder.closeAudioFile()
         }
         let audioFile: EZAudioFile = EZAudioFile(URL:self.testFilePathURL())
+        print(self.testFilePathURL())
         self.player.playAudioFile(audioFile)
 
     }

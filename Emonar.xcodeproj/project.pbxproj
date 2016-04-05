@@ -346,7 +346,7 @@
 				TargetAttributes = {
 					F72A26711C8644550053F3DC = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = MYSFRJD98Y;
+						DevelopmentTeam = 4VX52VR8GM;
 					};
 				};
 			};
@@ -587,6 +587,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Emonar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PurdueIdeaFamily.Emonar;
@@ -602,6 +603,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Emonar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PurdueIdeaFamily.Emonar;
