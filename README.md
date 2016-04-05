@@ -9,9 +9,8 @@ Time spent: **X** hours spent in total
 The following **required** functionality is completed:
 
 - [x] User can record audio
-- [ ] User can see emotion analystics every 20 seconds in real time.
-- [ ] User can view past cached audio recording
-- [ ] User can playback past audio recoding & seeing emotion analystics as well.
+- [x] User can see emotion analystics every 20 seconds in real time.
+- [x] User can view past cached audio recording
 
 The following **optional** features are implemented:
 
@@ -36,6 +35,9 @@ UI - Sketch
 02/18 :
 
 <img src='./UI Design/UI_Mockup.png' title='First UI' width='' alt='Video Walkthrough'/>
+
+
+
 
 The following **additional** features are implemented:
 
@@ -85,6 +87,8 @@ Here's a walkthrough of implemented user stories:
 <img src='./Gif/1_record.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 # UI Progress
 <img src='./Gif/1_ui.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+# Finished Version
+<img src='./Gif/apirl2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -94,7 +98,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-Copyright [yyyy] [name of copyright owner]
+Copyright [2016] [Ideafamily]
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
