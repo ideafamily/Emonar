@@ -9,7 +9,7 @@
 import UIKit
 
 class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicrophoneDelegate,EZRecorderDelegate {
-
+    
     @IBAction func playFile(sender: AnyObject) {
         //
         // Update microphone state
@@ -28,9 +28,8 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
             self.recorder.closeAudioFile()
         }
         let audioFile: EZAudioFile = EZAudioFile(URL:self.testFilePathURL())
-        print(self.testFilePathURL())
         self.player.playAudioFile(audioFile)
-
+        
     }
     @IBOutlet weak var playingStateLabel: UILabel!
     @IBAction func toggleMicrophone(sender: AnyObject) {
@@ -42,7 +41,7 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
         else {
             self.microphone.startFetchingAudio()
         }
-
+        
     }
     @IBAction func toggleRecoding(sender: AnyObject) {
         self.player.pause()
@@ -53,11 +52,12 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
             self.recordingAudioPlot.clear()
             self.microphone.startFetchingAudio()
             
-            self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.M4A, delegate: self)
+            self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
             self.playButton.enabled = true
         }
-//        self.isRecording = sender.isOn
+        self.isRecording = sender.on
         self.recordingStatusLabel.text = self.isRecording ? "Recording" : "Not Recording"
+        
     }
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var recordingStatusLabel: UILabel!
@@ -68,7 +68,7 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
     @IBOutlet weak var currentTimeLbael: UILabel!
     @IBOutlet weak var recordingAudioPlot: EZAudioPlotGL!
     
-    let kAudioFilePath = "test.m4a"
+    let kAudioFilePath = "test.wav"
     var isRecording = false
     var microphone:EZMicrophone!
     var player:EZAudioPlayer!
@@ -88,7 +88,7 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
             NSLog("Error setting up audio session category")
             NSLog("Error setting up audio session active")
         }
-
+        
         
         // The output below is limited by 1 KB.
         // Please Sign Up (Free!) to remove this limitation.
@@ -115,7 +115,7 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
         //
         // Override the output to the speaker. Do this after creating the EZAudioPlayer
         do {
-           try session.overrideOutputAudioPort(AVAudioSessionPortOverride.Speaker)
+            try session.overrideOutputAudioPort(AVAudioSessionPortOverride.Speaker)
         } catch {
             NSLog("Error overriding output to the speaker")
         }
@@ -138,7 +138,7 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
         // Start the microphone
         //
         self.microphone.startFetchingAudio()
-
+        
         
         // Do any additional setup after loading the view.
     }
@@ -147,7 +147,7 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
     func microphone(microphone: EZMicrophone!, changedPlayingState isPlaying: Bool) {
         self.microphoneStateLabel.text = isPlaying ? "Microphone On" : "Microphone Off"
         self.microphoneSwitch.on = isPlaying
-
+        
     }
     func recorderDidClose(recorder: EZRecorder!) {
         recorder.delegate = nil
@@ -158,21 +158,21 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
         dispatch_async(dispatch_get_main_queue(), {() -> Void in
             weakSelf!.currentTimeLbael.text = formattedCurrentTime
         })
-
+        
     }
     func audioPlayer(audioPlayer: EZAudioPlayer!, playedAudio buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32, inAudioFile audioFile: EZAudioFile!) {
         weak var weakSelf = self
         dispatch_async(dispatch_get_main_queue(), {() -> Void in
             weakSelf!.playingAudioPlot.updateBuffer(buffer[0], withBufferSize: bufferSize)
         })
-
+        
     }
     func audioPlayer(audioPlayer: EZAudioPlayer!, updatedPosition framePosition: Int64, inAudioFile audioFile: EZAudioFile!) {
         weak var weakSelf = self
         dispatch_async(dispatch_get_main_queue(), {() -> Void in
             weakSelf!.currentTimeLbael.text = audioPlayer.formattedCurrentTime
         })
-
+        
     }
     func microphone(microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
         weak var weakSelf = self
@@ -185,13 +185,13 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
             //
             weakSelf!.recordingAudioPlot.updateBuffer(buffer[0], withBufferSize: bufferSize)
         })
-
+        
     }
     func microphone(microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
         if self.isRecording {
             self.recorder.appendDataFromBufferList(bufferList, withBufferSize: bufferSize)
         }
-
+        
     }
     //------------------------------------------------------------------------------
     //------------------------------------------------------------------------------
@@ -240,21 +240,21 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
             weakSelf!.playingAudioPlot.clear()
         })
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

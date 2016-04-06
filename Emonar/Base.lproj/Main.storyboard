@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -219,6 +219,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="phoneCallButton" destination="gBX-ak-TTa" id="MCt-Z1-hkJ"/>
                         <segue destination="yQZ-oz-A5r" kind="presentation" identifier="gotoArchive" modalTransitionStyle="flipHorizontal" id="dYM-hf-gnv"/>
                         <segue destination="YWI-XW-T7L" kind="presentation" identifier="toRecord" id="KuX-pN-NDs"/>
                     </connections>
@@ -316,30 +317,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="archiveTableView" destination="wEh-bS-Hyb" id="4sJ-1B-8qJ"/>
-                        <segue destination="Tq0-W4-Lw3" kind="show" id="vQB-vX-MsD"/>
+                        <segue destination="YWI-XW-T7L" kind="show" identifier="gotoAudio" id="5lB-gH-a8P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MMF-Xa-Tbz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1763" y="1175"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="Yk5-bG-FSS">
-            <objects>
-                <viewController id="Tq0-W4-Lw3" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="v7j-0m-y6i"/>
-                        <viewControllerLayoutGuide type="bottom" id="GYh-hb-ziP"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="LTE-3b-P2g">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="d1u-EI-g4j" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3215" y="983"/>
         </scene>
         <!--Record View Controller-->
         <scene sceneID="XEy-iQ-aWq">
@@ -655,4 +638,7 @@
         <image name="main2" width="831" height="1211"/>
         <image name="notRecording" width="57" height="57"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="KuX-pN-NDs"/>
+    </inferredMetricsTieBreakers>
 </document>

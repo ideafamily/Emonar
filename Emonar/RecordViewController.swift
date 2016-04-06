@@ -28,7 +28,6 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var analyzed = false
         var startTime:NSDate?
     }
-    
     var datas:[data] = [data()]
     var datasIndex = 0
     
@@ -164,6 +163,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             showSaveAlert()
         } else {
             self.dismissViewControllerAnimated(true, completion: nil)
+        
         }
     }
     
