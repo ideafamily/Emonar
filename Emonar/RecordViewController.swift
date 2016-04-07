@@ -28,7 +28,6 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var analyzed = false
         var startTime:NSDate?
     }
-    
     var datas:[data] = [data()]
     var datasIndex = 0
     
@@ -164,6 +163,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             showSaveAlert()
         } else {
             self.dismissViewControllerAnimated(true, completion: nil)
+        
         }
     }
     
@@ -177,7 +177,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.microphone.stopFetchingAudio()
             if (self.recorder != nil) {
                 self.recorder.closeAudioFile()
-                fileManager.insertFileToStorage(testFilePathURL())
+                fileManager.insertFileToStorage(localFilePath())
             }
             recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
             showSaveAlert()
@@ -215,6 +215,10 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return NSURL.fileURLWithPath(filePath())
     }
     
+    func localFilePath() -> String {
+        return "/\(fileManager.getNumberOfFile()).wav"
+    }
+    
     func timerFinished(timer: NSTimer) {
         let localIndex = datasIndex
         datas.append(data(emotion: "Analyzing\(datasIndex)",description: "Description", analyzed: false, startTime: NSDate()))
@@ -234,7 +238,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if (self.recorder != nil && self.isRecording) {
             self.isRecording = false
             self.recorder.closeAudioFile()
-            fileManager.insertFileToStorage(testFilePathURL())
+            fileManager.insertFileToStorage(localFilePath())
             self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
             isRecording = true
         }

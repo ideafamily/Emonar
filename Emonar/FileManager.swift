@@ -17,19 +17,37 @@ public class FileManager: NSObject {
     private let userDefault = NSUserDefaults.standardUserDefaults()
     private let storageKey = "AudioIO"
     private let fileIndexKey = "CurrentFileIndex"
-    private var sharedArray : [NSURL] = []
+    private var sharedArray : [String] = []
     
     func getNumberOfFile()->Int{
         return userDefault.integerForKey(fileIndexKey)
         
     }
     
-    func getAllLocalFileStorage()->[NSURL]?{
-        readDictionaryFromStorage()
-        return sharedArray
+    private func applicationDocumentsDirectory() -> String? {
+        let paths: [AnyObject] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        if  paths.count > 0 {
+            return paths[0] as? String
+        }
+        return nil
+    }
+    private func filePath(localPath:String)->String{
+        return "\(applicationDocumentsDirectory()!)" + localPath
     }
     
-    func insertFileToStorage(filePath:NSURL){
+    
+    
+    func getAllLocalFileStorage()->[NSURL]? {
+        readDictionaryFromStorage()
+        
+        var files : [NSURL] = []
+        for localPath in sharedArray {
+            files.append(NSURL.fileURLWithPath(filePath(localPath)))
+        }
+        return files
+    }
+    
+    func insertFileToStorage(filePath:String){
         readDictionaryFromStorage()
         var numberOfFile = getNumberOfFile()
         sharedArray.append(filePath)
@@ -59,7 +77,7 @@ public class FileManager: NSObject {
     private func readDictionaryFromStorage(){
         if sharedArray.count == 0 {
             if let data = userDefault.objectForKey(storageKey) as? NSData {
-                self.sharedArray = (NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [NSURL])!
+                self.sharedArray = (NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [String])!
             }
         }
     }
