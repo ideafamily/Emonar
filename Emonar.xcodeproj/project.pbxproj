@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8455AC2C1CB6FA5A00060706 /* EmotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455AC2B1CB6FA5A00060706 /* EmotionData.swift */; };
 		C01CC5431C88D9C60058CAC5 /* ApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C01CC5421C88D9C60058CAC5 /* ApiManager.m */; };
 		C01CC5491C88DE940058CAC5 /* sample.wav in Resources */ = {isa = PBXBuildFile; fileRef = C01CC5481C88DE940058CAC5 /* sample.wav */; };
 		C01CC54B1C88E2160058CAC5 /* APIWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01CC54A1C88E2160058CAC5 /* APIWrapper.swift */; };
@@ -56,6 +57,7 @@
 		06680E6FB543DEC9D62E7AEC /* Pods_Emonar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Emonar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FFBAEC9A6466100777C6D5E /* Pods-Emonar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Emonar.release.xcconfig"; path = "Pods/Target Support Files/Pods-Emonar/Pods-Emonar.release.xcconfig"; sourceTree = "<group>"; };
 		790ABAB95F403B8CB6730D14 /* Pods-Emonar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Emonar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Emonar/Pods-Emonar.debug.xcconfig"; sourceTree = "<group>"; };
+		8455AC2B1CB6FA5A00060706 /* EmotionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmotionData.swift; sourceTree = "<group>"; };
 		C01CC5401C88D9C60058CAC5 /* Emonar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Emonar-Bridging-Header.h"; sourceTree = "<group>"; };
 		C01CC5411C88D9C60058CAC5 /* ApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiManager.h; sourceTree = "<group>"; };
 		C01CC5421C88D9C60058CAC5 /* ApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiManager.m; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				C0CCFF841CA1E07C0076D5A4 /* FileManager.swift */,
+				8455AC2B1CB6FA5A00060706 /* EmotionData.swift */,
 			);
 			name = AudioI/O;
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 				C05B433B1C9340380048F91E /* EZAudioDisplayLink.m in Sources */,
 				C05B433A1C9340380048F91E /* EZAudioDevice.m in Sources */,
 				C05B434B1C9340D90048F91E /* RecordingTestViewController.swift in Sources */,
+				8455AC2C1CB6FA5A00060706 /* EmotionData.swift in Sources */,
 				C05B43451C9340380048F91E /* EZOutput.m in Sources */,
 				C05B433F1C9340380048F91E /* EZAudioFloatData.m in Sources */,
 				C05B43461C9340380048F91E /* EZPlot.m in Sources */,

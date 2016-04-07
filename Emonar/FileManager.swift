@@ -15,9 +15,14 @@ public class FileManager: NSObject {
         return _sharedInstance
     }
     private let userDefault = NSUserDefaults.standardUserDefaults()
-    private let storageKey = "AudioIO"
+    private let audioStorageKey = "AudioIO"
     private let fileIndexKey = "CurrentFileIndex"
+    private let emotionDataStorageKey = "EmotionData"
+    private let recordFileStorageKey = "RecordFileStorage"
     private var sharedArray : [String] = []
+    private var sharedEmotionData: [data] = []
+    private var sharedRecordFiles: [RecordFile] = []
+    private var startIndex = 0;
     
     func getNumberOfFile()->Int{
         return userDefault.integerForKey(fileIndexKey)
@@ -35,10 +40,24 @@ public class FileManager: NSObject {
         return "\(applicationDocumentsDirectory()!)" + localPath
     }
     
+    func insertRecordFile(name:String) {
+        let recordFile = RecordFile(name:name, startIndex: startIndex, endIndex: getNumberOfFile()-1)
+        
+        
+        
+        
+    }
+    
+    func insertEmotionDataToStorage(da:data){
+        
+    }
+    func deleteRecordFileFromStorage(index:Int){
+        
+    }
     
     
     func getAllLocalFileStorage()->[NSURL]? {
-        readDictionaryFromStorage()
+        readAudioDictionaryFromStorage()
         
         var files : [NSURL] = []
         for localPath in sharedArray {
@@ -47,17 +66,19 @@ public class FileManager: NSObject {
         return files
     }
     
+    
     func insertFileToStorage(filePath:String){
-        readDictionaryFromStorage()
+        readAudioDictionaryFromStorage()
         var numberOfFile = getNumberOfFile()
         sharedArray.append(filePath)
         numberOfFile += 1
         setCurrentFileIndex(numberOfFile)
-        syncDictionaryToStorage()
+        
+        syncAudioDictionaryToStorage()
     }
     
     func deleteFileFromStorate(index:Int){
-        readDictionaryFromStorage()
+        readAudioDictionaryFromStorage()
         
         
         var numberOfFile = getNumberOfFile()
@@ -67,24 +88,50 @@ public class FileManager: NSObject {
         sharedArray.removeAtIndex(index)
         numberOfFile -= 1
         setCurrentFileIndex(numberOfFile)
-        syncDictionaryToStorage()
+        syncAudioDictionaryToStorage()
     }
     
     private func setCurrentFileIndex(index:Int){
         userDefault.setInteger(index, forKey: fileIndexKey)
     }
     
-    private func readDictionaryFromStorage(){
+    private func readAudioDictionaryFromStorage(){
         if sharedArray.count == 0 {
-            if let data = userDefault.objectForKey(storageKey) as? NSData {
+            if let data = userDefault.objectForKey(audioStorageKey) as? NSData {
                 self.sharedArray = (NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [String])!
             }
         }
     }
-    private func syncDictionaryToStorage(){
+    private func syncAudioDictionaryToStorage(){
 
 //        print("about to sync \(self.sharedArray)")
-        userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedArray), forKey: storageKey)
+        userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedArray), forKey: audioStorageKey)
+        userDefault.synchronize()
+    }
+    private func readEmotionDataDictionaryFromStorage(){
+        if sharedEmotionData.count == 0 {
+            if let dataObject = userDefault.objectForKey(emotionDataStorageKey) as? NSData {
+                self.sharedEmotionData = (NSKeyedUnarchiver.unarchiveObjectWithData(dataObject) as? [data])!
+            }
+        }
+    }
+    private func syncEmotionDataDictionaryToStorage(){
+        
+        //        print("about to sync \(self.sharedArray)")
+        userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedEmotionData), forKey: emotionDataStorageKey)
+        userDefault.synchronize()
+    }
+    private func readRecordFileDictionaryFromStorage(){
+        if sharedRecordFiles.count == 0 {
+            if let data = userDefault.objectForKey(recordFileStorageKey) as? NSData {
+                self.sharedRecordFiles = (NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [RecordFile])!
+            }
+        }
+    }
+    private func syncRecordFileDictionaryToStorage(){
+        
+        //        print("about to sync \(self.sharedArray)")
+        userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedRecordFiles), forKey: recordFileStorageKey)
         userDefault.synchronize()
     }
     
