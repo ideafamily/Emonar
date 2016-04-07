@@ -18,6 +18,10 @@ The following **optional** features are implemented:
 - [ ] User can use this for app-app call
 - [ ] User can use this for app-phone call
 
+Problem needs to fix:
+- [ ] How to save the data for cells that haven't retrieved data from API
+- [ ] How to deal with the scenario that user record under the min record time span
+
 Work Assignment:
 
 - Main-UI : Jintao Zeng
