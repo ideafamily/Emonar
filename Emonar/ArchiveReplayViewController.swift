@@ -14,6 +14,7 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     
     @IBOutlet weak var playButton: UIButton!
     
+    var audioName:String = ""
     var isPlaying:Bool!
     var playingIndex:Int!
     
@@ -33,7 +34,7 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
         label.backgroundColor = UIColor.clearColor()
         label.numberOfLines = 0
         label.textAlignment = NSTextAlignment.Center
-        label.text = "New File\n00:00"
+        label.text = "\(audioName)\n00:00"
         self.navigationItem.titleView = label
     }
 
@@ -62,7 +63,13 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     
     
     @IBAction func playButtonPressed(sender: UIButton) {
-        
+        if playButton.selected {
+            //MARK: Start playing
+            playButton.selected = false
+        } else {
+            //MARK: Pause playing
+            playButton.selected = true
+        }
     }
 
 }

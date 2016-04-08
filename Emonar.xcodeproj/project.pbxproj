@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8455AC2C1CB6FA5A00060706 /* EmotionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8455AC2B1CB6FA5A00060706 /* EmotionData.swift */; };
+		C011033F1CB73DF100B39B17 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C011033E1CB73DF100B39B17 /* NSDateExtension.swift */; };
 		C01CC5431C88D9C60058CAC5 /* ApiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C01CC5421C88D9C60058CAC5 /* ApiManager.m */; };
 		C01CC5491C88DE940058CAC5 /* sample.wav in Resources */ = {isa = PBXBuildFile; fileRef = C01CC5481C88DE940058CAC5 /* sample.wav */; };
 		C01CC54B1C88E2160058CAC5 /* APIWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01CC54A1C88E2160058CAC5 /* APIWrapper.swift */; };
@@ -57,6 +59,8 @@
 		06680E6FB543DEC9D62E7AEC /* Pods_Emonar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Emonar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FFBAEC9A6466100777C6D5E /* Pods-Emonar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Emonar.release.xcconfig"; path = "Pods/Target Support Files/Pods-Emonar/Pods-Emonar.release.xcconfig"; sourceTree = "<group>"; };
 		790ABAB95F403B8CB6730D14 /* Pods-Emonar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Emonar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Emonar/Pods-Emonar.debug.xcconfig"; sourceTree = "<group>"; };
+		8455AC2B1CB6FA5A00060706 /* EmotionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmotionData.swift; sourceTree = "<group>"; };
+		C011033E1CB73DF100B39B17 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		C01CC5401C88D9C60058CAC5 /* Emonar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Emonar-Bridging-Header.h"; sourceTree = "<group>"; };
 		C01CC5411C88D9C60058CAC5 /* ApiManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiManager.h; sourceTree = "<group>"; };
 		C01CC5421C88D9C60058CAC5 /* ApiManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiManager.m; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				C0CCFF841CA1E07C0076D5A4 /* FileManager.swift */,
+				8455AC2B1CB6FA5A00060706 /* EmotionData.swift */,
 			);
 			name = AudioI/O;
 			sourceTree = "<group>";
@@ -251,6 +256,7 @@
 			children = (
 				C0E913121CADBF81001E1F2F /* Tool.swift */,
 				C0E913151CADE71A001E1F2F /* StringExtension.swift */,
+				C011033E1CB73DF100B39B17 /* NSDateExtension.swift */,
 			);
 			name = "Extension & Helper";
 			sourceTree = "<group>";
@@ -365,7 +371,7 @@
 				TargetAttributes = {
 					F72A26711C8644550053F3DC = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = MYSFRJD98Y;
+						DevelopmentTeam = 4VX52VR8GM;
 					};
 				};
 			};
@@ -483,6 +489,7 @@
 				C05B43431C9340380048F91E /* EZAudioUtilities.m in Sources */,
 				C05B433E1C9340380048F91E /* EZAudioFloatConverter.m in Sources */,
 				F774167D1C8FD417000F4E74 /* GIFExtension.swift in Sources */,
+				C011033F1CB73DF100B39B17 /* NSDateExtension.swift in Sources */,
 				C05B43471C9340380048F91E /* EZRecorder.m in Sources */,
 				F774166E1C8F7DF2000F4E74 /* ArchiveViewController.swift in Sources */,
 				C05B43401C9340380048F91E /* EZAudioPlayer.m in Sources */,
@@ -490,6 +497,7 @@
 				C05B433B1C9340380048F91E /* EZAudioDisplayLink.m in Sources */,
 				C05B433A1C9340380048F91E /* EZAudioDevice.m in Sources */,
 				C05B434B1C9340D90048F91E /* RecordingTestViewController.swift in Sources */,
+				8455AC2C1CB6FA5A00060706 /* EmotionData.swift in Sources */,
 				C05B43451C9340380048F91E /* EZOutput.m in Sources */,
 				C05B433F1C9340380048F91E /* EZAudioFloatData.m in Sources */,
 				C05B43461C9340380048F91E /* EZPlot.m in Sources */,
@@ -607,6 +615,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Emonar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PurdueIdeaFamily.Emonar;
@@ -622,6 +631,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Emonar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PurdueIdeaFamily.Emonar;

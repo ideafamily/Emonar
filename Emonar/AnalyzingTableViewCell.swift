@@ -52,7 +52,7 @@ class AnalyzingTableViewCell: UITableViewCell {
         } else {
             progressPerc = timeIncrease * CGFloat(1.03/timeSpan)
             progressBar.progress = progressPerc!
-            timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "timerFinished:", userInfo: nil, repeats: true)
+            timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: #selector(AnalyzingTableViewCell.timerFinished(_:)), userInfo: nil, repeats: true)
         }
     }
     

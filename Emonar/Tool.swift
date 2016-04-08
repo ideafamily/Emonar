@@ -35,9 +35,5 @@ class Tool:NSObject
         ProgressHUD.showError(text)
     }
     
-    
-    
-    
-    
-    
 }
+

@@ -13,8 +13,8 @@ class ArchiveTableViewCell: UITableViewCell {
     
     @IBOutlet weak var recordNameLabel: UILabel!
     @IBOutlet weak var timeLengthLabel: UILabel!
-    
     @IBOutlet weak var dateLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
