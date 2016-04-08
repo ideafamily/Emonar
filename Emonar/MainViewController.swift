@@ -47,7 +47,7 @@ class MainViewController: UIViewController,EZAudioPlayerDelegate {
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(animated: Bool) {
-        files = FileManager.sharedInstance.getAllLocalFileStorage()
+//        files = FileManager.sharedInstance.getAllLocalFileStorage()
 
     }
     

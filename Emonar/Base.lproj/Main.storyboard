@@ -9,7 +9,7 @@
         <!--Recording Test View Controller-->
         <scene sceneID="v5k-VA-bkg">
             <objects>
-                <viewController id="Sh7-1P-ldc" customClass="RecordingTestViewController" customModule="Emonar" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="bbb" id="Sh7-1P-ldc" customClass="RecordingTestViewController" customModule="Emonar" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="z2x-2T-3eo"/>
                         <viewControllerLayoutGuide type="bottom" id="say-rw-gDo"/>
@@ -639,6 +639,6 @@
         <image name="notRecording" width="57" height="57"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="KuX-pN-NDs"/>
+        <segue reference="5lB-gH-a8P"/>
     </inferredMetricsTieBreakers>
 </document>
