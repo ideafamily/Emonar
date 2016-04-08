@@ -15,8 +15,11 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        let backButton = UIBarButtonItem()
+        backButton.title = ""
+        navigationItem.backBarButtonItem = backButton
+        
     }
 
     override func didReceiveMemoryWarning() {

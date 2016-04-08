@@ -50,6 +50,7 @@
 		F774167B1C8FD136000F4E74 /* loading4.gif in Resources */ = {isa = PBXBuildFile; fileRef = F774167A1C8FD136000F4E74 /* loading4.gif */; };
 		F774167D1C8FD417000F4E74 /* GIFExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F774167C1C8FD417000F4E74 /* GIFExtension.swift */; };
 		F774167F1C921734000F4E74 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F774167E1C921734000F4E74 /* MainViewController.swift */; };
+		F797F93A1CB45E1900D4B6E0 /* ArchiveReplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F797F9391CB45E1900D4B6E0 /* ArchiveReplayViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -120,6 +121,7 @@
 		F774167A1C8FD136000F4E74 /* loading4.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading4.gif; sourceTree = "<group>"; };
 		F774167C1C8FD417000F4E74 /* GIFExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIFExtension.swift; sourceTree = "<group>"; };
 		F774167E1C921734000F4E74 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		F797F9391CB45E1900D4B6E0 /* ArchiveReplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveReplayViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,8 +150,6 @@
 				C01CC5401C88D9C60058CAC5 /* Emonar-Bridging-Header.h */,
 				F72A26751C8644550053F3DC /* AppDelegate.swift */,
 				F72A26791C8644550053F3DC /* Main.storyboard */,
-				F703D65A1CAB8F2200A2E430 /* InitialTableViewCell.swift */,
-				F703D63A1CAB2A1700A2E430 /* AnalyzingTableViewCell.swift */,
 				F72A267C1C8644550053F3DC /* Assets.xcassets */,
 				F72A267E1C8644550053F3DC /* LaunchScreen.storyboard */,
 				F72A26811C8644550053F3DC /* Info.plist */,
@@ -157,17 +157,13 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
-		C01CC53F1C88D9AC0058CAC5 /* Controller */ = {
+		C01CC53F1C88D9AC0058CAC5 /* Controller & View */ = {
 			isa = PBXGroup;
 			children = (
-				F774167E1C921734000F4E74 /* MainViewController.swift */,
-				C05B434A1C9340D90048F91E /* RecordingTestViewController.swift */,
-				F77416691C8F77ED000F4E74 /* RecordViewController.swift */,
-				F774166B1C8F780E000F4E74 /* RecordTableViewCell.swift */,
-				F774166D1C8F7DF2000F4E74 /* ArchiveViewController.swift */,
-				F774166F1C8F7E55000F4E74 /* ArchiveTableViewCell.swift */,
+				F7CBF7E81CB6F9D1000CD86E /* Controller */,
+				F7CBF7E91CB6F9D8000CD86E /* View */,
 			);
-			name = Controller;
+			name = "Controller & View";
 			sourceTree = "<group>";
 		};
 		C01CC5441C88D9CE0058CAC5 /* API */ = {
@@ -294,7 +290,7 @@
 				C0367AA31C8F752400A39FCF /* Library */,
 				C01CC5451C88D9D80058CAC5 /* AudioI/O */,
 				C01CC5441C88D9CE0058CAC5 /* API */,
-				C01CC53F1C88D9AC0058CAC5 /* Controller */,
+				C01CC53F1C88D9AC0058CAC5 /* Controller & View */,
 				C01CC53E1C88D98E0058CAC5 /* Other */,
 			);
 			path = Emonar;
@@ -309,6 +305,29 @@
 				F77416751C8FCC2E000F4E74 /* loading1.gif */,
 			);
 			name = GIF;
+			sourceTree = "<group>";
+		};
+		F7CBF7E81CB6F9D1000CD86E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F774167E1C921734000F4E74 /* MainViewController.swift */,
+				C05B434A1C9340D90048F91E /* RecordingTestViewController.swift */,
+				F77416691C8F77ED000F4E74 /* RecordViewController.swift */,
+				F774166D1C8F7DF2000F4E74 /* ArchiveViewController.swift */,
+				F797F9391CB45E1900D4B6E0 /* ArchiveReplayViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		F7CBF7E91CB6F9D8000CD86E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F774166B1C8F780E000F4E74 /* RecordTableViewCell.swift */,
+				F774166F1C8F7E55000F4E74 /* ArchiveTableViewCell.swift */,
+				F703D65A1CAB8F2200A2E430 /* InitialTableViewCell.swift */,
+				F703D63A1CAB2A1700A2E430 /* AnalyzingTableViewCell.swift */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -451,6 +470,7 @@
 				C05B43391C9340380048F91E /* EZAudio.m in Sources */,
 				C01CC54B1C88E2160058CAC5 /* APIWrapper.swift in Sources */,
 				C0367ACD1C8F781A00A39FCF /* Analysis_result_analysisSummary.swift in Sources */,
+				F797F93A1CB45E1900D4B6E0 /* ArchiveReplayViewController.swift in Sources */,
 				C05B433C1C9340380048F91E /* EZAudioFFT.m in Sources */,
 				C0367AC81C8F75FF00A39FCF /* Analysis.swift in Sources */,
 				C05B43421C9340380048F91E /* EZAudioPlotGL.m in Sources */,
