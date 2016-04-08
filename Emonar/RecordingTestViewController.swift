@@ -219,8 +219,8 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
         return NSURL.fileURLWithPath(content)
     }
     func setupNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidChangePlayState:", name: EZAudioPlayerDidChangePlayStateNotification, object: self.player)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndOfFile:", name: EZAudioPlayerDidReachEndOfFileNotification, object: self.player)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RecordingTestViewController.playerDidChangePlayState(_:)), name: EZAudioPlayerDidChangePlayStateNotification, object: self.player)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RecordingTestViewController.playerDidReachEndOfFile(_:)), name: EZAudioPlayerDidReachEndOfFileNotification, object: self.player)
     }
     func playerDidChangePlayState(notification: NSNotification) {
         weak var weakSelf = self
