@@ -85,7 +85,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     func microphone(microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
         weak var weakSelf = self
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+        runOnMainThread { 
             //
             // All the audio plot needs is the buffer data (float*) and the size.
             // Internally the audio plot will handle all the drawing related code,
@@ -93,7 +93,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             // line of code gets you a pretty plot :)
             //
             weakSelf!.soundWaveView.updateBuffer(buffer[0], withBufferSize: bufferSize)
-        })
+        }
         
     }
     func microphone(microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
@@ -105,7 +105,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+
         if indexPath.row == 0 && !isRecording {
                 //Initial cell
                 let cell = tableView.dequeueReusableCellWithIdentifier("InitialTableViewCell", forIndexPath: indexPath) as! InitialTableViewCell
@@ -170,11 +170,11 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             timer!.invalidate()
             isRecording = false
             
-            self.microphone.stopFetchingAudio()
+
             if (self.recorder != nil) {
                 self.recorder.closeAudioFile()
             }
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            runOnMainThread({
                 self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
                 self.showSaveAlert()
             })
@@ -194,9 +194,16 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             datas[0].startTime = NSDate()
             datasIndex = 0
-            recordTableView.reloadData()
+            runOnMainThread({ 
+                self.recordTableView.reloadData()
+            })
             
             timer = NSTimer.scheduledTimerWithTimeInterval(timeSpan, target: self, selector: #selector(RecordViewController.timerFinished(_:)), userInfo: nil, repeats: true)
+        }
+    }
+    func runOnMainThread(block: () -> Void){
+        dispatch_async(dispatch_get_main_queue()) { 
+            block()
         }
     }
     
@@ -225,9 +232,9 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         datas.append(currentData)
         datasIndex += 1
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        runOnMainThread({
             self.recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
-        }
+        })
         
         
         APIWrapper.sharedInstance.startAnSessionAndSendAFile(filePath(), completion: { (object:Analysis_result_analysisSegments?) in
@@ -256,9 +263,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let emotionData = self.datas[localIndex]
         self.fileManager.insertEmotionDataToStorage(emotionData)
         
-        dispatch_async(dispatch_get_main_queue(), {
-            // code here
-            
+        runOnMainThread({ 
             self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.datas.count - localIndex - 1, inSection: 0)], withRowAnimation: .Automatic)
         })
 
@@ -279,7 +284,10 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         datasIndex = 0
         
         //3. reload data
-        recordTableView.reloadData()
+        runOnMainThread { 
+            self.recordTableView.reloadData()
+        }
+        
     }
 
     func showSaveAlert() {
@@ -291,10 +299,12 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let fileName = alertController.textFields![0].text
             print("save file: \(fileName!)")
             self.fileManager.insertRecordFileToStorage(fileName!)
+            self.timer?.invalidate()
             //TODO: save the file
         }
         let deleteAction = UIAlertAction(title: "Delete", style: .Default) { (action:UIAlertAction) -> Void in
             //TODO: delete the file
+            self.timer?.invalidate()
 //            self.resetAllData()
         }
         alertController.addAction(saveAction)

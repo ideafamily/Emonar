@@ -152,7 +152,7 @@ public class FileManager: NSObject {
             print(elemnt)
         }
         userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedAduioArray), forKey: audioStorageKey)
-        userDefault.synchronize()
+
     }
     private func readEmotionDataDictionaryFromStorage(){
         if sharedEmotionDataArray.count == 0 {
@@ -167,7 +167,6 @@ public class FileManager: NSObject {
             print(elemnt.emotionDescription)
         }
         userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedEmotionDataArray), forKey: emotionDataStorageKey)
-        userDefault.synchronize()
     }
     private func readRecordFileDictionaryFromStorage(){
         if sharedRecordFileArray.count == 0 {
@@ -183,7 +182,6 @@ public class FileManager: NSObject {
             print(elemnt.endIndex)
         }
         userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedRecordFileArray), forKey: recordFileStorageKey)
-        userDefault.synchronize()
     }
     
     
