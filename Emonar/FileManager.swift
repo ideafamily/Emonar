@@ -66,9 +66,13 @@ public class FileManager: NSObject {
     }
     
     func insertRecordFileToStorage(name:String) {
-        let recordFile = RecordFile(name:name, startIndex: getNumberOfRecordFile(), endIndex: getNumberOfAudio()-1)
-        self.currentRecordIndex = getNumberOfAudio()
         readRecordFileDictionaryFromStorage()
+        var startIndex = 0
+        if self.sharedRecordFileArray.count != 0 {
+            startIndex = self.sharedRecordFileArray[self.sharedRecordFileArray.count-1].endIndex+1
+        }
+        let recordFile = RecordFile(name:name, startIndex: startIndex, endIndex: getNumberOfAudio()-1)
+        
         var numberOfFile = getNumberOfRecordFile()
         self.sharedRecordFileArray.append(recordFile)
         numberOfFile += 1
@@ -122,12 +126,15 @@ public class FileManager: NSObject {
     }
     
     private func setCurrentAudioIndex(index:Int){
+        self.currentAudioIndex = index
         userDefault.setInteger(index, forKey: audioIndexKey)
     }
     private func setCurrentEmotionDataIndex(index:Int){
+        self.currentEmotionDataIndex = index
         userDefault.setInteger(index, forKey: emotionIndexKey)
     }
     private func setCurrentRecordIndex(index:Int){
+        self.currentRecordIndex = index
         userDefault.setInteger(index, forKey: recordFileIndexKey)
     }
     
@@ -140,10 +147,10 @@ public class FileManager: NSObject {
         }
     }
     private func syncAudioDictionaryToStorage(){
-        print("syncAudioDictionaryToStorage:\n")
-//        for elemnt in self.sharedAduioArray {
-//            print(elemnt)
-//        }
+        print("syncAudioDictionaryToStorage:\(self.sharedAduioArray)\n")
+        for elemnt in self.sharedAduioArray {
+            print(elemnt)
+        }
         userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedAduioArray), forKey: audioStorageKey)
         userDefault.synchronize()
     }
@@ -172,7 +179,8 @@ public class FileManager: NSObject {
     private func syncRecordFileDictionaryToStorage(){
         print("syncRecordFileDictionaryToStorage:\(self.sharedRecordFileArray)\n")
         for elemnt in self.sharedRecordFileArray {
-            print(elemnt.name)
+            print(elemnt.startIndex)
+            print(elemnt.endIndex)
         }
         userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedRecordFileArray), forKey: recordFileStorageKey)
         userDefault.synchronize()
