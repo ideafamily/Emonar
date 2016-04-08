@@ -15,8 +15,11 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        let backButton = UIBarButtonItem()
+        backButton.title = ""
+        navigationItem.backBarButtonItem = backButton
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,7 +53,7 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.performSegueWithIdentifier("gotoAudio", sender: self)
+        self.performSegueWithIdentifier("goToReplay", sender: self)
     }
     
     @IBAction func mainPressed(sender: UIBarButtonItem) {
@@ -65,7 +68,13 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-
+        if segue.identifier == "goToReplay" {
+            let destination = segue.destinationViewController as! ArchiveReplayViewController
+            var index = archiveTableView.indexPathForSelectedRow!.row
+            destination.audioName = dataArray[index].name
+//            print("indexpath is \(archiveTableView.indexPathForSelectedRow!.row)")
+        }
+        
     }
     
 
