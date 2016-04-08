@@ -23,7 +23,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
 
     
-    var datas:[data] = [data(emotion: "Analyzing", description: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)]
+    var datas:[EmonationData] = [EmonationData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)]
     var datasIndex = 0
     
     var timer:NSTimer?
@@ -118,7 +118,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let cell = tableView.dequeueReusableCellWithIdentifier("RecordTableViewCell", forIndexPath: indexPath) as! RecordTableViewCell
             cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
             cell.emotionLabel.text = datas[datas.count-1-indexPath.row].emotion
-            cell.descriptionLabel.text = datas[datas.count-1-indexPath.row].description
+            cell.descriptionLabel.text = datas[datas.count-1-indexPath.row].emotionDescription
             return cell
         } else {
             //Recording and Analyzing cell
@@ -169,6 +169,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             sender.selected = false
             timer!.invalidate()
             isRecording = false
+            
             self.microphone.stopFetchingAudio()
             if (self.recorder != nil) {
                 self.recorder.closeAudioFile()
@@ -179,21 +180,23 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             })
             
         } else {
-//            recordTableView.userInteractionEnabled = false
+            
             sender.selected = true
             isRecording = true
             self.microphone.startFetchingAudio()
             self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
             if datas.count > 1 {
                 datas.removeAll()
-                datas.append(data(emotion: "Analyzing", description: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil))
+                let currentData = EmonationData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)
+                datas.append(currentData)
+                
                 
             }
             datas[0].startTime = NSDate()
             datasIndex = 0
             recordTableView.reloadData()
             
-            timer = NSTimer.scheduledTimerWithTimeInterval(timeSpan, target: self, selector: "timerFinished:", userInfo: nil, repeats: true)
+            timer = NSTimer.scheduledTimerWithTimeInterval(timeSpan, target: self, selector: #selector(RecordViewController.timerFinished(_:)), userInfo: nil, repeats: true)
         }
     }
     
@@ -205,7 +208,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return nil
     }
     func filePath()->String{
-        return "\(self.applicationDocumentsDirectory()!)/\(fileManager.getNumberOfFile()).wav"
+        return "\(self.applicationDocumentsDirectory()!)/\(fileManager.getNumberOfAudio()).wav"
     }
     func testFilePathURL() -> NSURL {
 //        print("content :\(content)")
@@ -213,13 +216,14 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func localFilePath() -> String {
-        return "/\(fileManager.getNumberOfFile()).wav"
+        return "/\(fileManager.getNumberOfAudio()).wav"
     }
     
     func timerFinished(timer: NSTimer) {
         let localIndex = datasIndex
-    
-        datas.append(data(emotion: "Analyzing\(datasIndex)",description: "Description", analyzed: false, startTime: NSDate()))
+        let currentData = EmonationData(emotion: "Analyzing\(datasIndex)",emotionDescription: "Description", analyzed: false, startTime: NSDate())
+        
+        datas.append(currentData)
         datasIndex += 1
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.recordTableView.insertRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Left)
@@ -239,7 +243,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if (self.recorder != nil && self.isRecording) {
             self.isRecording = false
             self.recorder.closeAudioFile()
-            fileManager.insertFileToStorage(localFilePath())
+            fileManager.insertAudioToStorage(localFilePath())
             self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
             isRecording = true
         }
@@ -248,9 +252,13 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func updateData(localIndex:Int,content:String,description:String){
         self.datas[localIndex].emotion = String.trimString(content)
         self.datas[localIndex].analyzed = true
-        self.datas[localIndex].description = description
+        self.datas[localIndex].emotionDescription = description
+        let emotionData = self.datas[localIndex]
+        self.fileManager.insertEmotionDataToStorage(emotionData)
+        
         dispatch_async(dispatch_get_main_queue(), {
             // code here
+            
             self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.datas.count - localIndex - 1, inSection: 0)], withRowAnimation: .Automatic)
         })
 
@@ -267,7 +275,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         datas.removeAll()
         
         //2. initial data
-        datas.append(data(emotion: "Analyzing", description: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil))
+        datas.append(EmonationData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil))
         datasIndex = 0
         
         //3. reload data
@@ -281,7 +289,8 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         let saveAction = UIAlertAction(title: "Save", style: .Default) { (action:UIAlertAction) -> Void in
             let fileName = alertController.textFields![0].text
-            print("save file: \(fileName)")
+            print("save file: \(fileName!)")
+            self.fileManager.insertRecordFileToStorage(fileName!)
             //TODO: save the file
         }
         let deleteAction = UIAlertAction(title: "Delete", style: .Default) { (action:UIAlertAction) -> Void in
