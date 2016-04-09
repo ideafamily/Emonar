@@ -59,7 +59,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.soundWaveView.plotType = EZPlotType.Rolling
         self.soundWaveView.shouldFill = true
         self.soundWaveView.shouldMirror = true
-
+        self.soundWaveView.gain = 5
         self.microphone = EZMicrophone(delegate: self)
         self.player = EZAudioPlayer(delegate: self)
         //
