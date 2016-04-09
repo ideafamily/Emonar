@@ -35,4 +35,11 @@ class RecordFile : NSObject,NSCoding {
         aCoder.encodeObject(self.currentDate, forKey: "currentDate")
         aCoder.encodeObject(self.recordLength, forKey: "recordLength")
     }
+    func audioArrayToNSURLArray()->[NSURL]{
+        var result:[NSURL] = []
+        for string in self.sharedAduioArray {
+            result.append(FileManager.sharedInstance.stringToURL(string))
+        }
+        return result
+    }
 }

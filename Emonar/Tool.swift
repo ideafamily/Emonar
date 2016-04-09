@@ -34,6 +34,7 @@ class Tool:NSObject
     {
         ProgressHUD.showError(text)
     }
+    
     class func stringFromTimeInterval(interval: NSTimeInterval) -> String {
         let interval = Int(interval)
         let seconds = interval % 60
@@ -42,5 +43,8 @@ class Tool:NSObject
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
     
+    class func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
 }
 
