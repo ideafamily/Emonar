@@ -39,6 +39,7 @@ class MainViewController: UIViewController,EZAudioPlayerDelegate {
         super.viewDidLoad()
         
         self.player = EZAudioPlayer(delegate: self)
+        
         Tool.showProgressHUD("Log in")
         APIWrapper.sharedInstance.loginWithCallback({
             Tool.dismissHUD()

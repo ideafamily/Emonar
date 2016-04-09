@@ -50,7 +50,6 @@
 		F77416771C8FCC2E000F4E74 /* loading2.gif in Resources */ = {isa = PBXBuildFile; fileRef = F77416741C8FCC2E000F4E74 /* loading2.gif */; };
 		F77416781C8FCC2E000F4E74 /* loading1.gif in Resources */ = {isa = PBXBuildFile; fileRef = F77416751C8FCC2E000F4E74 /* loading1.gif */; };
 		F774167B1C8FD136000F4E74 /* loading4.gif in Resources */ = {isa = PBXBuildFile; fileRef = F774167A1C8FD136000F4E74 /* loading4.gif */; };
-		F774167D1C8FD417000F4E74 /* GIFExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F774167C1C8FD417000F4E74 /* GIFExtension.swift */; };
 		F774167F1C921734000F4E74 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F774167E1C921734000F4E74 /* MainViewController.swift */; };
 		F797F93A1CB45E1900D4B6E0 /* ArchiveReplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F797F9391CB45E1900D4B6E0 /* ArchiveReplayViewController.swift */; };
 /* End PBXBuildFile section */
@@ -123,7 +122,6 @@
 		F77416741C8FCC2E000F4E74 /* loading2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading2.gif; sourceTree = "<group>"; };
 		F77416751C8FCC2E000F4E74 /* loading1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading1.gif; sourceTree = "<group>"; };
 		F774167A1C8FD136000F4E74 /* loading4.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading4.gif; sourceTree = "<group>"; };
-		F774167C1C8FD417000F4E74 /* GIFExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GIFExtension.swift; sourceTree = "<group>"; };
 		F774167E1C921734000F4E74 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		F797F9391CB45E1900D4B6E0 /* ArchiveReplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveReplayViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -195,7 +193,6 @@
 			isa = PBXGroup;
 			children = (
 				C05B43491C93403D0048F91E /* EZAudio */,
-				F774167C1C8FD417000F4E74 /* GIFExtension.swift */,
 			);
 			name = Library;
 			sourceTree = "<group>";
@@ -488,7 +485,6 @@
 				C01CC5431C88D9C60058CAC5 /* ApiManager.m in Sources */,
 				C05B43431C9340380048F91E /* EZAudioUtilities.m in Sources */,
 				C05B433E1C9340380048F91E /* EZAudioFloatConverter.m in Sources */,
-				F774167D1C8FD417000F4E74 /* GIFExtension.swift in Sources */,
 				C011033F1CB73DF100B39B17 /* NSDateExtension.swift in Sources */,
 				C05B43471C9340380048F91E /* EZRecorder.m in Sources */,
 				F774166E1C8F7DF2000F4E74 /* ArchiveViewController.swift in Sources */,
