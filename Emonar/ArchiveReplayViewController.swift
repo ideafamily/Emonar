@@ -23,16 +23,16 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     
     var recordFiles : [RecordFile]!
     var audioData: [NSURL]!
-    var emotionData : [EmonationData]!
+    var emotionData : [EmotionData]!
     
     
     
     var recordFileIndex:Int! {
         didSet{
             recordFiles = FileManager.sharedInstance.getAllLocalRecordFileFromStorage()
-            audioData = FileManager.sharedInstance.getAllLocalAudioFileFromStorage()
-            emotionData = FileManager.sharedInstance.getAllLocalEmotionDateFromStorage()
-            currentIndex = recordFiles[recordFileIndex].startIndex
+//            audioData = FileManager.sharedInstance.getAllLocalAudioFileFromStorage()
+//            emotionData = FileManager.sharedInstance.getAllLocalEmotionDateFromStorage()
+//            currentIndex = recordFiles[recordFileIndex].startIndex
         }
     }
     
@@ -81,7 +81,7 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
         return 5
     }
     func playFile(){
-        if audioData.count != 0 && self.currentIndex != self.recordFiles[recordFileIndex].endIndex+1 {
+        if audioData.count != 0 && self.currentIndex != self.recordFiles[recordFileIndex].sharedAduioArray.count {
             let audioFile: EZAudioFile = EZAudioFile(URL:audioData[self.currentIndex])
             self.player.playAudioFile(audioFile)
         }

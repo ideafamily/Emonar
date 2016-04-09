@@ -22,7 +22,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
 
     
-    var datas:[EmonationData] = [EmonationData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)]
+    var datas:[EmotionData] = [EmotionData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)]
     var datasIndex = 0
     
     var timer:NSTimer?
@@ -190,7 +190,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
             if datas.count > 1 {
                 datas.removeAll()
-                let currentData = EmonationData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)
+                let currentData = EmotionData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)
                 datas.append(currentData)
                 
                 
@@ -218,7 +218,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return nil
     }
     func filePath()->String{
-        return "\(self.applicationDocumentsDirectory()!)/\(fileManager.getNumberOfAudio()).wav"
+        return "\(self.applicationDocumentsDirectory()!)/\(fileManager.getAudioIndex()).wav"
     }
     func testFilePathURL() -> NSURL {
 //        print("content :\(content)")
@@ -226,12 +226,12 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func localFilePath() -> String {
-        return "/\(fileManager.getNumberOfAudio()).wav"
+        return "/\(fileManager.getAudioIndex()).wav"
     }
     
     func timerFinished(timer: NSTimer) {
         let localIndex = datasIndex
-        let currentData = EmonationData(emotion: "Analyzing\(datasIndex)",emotionDescription: "Description", analyzed: false, startTime: NSDate())
+        let currentData = EmotionData(emotion: "Analyzing\(datasIndex)",emotionDescription: "Description", analyzed: false, startTime: NSDate())
         
         datas.append(currentData)
         datasIndex += 1
@@ -283,7 +283,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         datas.removeAll()
         
         //2. initial data
-        datas.append(EmonationData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil))
+        datas.append(EmotionData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil))
         datasIndex = 0
         
         //3. reload data
