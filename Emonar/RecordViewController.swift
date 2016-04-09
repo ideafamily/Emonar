@@ -36,6 +36,8 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     var recorder: EZRecorder!
     var player: EZAudioPlayer!
     
+    var beginTime:NSDate!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,7 +156,8 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if recordButton.selected {
             recordButton.selected = false
             timer?.invalidate()
-            showSaveAlert()
+            let elapsedTime = NSDate().timeIntervalSinceDate(self.beginTime)
+            showSaveAlert(Tool.stringFromTimeInterval(elapsedTime))
         } else {
             self.dismissViewControllerAnimated(true, completion: nil)
         
@@ -168,16 +171,19 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             timer!.invalidate()
             isRecording = false
             
-
+            let elapsedTime = NSDate().timeIntervalSinceDate(self.beginTime)
+            
+            
             if (self.recorder != nil) {
                 self.recorder.closeAudioFile()
             }
             runOnMainThread({
                 self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
-                self.showSaveAlert()
+                self.showSaveAlert(Tool.stringFromTimeInterval(elapsedTime))
             })
             
         } else {
+            self.beginTime = NSDate()
             sender.selected = true
             isRecording = true
             self.microphone.startFetchingAudio()
@@ -287,7 +293,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
     }
 
-    func showSaveAlert() {
+    func showSaveAlert(recordLength:String) {
         let alertController = UIAlertController(title: "Save your record?", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
         alertController.addTextFieldWithConfigurationHandler { (name:UITextField) -> Void in
             name.text = "New file"
@@ -295,14 +301,14 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let saveAction = UIAlertAction(title: "Save", style: .Default) { (action:UIAlertAction) -> Void in
             let fileName = alertController.textFields![0].text
             print("save file: \(fileName!)")
-            self.fileManager.insertRecordFileToStorage(fileName!)
+            self.fileManager.insertRecordFileToStorage(fileName!,recordLength: recordLength)
             self.timer?.invalidate()
             //TODO: save the file
         }
         let deleteAction = UIAlertAction(title: "Delete", style: .Default) { (action:UIAlertAction) -> Void in
             //TODO: delete the file
             self.timer?.invalidate()
-//            self.resetAllData()
+//            serlf.resetAllData()
         }
         alertController.addAction(saveAction)
         alertController.addAction(deleteAction)
