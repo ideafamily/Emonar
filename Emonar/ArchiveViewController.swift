@@ -12,6 +12,7 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
 
     @IBOutlet weak var archiveTableView: UITableView!
     var dataArray = FileManager.sharedInstance.getAllLocalRecordFileFromStorage()
+    var recordFileIndex:Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +54,7 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.recordFileIndex = indexPath.row
         self.performSegueWithIdentifier("goToReplay", sender: self)
     }
     
@@ -70,8 +72,9 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
         // Pass the selected object to the new view controller.
         if segue.identifier == "goToReplay" {
             let destination = segue.destinationViewController as! ArchiveReplayViewController
-            var index = archiveTableView.indexPathForSelectedRow!.row
+            let index = archiveTableView.indexPathForSelectedRow!.row
             destination.audioName = dataArray[index].name
+            destination.recordFileIndex = self.recordFileIndex
 //            print("indexpath is \(archiveTableView.indexPathForSelectedRow!.row)")
         }
         
