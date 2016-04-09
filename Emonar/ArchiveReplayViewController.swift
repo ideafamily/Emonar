@@ -23,7 +23,7 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     
     var recordFiles : [RecordFile]!
     var audioData: [NSURL]!
-    var emotionData : [EmonationData]!
+    var emotionData : [EmotionData]!
     
     var endIndex:Int!
     var startIndex:Int!
@@ -32,10 +32,10 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     var recordFileIndex:Int! {
         didSet{
             recordFiles = FileManager.sharedInstance.getAllLocalRecordFileFromStorage()
-            audioData = FileManager.sharedInstance.getAllLocalAudioFileFromStorage()
-            emotionData = FileManager.sharedInstance.getAllLocalEmotionDateFromStorage()
-            startIndex = recordFiles[recordFileIndex].startIndex
-            endIndex = recordFiles[recordFileIndex].endIndex
+            audioData = recordFiles[recordFileIndex].audioArrayToNSURLArray()
+            emotionData = recordFiles[recordFileIndex].sharedEmotionDataArray
+            startIndex = 0
+            endIndex = emotionData.count - 1
             currentIndex = startIndex
             cardSize = endIndex - startIndex + 1
         }
@@ -71,8 +71,8 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RecordTableViewCell", forIndexPath: indexPath) as! RecordTableViewCell
         cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
-        cell.emotionLabel.text = emotionData[startIndex + indexPath.row].emotion
-        cell.descriptionLabel.text = emotionData[startIndex + indexPath.row].emotionDescription
+        cell.emotionLabel.text = emotionData[indexPath.row].emotion
+        cell.descriptionLabel.text = emotionData[indexPath.row].emotionDescription
         if indexPath.row == playingIndex {
             //MARK: cell is playing
             cell.cardView.backgroundColor = UIColor.whiteColor()
@@ -87,9 +87,10 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cardSize
     }
-    
+
     func playFile()->Bool{
-        if audioData.count != 0 && self.currentIndex != self.recordFiles[recordFileIndex].endIndex+1 {
+        if audioData.count != 0 && self.currentIndex != self.recordFiles[recordFileIndex].sharedAduioArray.count {
+
             let audioFile: EZAudioFile = EZAudioFile(URL:audioData[self.currentIndex])
             self.player.playAudioFile(audioFile)
 

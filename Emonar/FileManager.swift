@@ -16,37 +16,28 @@ public class FileManager: NSObject {
     }
     private let userDefault = NSUserDefaults.standardUserDefaults()
     
-    private let audioStorageKey = "audioStorageKey"
     private var sharedAduioArray : [String] = []
-    private let audioIndexKey = "AudioIndexKey"
     private var currentAudioIndex : Int!
-    
-    private let emotionDataStorageKey = "emotionDataStorageKey"
-    private var sharedEmotionDataArray: [EmonationData] = []
-    private let emotionIndexKey = "emotionIndexKey"
-    private var currentEmotionDataIndex : Int!
+    private let audioIndexKey = "AudioIndexKey"
+    private var sharedEmotionDataArray: [EmotionData] = []
+    private var currentEmotionDataIndex : Int = 0
     
     private let recordFileStorageKey = "recordFileStorageKey"
     private var sharedRecordFileArray: [RecordFile] = []
     private let recordFileIndexKey = "recordFileIndexKey"
     private var currentRecordIndex : Int!
+    private var fileManager : NSFileManager!
     
     
     
-    
-    func getNumberOfAudio()->Int{
+    func getAudioIndex()->Int{
         if currentAudioIndex == nil {
             currentAudioIndex = userDefault.integerForKey(audioIndexKey)
         }
         return currentAudioIndex
     }
     
-    func getNumberOfEmotionData()->Int{
-        if currentEmotionDataIndex == nil {
-            currentEmotionDataIndex = userDefault.integerForKey(emotionIndexKey)
-        }
-        return currentEmotionDataIndex
-    }
+
     
     func getNumberOfRecordFile()->Int {
         if currentRecordIndex == nil {
@@ -57,37 +48,27 @@ public class FileManager: NSObject {
     }
     
     func insertAudioToStorage(filePath:String){
-        readAudioDictionaryFromStorage()
-        var numberOfFile = getNumberOfAudio()
+        var numberOfFile = getAudioIndex()
         sharedAduioArray.append(filePath)
         numberOfFile += 1
         setCurrentAudioIndex(numberOfFile)
-        syncAudioDictionaryToStorage()
     }
     
     func insertRecordFileToStorage(name:String,recordLength:String) {
         readRecordFileDictionaryFromStorage()
-        var startIndex = 0
-        if self.sharedRecordFileArray.count != 0 {
-            startIndex = self.sharedRecordFileArray[self.sharedRecordFileArray.count-1].endIndex+1
-        }
-        let recordFile = RecordFile(name:name, startIndex: startIndex, endIndex: getNumberOfAudio()-1,recordLength:recordLength)
+        let recordFile = RecordFile(name:name, audioArray: self.sharedAduioArray, emotionDataArray: self.sharedEmotionDataArray,recordLength:recordLength)
         
         var numberOfFile = getNumberOfRecordFile()
         self.sharedRecordFileArray.append(recordFile)
         numberOfFile += 1
         setCurrentRecordIndex(numberOfFile)
         syncRecordFileDictionaryToStorage()
-        
+        cleanupDataInMemory()
     }
     
-    func insertEmotionDataToStorage(data:EmonationData){
-        readEmotionDataDictionaryFromStorage()
-        var numberOfFile = getNumberOfEmotionData()
+    
+    func insertEmotionDataToStorage(data:EmotionData){
         self.sharedEmotionDataArray.append(data)
-        numberOfFile += 1
-        setCurrentEmotionDataIndex(numberOfFile)
-        syncEmotionDataDictionaryToStorage()
     }
     
     
@@ -98,6 +79,21 @@ public class FileManager: NSObject {
         if index >= numberOfFile || index < 0 {
             return
         }
+        let recordFile = sharedRecordFileArray[index]
+        if fileManager == nil {
+            fileManager = NSFileManager.defaultManager()
+        }
+        
+        for recording in recordFile.sharedAduioArray {
+            let actualPath = filePath(recording)
+            do {
+                try fileManager.removeItemAtPath(actualPath)
+            }
+            catch let error as NSError {
+                print("Ooops! Something went wrong: \(error)")
+            }
+        }
+        
         sharedRecordFileArray.removeAtIndex(index)
         numberOfFile -= 1
         setCurrentRecordIndex(numberOfFile)
@@ -110,22 +106,13 @@ public class FileManager: NSObject {
         return self.sharedRecordFileArray
     }
     
-    func getAllLocalEmotionDateFromStorage()->[EmonationData]{
-        readEmotionDataDictionaryFromStorage()
-        return self.sharedEmotionDataArray
-    }
-    
-    func getAllLocalAudioFileFromStorage()->[NSURL]{
-        readAudioDictionaryFromStorage()
-        var result:[NSURL] = []
-        for element in self.sharedAduioArray {
-            result.append(stringToURL(element))
-        }
-        return result
-    }
-    
     func stringToURL(path:String)->NSURL{
         return NSURL.fileURLWithPath(filePath(path))
+    }
+    
+    private func cleanupDataInMemory(){
+        self.sharedEmotionDataArray = []
+        self.sharedAduioArray = []
     }
     
     private func applicationDocumentsDirectory() -> String? {
@@ -139,49 +126,16 @@ public class FileManager: NSObject {
         return "\(applicationDocumentsDirectory()!)" + localPath
     }
     
-    private func setCurrentAudioIndex(index:Int){
-        self.currentAudioIndex = index
-        userDefault.setInteger(index, forKey: audioIndexKey)
-    }
-    private func setCurrentEmotionDataIndex(index:Int){
-        self.currentEmotionDataIndex = index
-        userDefault.setInteger(index, forKey: emotionIndexKey)
-    }
     private func setCurrentRecordIndex(index:Int){
         self.currentRecordIndex = index
         userDefault.setInteger(index, forKey: recordFileIndexKey)
     }
     
+    private func setCurrentAudioIndex(index:Int){
+        self.currentAudioIndex = index
+        userDefault.setInteger(index, forKey: audioIndexKey)
+    }
     
-    private func readAudioDictionaryFromStorage(){
-        if sharedAduioArray.count == 0 {
-            if let data = userDefault.objectForKey(audioStorageKey) as? NSData {
-                self.sharedAduioArray = (NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [String])!
-            }
-        }
-    }
-    private func syncAudioDictionaryToStorage(){
-        print("syncAudioDictionaryToStorage:\(self.sharedAduioArray)\n")
-        for elemnt in self.sharedAduioArray {
-            print(elemnt)
-        }
-        userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedAduioArray), forKey: audioStorageKey)
-
-    }
-    private func readEmotionDataDictionaryFromStorage(){
-        if sharedEmotionDataArray.count == 0 {
-            if let dataObject = userDefault.objectForKey(emotionDataStorageKey) as? NSData {
-                self.sharedEmotionDataArray = (NSKeyedUnarchiver.unarchiveObjectWithData(dataObject) as? [EmonationData])!
-            }
-        }
-    }
-    private func syncEmotionDataDictionaryToStorage(){
-        print("syncEmotionDataDictionaryToStorage:\(self.sharedEmotionDataArray)\n")
-        for elemnt in self.sharedEmotionDataArray {
-            print(elemnt.emotionDescription)
-        }
-        userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedEmotionDataArray), forKey: emotionDataStorageKey)
-    }
     private func readRecordFileDictionaryFromStorage(){
         if sharedRecordFileArray.count == 0 {
             if let data = userDefault.objectForKey(recordFileStorageKey) as? NSData {
@@ -191,9 +145,16 @@ public class FileManager: NSObject {
     }
     private func syncRecordFileDictionaryToStorage(){
         print("syncRecordFileDictionaryToStorage:\(self.sharedRecordFileArray)\n")
+        print(self.sharedRecordFileArray.count)
         for elemnt in self.sharedRecordFileArray {
-            print(elemnt.startIndex)
-            print(elemnt.endIndex)
+            print("record name:\(elemnt.name)")
+            for emotion in elemnt.sharedEmotionDataArray {
+                    print("emotion:\(emotion.emotion)")
+            }
+            for audio in elemnt.sharedAduioArray {
+                    print("audio:\(audio)")
+            }
+            print("--------end---------")
         }
         userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedRecordFileArray), forKey: recordFileStorageKey)
     }
