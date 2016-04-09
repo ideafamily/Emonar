@@ -15,10 +15,13 @@ extension NSDateFormatter {
 }
 
 extension NSDate {
-    struct Date {
+    struct CurrentDate {
         static let formatterShortDate = NSDateFormatter(dateFormat: "yyyy-MM-dd")
     }
+    
     var shortDate: String {
-        return Date.formatterShortDate.stringFromDate(self)
+        return CurrentDate.formatterShortDate.stringFromDate(self)
     }
+    
+    
 }

@@ -8,24 +8,44 @@
 
 import UIKit
 
-class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,EZAudioPlayerDelegate {
 
     @IBOutlet weak var recordTableView: UITableView!
     
     @IBOutlet weak var playButton: UIButton!
     
     var audioName:String = ""
-    var isPlaying:Bool!
+    var isPaused:Bool = false
+    
     var playingIndex:Int!
+    var player:EZAudioPlayer!
+    var currentIndex = 0
+    
+    var recordFiles : [RecordFile]!
+    var audioData: [NSURL]!
+    var emotionData : [EmonationData]!
+    
+    
+    
+    var recordFileIndex:Int! {
+        didSet{
+            recordFiles = FileManager.sharedInstance.getAllLocalRecordFileFromStorage()
+            audioData = FileManager.sharedInstance.getAllLocalAudioFileFromStorage()
+            emotionData = FileManager.sharedInstance.getAllLocalEmotionDateFromStorage()
+            currentIndex = recordFiles[recordFileIndex].startIndex
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.player = EZAudioPlayer(delegate: self)
+        
+        
         recordTableView.delegate = self
         recordTableView.dataSource = self
         recordTableView.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI))
         
         playingIndex = 0
-        isPlaying = false
         
         navigationItem.title = "hahah"
         navigationItem.backBarButtonItem?.title = "d"
@@ -60,14 +80,36 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
-    
-    
+    func playFile(){
+        if audioData.count != 0 && self.currentIndex != self.recordFiles[recordFileIndex].endIndex+1 {
+            let audioFile: EZAudioFile = EZAudioFile(URL:audioData[self.currentIndex])
+            self.player.playAudioFile(audioFile)
+        }
+    }
+    func audioPlayer(audioPlayer: EZAudioPlayer!, reachedEndOfAudioFile audioFile: EZAudioFile!) {
+        print("end of file at index \(self.currentIndex)")
+        self.currentIndex = self.currentIndex + 1
+        dispatch_async(dispatch_get_main_queue()) {
+            self.playFile()
+        }
+        
+    }
     @IBAction func playButtonPressed(sender: UIButton) {
         if playButton.selected {
-            //MARK: Start playing
-            playButton.selected = false
-        } else {
             //MARK: Pause playing
+            self.player.pause()
+            playButton.selected = false
+            self.isPaused = true
+        } else {
+            //MARK: Star playing
+            if isPaused {
+                self.isPaused = false
+                self.player.play()
+            } else {
+                playFile()
+            }
+            
+            
             playButton.selected = true
         }
     }
