@@ -32,6 +32,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
         
         Tool.showProgressHUD("Log in")
         APIWrapper.sharedInstance.loginWithCallback({
