@@ -172,7 +172,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             isRecording = false
             
             let elapsedTime = NSDate().timeIntervalSinceDate(self.beginTime)
-            
+            self.microphone.stopFetchingAudio()
             
             if (self.recorder != nil) {
                 self.recorder.closeAudioFile()

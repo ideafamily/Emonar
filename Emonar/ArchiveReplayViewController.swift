@@ -17,7 +17,7 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     var audioName:String = ""
     var isPaused:Bool = false
     
-    var playingIndex:Int!
+    var playingIndex:Int = 0
     var player:EZAudioPlayer!
     var currentIndex = 0
     
@@ -25,14 +25,19 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     var audioData: [NSURL]!
     var emotionData : [EmotionData]!
     
-    
+    var endIndex:Int!
+    var startIndex:Int!
+    var cardSize:Int!
     
     var recordFileIndex:Int! {
         didSet{
             recordFiles = FileManager.sharedInstance.getAllLocalRecordFileFromStorage()
-//            audioData = FileManager.sharedInstance.getAllLocalAudioFileFromStorage()
-//            emotionData = FileManager.sharedInstance.getAllLocalEmotionDateFromStorage()
-//            currentIndex = recordFiles[recordFileIndex].startIndex
+            audioData = recordFiles[recordFileIndex].audioArrayToNSURLArray()
+            emotionData = recordFiles[recordFileIndex].sharedEmotionDataArray
+            startIndex = 0
+            endIndex = emotionData.count - 1
+            currentIndex = startIndex
+            cardSize = endIndex - startIndex + 1
         }
     }
     
@@ -66,6 +71,8 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RecordTableViewCell", forIndexPath: indexPath) as! RecordTableViewCell
         cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
+        cell.emotionLabel.text = emotionData[indexPath.row].emotion
+        cell.descriptionLabel.text = emotionData[indexPath.row].emotionDescription
         if indexPath.row == playingIndex {
             //MARK: cell is playing
             cell.cardView.backgroundColor = UIColor.whiteColor()
@@ -78,22 +85,41 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return cardSize
     }
-    func playFile(){
+
+    func playFile()->Bool{
         if audioData.count != 0 && self.currentIndex != self.recordFiles[recordFileIndex].sharedAduioArray.count {
+
             let audioFile: EZAudioFile = EZAudioFile(URL:audioData[self.currentIndex])
             self.player.playAudioFile(audioFile)
+
+           
+            return true
         }
+        return false
     }
+    
     func audioPlayer(audioPlayer: EZAudioPlayer!, reachedEndOfAudioFile audioFile: EZAudioFile!) {
         print("end of file at index \(self.currentIndex)")
         self.currentIndex = self.currentIndex + 1
         dispatch_async(dispatch_get_main_queue()) {
-            self.playFile()
+            if self.playFile() {
+                self.playingIndex += 1
+                self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.playingIndex, inSection: 0)], withRowAnimation: .Automatic)
+                self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.playingIndex - 1, inSection: 0)], withRowAnimation: .Automatic)
+                self.recordTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.playingIndex, inSection: 0), atScrollPosition: .Middle, animated: true)
+                
+            } else {
+                self.playButton.selected = false
+                self.isPaused = false
+                self.currentIndex = self.startIndex
+            }
+            
         }
         
     }
+    
     @IBAction func playButtonPressed(sender: UIButton) {
         if playButton.selected {
             //MARK: Pause playing
@@ -106,6 +132,13 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
                 self.isPaused = false
                 self.player.play()
             } else {
+                if self.playingIndex != 0 {
+                    //when audio has been played to end
+                    self.playingIndex = 0
+                    self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.cardSize - 1, inSection: 0)], withRowAnimation: .Automatic)
+                    self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+                    self.recordTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Bottom, animated: true)
+                }
                 playFile()
             }
             
