@@ -8,7 +8,7 @@
 
 import Foundation
 
-class EmonationData : NSObject,NSCoding {
+class EmotionData : NSObject,NSCoding {
     var emotion = "Analyzing"
     var emotionDescription = "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low."
     var analyzed = false
@@ -39,31 +39,3 @@ class EmonationData : NSObject,NSCoding {
     }
 }
 
-class RecordFile : NSObject,NSCoding {
-    var name:String = "123"
-    var startIndex:Int  = 1
-    var endIndex:Int = 2
-    var currentDate:String!
-    var recordLength:String!
-    init(name:String,startIndex:Int,endIndex:Int,recordLength:String){
-        self.name = name
-        self.startIndex = startIndex
-        self.endIndex = endIndex
-        self.currentDate = NSDate().shortDate
-        self.recordLength = recordLength
-    }
-    required init?(coder aDecoder: NSCoder) {
-        self.name = aDecoder.decodeObjectForKey("name") as! String
-        self.startIndex = aDecoder.decodeObjectForKey("startIndex") as! Int
-        self.endIndex = aDecoder.decodeObjectForKey("endIndex") as! Int
-        self.currentDate = aDecoder.decodeObjectForKey("currentDate") as! String
-        self.recordLength = aDecoder.decodeObjectForKey("recordLength") as! String
-    }
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.name, forKey: "name")
-        aCoder.encodeObject(self.startIndex, forKey: "startIndex")
-        aCoder.encodeObject(self.endIndex, forKey: "endIndex")
-        aCoder.encodeObject(self.currentDate, forKey: "currentDate")
-        aCoder.encodeObject(self.recordLength, forKey: "recordLength")
-    }
-}
