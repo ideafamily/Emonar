@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import Gifu
 
 var timeSpan = 10.0
 
@@ -165,7 +164,6 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func recordPressed(sender: UIButton) {
 
         if sender.selected == true {
-            recordTableView.userInteractionEnabled = true
             sender.selected = false
             timer!.invalidate()
             isRecording = false
@@ -180,7 +178,6 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             })
             
         } else {
-            
             sender.selected = true
             isRecording = true
             self.microphone.startFetchingAudio()
