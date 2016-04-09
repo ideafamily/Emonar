@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LDONavigationSubtitleView
 
 class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITableViewDelegate,EZAudioPlayerDelegate {
 
@@ -19,14 +20,13 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     
     var playingIndex:Int = 0
     var player:EZAudioPlayer!
-    var currentIndex = 0
+    var timer:NSTimer?
+    var playingTime:Int = 0
     
     var recordFiles : [RecordFile]!
     var audioData: [NSURL]!
     var emotionData : [EmotionData]!
     
-    var endIndex:Int!
-    var startIndex:Int!
     var cardSize:Int!
     
     var recordFileIndex:Int! {
@@ -34,17 +34,14 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
             recordFiles = FileManager.sharedInstance.getAllLocalRecordFileFromStorage()
             audioData = recordFiles[recordFileIndex].audioArrayToNSURLArray()
             emotionData = recordFiles[recordFileIndex].sharedEmotionDataArray
-            startIndex = 0
-            endIndex = emotionData.count - 1
-            currentIndex = startIndex
-            cardSize = endIndex - startIndex + 1
+            cardSize = emotionData.count
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.player = EZAudioPlayer(delegate: self)
-        
+//        self.navigationController.
         
         recordTableView.delegate = self
         recordTableView.dataSource = self
@@ -52,15 +49,20 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
         
         playingIndex = 0
         
-        navigationItem.title = "hahah"
-        navigationItem.backBarButtonItem?.title = "d"
-//        navigationItem.titleView.
-        let label = UILabel(frame: CGRectMake(0, 0, 1, 44))
-        label.backgroundColor = UIColor.clearColor()
-        label.numberOfLines = 0
-        label.textAlignment = NSTextAlignment.Center
-        label.text = "\(audioName)\n00:00"
-        self.navigationItem.titleView = label
+//        navigationItem.title = "hahah"
+        let v = LDONavigationSubtitleView(frame: CGRectMake(0, 0, 300, 44))
+        v.subtitle = "00:00"
+        v.title = "\(audioName)"
+        navigationItem.titleView = v
+
+//        let navView = UIView(frame: CGRectMake(0, 0, 300, 44))
+//        let label = UILabel(frame: CGRectMake(0, 0, 1, 44))
+//        label.backgroundColor = UIColor.clearColor()
+//        label.numberOfLines = 0
+//        label.textAlignment = NSTextAlignment.Center
+//        label.text = "\(audioName)"
+//        navView.addSubview(label)
+//        self.navigationItem.titleView = navView
     }
 
     override func didReceiveMemoryWarning() {
@@ -89,36 +91,43 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     }
 
     func playFile()->Bool{
-        if audioData.count != 0 && self.currentIndex != self.recordFiles[recordFileIndex].sharedAduioArray.count {
-
-            let audioFile: EZAudioFile = EZAudioFile(URL:audioData[self.currentIndex])
+        if audioData.count != 0 && playingIndex != cardSize {
+            let audioFile: EZAudioFile = EZAudioFile(URL:audioData[playingIndex])
             self.player.playAudioFile(audioFile)
-
-           
+            
             return true
         }
         return false
     }
     
     func audioPlayer(audioPlayer: EZAudioPlayer!, reachedEndOfAudioFile audioFile: EZAudioFile!) {
-        print("end of file at index \(self.currentIndex)")
-        self.currentIndex = self.currentIndex + 1
+        print("end of file at index \(self.playingIndex)")
+        self.playingIndex += 1
         dispatch_async(dispatch_get_main_queue()) {
             if self.playFile() {
-                self.playingIndex += 1
+                //Go to the next indexpath
                 self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.playingIndex, inSection: 0)], withRowAnimation: .Automatic)
                 self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.playingIndex - 1, inSection: 0)], withRowAnimation: .Automatic)
                 self.recordTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.playingIndex, inSection: 0), atScrollPosition: .Middle, animated: true)
-                
             } else {
+                //Audio ends
                 self.playButton.selected = false
                 self.isPaused = false
-                self.currentIndex = self.startIndex
+                self.timer?.invalidate()
             }
             
         }
         
     }
+    
+    func updateTime(timer:NSTimer) {
+        playingTime += 1
+        let (h, m, s) = Tool.secondsToHoursMinutesSeconds(playingTime)
+//        navigationItem.titleView
+        print("\(m):\(s)")
+    }
+    
+    
     
     @IBAction func playButtonPressed(sender: UIButton) {
         if playButton.selected {
@@ -127,7 +136,7 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
             playButton.selected = false
             self.isPaused = true
         } else {
-            //MARK: Star playing
+            //MARK: Start playing
             if isPaused {
                 self.isPaused = false
                 self.player.play()
@@ -139,7 +148,9 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
                     self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
                     self.recordTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Bottom, animated: true)
                 }
+                timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
                 playFile()
+                
             }
             
             

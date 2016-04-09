@@ -9,5 +9,6 @@ target 'Emonar' do
     pod 'MJExtension'
     pod 'YLProgressBar'
     pod 'ProgressHUD'
+    pod 'LDONavigationSubtitleView'
 end
 
