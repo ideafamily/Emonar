@@ -13,6 +13,7 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
 
     @IBOutlet weak var recordTableView: UITableView!
     
+    @IBOutlet weak var playingAudioPlot: EZAudioPlotGL!
     @IBOutlet weak var playButton: UIButton!
     
     var audioName:String = ""
@@ -48,7 +49,12 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
         recordTableView.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI))
         
         playingIndex = 0
-        
+        self.playingAudioPlot.backgroundColor = UIColor(red: 0.984, green: 0.71, blue: 0.365, alpha: 1)
+        self.playingAudioPlot.color = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        self.playingAudioPlot.plotType = EZPlotType.Rolling
+        self.playingAudioPlot.shouldFill = true
+        self.playingAudioPlot.shouldMirror = true
+        self.playingAudioPlot.gain = 5
 //        navigationItem.title = "hahah"
         let v = LDONavigationSubtitleView(frame: CGRectMake(0, 0, 300, 44))
         v.subtitle = "00:00"
@@ -117,6 +123,13 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
             }
             
         }
+        
+    }
+    func audioPlayer(audioPlayer: EZAudioPlayer!, playedAudio buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32, inAudioFile audioFile: EZAudioFile!) {
+        weak var weakSelf = self
+        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+            weakSelf!.playingAudioPlot.updateBuffer(buffer[0], withBufferSize: bufferSize)
+        })
         
     }
     

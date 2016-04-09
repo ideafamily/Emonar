@@ -314,11 +314,6 @@
                                 <action selector="mainPressed:" destination="y09-5c-pW3" id="a4o-P6-0sg"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="vWJ-Zu-hrG">
-                            <connections>
-                                <segue destination="Tq0-W4-Lw3" kind="show" id="ZlI-nW-smk"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="archiveTableView" destination="wEh-bS-Hyb" id="4sJ-1B-8qJ"/>
@@ -341,7 +336,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NYf-6i-hFa">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NYf-6i-hFa" customClass="EZAudioPlotGL">
                                 <rect key="frame" x="0.0" y="472" width="600" height="128"/>
                                 <color key="backgroundColor" red="1" green="0.69588651729999995" blue="0.1819617151" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -449,6 +444,7 @@
                     </view>
                     <connections>
                         <outlet property="playButton" destination="8jF-AN-f3S" id="AZM-Mu-hEk"/>
+                        <outlet property="playingAudioPlot" destination="NYf-6i-hFa" id="voU-tw-yg3"/>
                         <outlet property="recordTableView" destination="rDw-C7-riD" id="vCH-9r-qVI"/>
                     </connections>
                 </viewController>
@@ -772,7 +768,4 @@
         <image name="notRecording" width="57" height="57"/>
         <image name="play" width="64" height="64"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="U5c-dp-KqO"/>
-    </inferredMetricsTieBreakers>
 </document>
