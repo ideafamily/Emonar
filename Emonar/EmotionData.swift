@@ -45,12 +45,12 @@ class RecordFile : NSObject,NSCoding {
     var endIndex:Int = 2
     var currentDate:String!
     var recordLength:String!
-    init(name:String,startIndex:Int,endIndex:Int){
+    init(name:String,startIndex:Int,endIndex:Int,recordLength:String){
         self.name = name
         self.startIndex = startIndex
         self.endIndex = endIndex
         self.currentDate = NSDate().shortDate
-        self.recordLength = NSDate().shortDate
+        self.recordLength = recordLength
     }
     required init?(coder aDecoder: NSCoder) {
         self.name = aDecoder.decodeObjectForKey("name") as! String

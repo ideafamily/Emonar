@@ -65,13 +65,13 @@ public class FileManager: NSObject {
         syncAudioDictionaryToStorage()
     }
     
-    func insertRecordFileToStorage(name:String) {
+    func insertRecordFileToStorage(name:String,recordLength:String) {
         readRecordFileDictionaryFromStorage()
         var startIndex = 0
         if self.sharedRecordFileArray.count != 0 {
             startIndex = self.sharedRecordFileArray[self.sharedRecordFileArray.count-1].endIndex+1
         }
-        let recordFile = RecordFile(name:name, startIndex: startIndex, endIndex: getNumberOfAudio()-1)
+        let recordFile = RecordFile(name:name, startIndex: startIndex, endIndex: getNumberOfAudio()-1,recordLength:recordLength)
         
         var numberOfFile = getNumberOfRecordFile()
         self.sharedRecordFileArray.append(recordFile)
@@ -108,6 +108,20 @@ public class FileManager: NSObject {
     func getAllLocalRecordFileFromStorage()->[RecordFile] {
         readRecordFileDictionaryFromStorage()
         return self.sharedRecordFileArray
+    }
+    
+    func getAllLocalEmotionDateFromStorage()->[EmonationData]{
+        readEmotionDataDictionaryFromStorage()
+        return self.sharedEmotionDataArray
+    }
+    
+    func getAllLocalAudioFileFromStorage()->[NSURL]{
+        readAudioDictionaryFromStorage()
+        var result:[NSURL] = []
+        for element in self.sharedAduioArray {
+            result.append(stringToURL(element))
+        }
+        return result
     }
     
     func stringToURL(path:String)->NSURL{
