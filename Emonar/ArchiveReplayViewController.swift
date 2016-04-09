@@ -29,6 +29,8 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     
     var cardSize:Int!
     
+    var customTitleView:LDONavigationSubtitleView?
+    
     var recordFileIndex:Int! {
         didSet{
             recordFiles = FileManager.sharedInstance.getAllLocalRecordFileFromStorage()
@@ -49,20 +51,12 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
         
         playingIndex = 0
         
-//        navigationItem.title = "hahah"
-        let v = LDONavigationSubtitleView(frame: CGRectMake(0, 0, 300, 44))
-        v.subtitle = "00:00"
-        v.title = "\(audioName)"
-        navigationItem.titleView = v
 
-//        let navView = UIView(frame: CGRectMake(0, 0, 300, 44))
-//        let label = UILabel(frame: CGRectMake(0, 0, 1, 44))
-//        label.backgroundColor = UIColor.clearColor()
-//        label.numberOfLines = 0
-//        label.textAlignment = NSTextAlignment.Center
-//        label.text = "\(audioName)"
-//        navView.addSubview(label)
-//        self.navigationItem.titleView = navView
+        customTitleView = LDONavigationSubtitleView(frame: CGRectMake(0, 0, 300, 44))
+        customTitleView!.subtitle = "00:00"
+        customTitleView!.title = "\(audioName)"
+        navigationItem.titleView = customTitleView
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -124,6 +118,7 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
         playingTime += 1
         let (h, m, s) = Tool.secondsToHoursMinutesSeconds(playingTime)
 //        navigationItem.titleView
+        customTitleView?.subtitle = "\(m):\(s)"
         print("\(m):\(s)")
     }
     
