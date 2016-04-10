@@ -179,44 +179,53 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func recordPressed(sender: UIButton) {
-
-        if sender.selected == true {
-            sender.selected = false
-            timer!.invalidate()
-            isRecording = false
-            
-            let elapsedTime = NSDate().timeIntervalSinceDate(self.beginTime)
-            self.microphone.stopFetchingAudio()
-            
-            if (self.recorder != nil) {
-                self.recorder.closeAudioFile()
-            }
-            runOnMainThread({
-                self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
-                self.showSaveAlert(Tool.stringFromTimeInterval(elapsedTime))
-            })
+        if !Tool.isConnectedToNetwork() {
+            let alertController = UIAlertController(title: "Please check your network connection", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.Cancel, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
             
         } else {
-            self.beginTime = NSDate()
-            sender.selected = true
-            isRecording = true
-            self.microphone.startFetchingAudio()
-            self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
-            if datas.count > 1 {
-                datas.removeAll()
-                let currentData = EmotionData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)
-                datas.append(currentData)
+            if sender.selected == true {
+                sender.selected = false
+                timer!.invalidate()
+                isRecording = false
                 
+                let elapsedTime = NSDate().timeIntervalSinceDate(self.beginTime)
+                self.microphone.stopFetchingAudio()
                 
+                if (self.recorder != nil) {
+                    self.recorder.closeAudioFile()
+                }
+                runOnMainThread({
+                    self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+                    self.showSaveAlert(Tool.stringFromTimeInterval(elapsedTime))
+                })
+                
+            } else {
+                self.beginTime = NSDate()
+                sender.selected = true
+                isRecording = true
+                self.microphone.startFetchingAudio()
+                self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
+                if datas.count > 1 {
+                    datas.removeAll()
+                    let currentData = EmotionData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)
+                    datas.append(currentData)
+                    
+                    
+                }
+                datas[0].startTime = NSDate()
+                datasIndex = 0
+                runOnMainThread({
+                    self.recordTableView.reloadData()
+                })
+                
+                timer = NSTimer.scheduledTimerWithTimeInterval(timeSpan, target: self, selector: #selector(RecordViewController.timerFinished(_:)), userInfo: nil, repeats: true)
             }
-            datas[0].startTime = NSDate()
-            datasIndex = 0
-            runOnMainThread({ 
-                self.recordTableView.reloadData()
-            })
-            
-            timer = NSTimer.scheduledTimerWithTimeInterval(timeSpan, target: self, selector: #selector(RecordViewController.timerFinished(_:)), userInfo: nil, repeats: true)
+
         }
+        
+        
     }
     func runOnMainThread(block: () -> Void){
         dispatch_async(dispatch_get_main_queue()) { 
