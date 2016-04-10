@@ -22,7 +22,6 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     var playingIndex:Int = 0
     var player:EZAudioPlayer!
     var timer:NSTimer?
-    var playingTime:Int = 0
     
     var recordFiles : [RecordFile]!
     var audioData: [NSURL]!
@@ -96,7 +95,6 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
         if audioData.count != 0 && playingIndex != cardSize {
             let audioFile: EZAudioFile = EZAudioFile(URL:audioData[playingIndex])
             self.player.playAudioFile(audioFile)
-            
             return true
         }
         return false
@@ -130,11 +128,8 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     }
     
     func updateTime(timer:NSTimer) {
-        playingTime += 1
-        let (h, m, s) = Tool.secondsToHoursMinutesSeconds(playingTime)
-//        navigationItem.titleView
-        customTitleView?.subtitle = "\(m):\(s)"
-        print("\(m):\(s)")
+        let currentTime = Tool.stringFromTimeInterval(player.currentTime.advancedBy(1 + Double(playingIndex) * timeSpan))
+        customTitleView?.subtitle = "\(currentTime)"
     }
     
     
@@ -142,23 +137,30 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     @IBAction func playButtonPressed(sender: UIButton) {
         if playButton.selected {
             //MARK: Pause playing
-            self.player.pause()
+            player.pause()
             playButton.selected = false
-            self.isPaused = true
+            isPaused = true
+            timer?.invalidate()
+            
         } else {
             //MARK: Start playing
+            let currentTime = Tool.stringFromTimeInterval(player.currentTime.advancedBy(1 + Double(playingIndex) * timeSpan))
+            customTitleView?.subtitle = "\(currentTime)"
+            timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
             if isPaused {
-                self.isPaused = false
-                self.player.play()
+                
+                isPaused = false
+                player.play()
             } else {
-                if self.playingIndex != 0 {
+                
+                if playingIndex != 0 {
                     //when audio has been played to end
-                    self.playingIndex = 0
-                    self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.cardSize - 1, inSection: 0)], withRowAnimation: .Automatic)
-                    self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
-                    self.recordTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Bottom, animated: true)
+                    customTitleView?.subtitle = "00:00"
+                    playingIndex = 0
+                    recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: cardSize - 1, inSection: 0)], withRowAnimation: .Automatic)
+                    recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
+                    recordTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Bottom, animated: true)
                 }
-                timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
                 playFile()
                 
             }
@@ -166,6 +168,12 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
             
             playButton.selected = true
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer?.invalidate()
+        player.pause()
     }
 
 }
