@@ -107,6 +107,7 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RecordTableViewCell", forIndexPath: indexPath) as! RecordTableViewCell
+        cell.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
         cell.emotionLabel.text = emotionData[indexPath.row].emotion
         cell.descriptionLabel.text = emotionData[indexPath.row].emotionDescription
