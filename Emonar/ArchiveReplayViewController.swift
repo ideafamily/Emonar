@@ -64,8 +64,40 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
         customTitleView?.titleColor = UIColor.whiteColor()
         customTitleView!.subtitle = "00:00"
         customTitleView!.title = "\(audioName)"
+        
+        
+        let gRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTitle(_:)))
+        customTitleView?.addGestureRecognizer(gRecognizer)
+        customTitleView?.userInteractionEnabled = true
         navigationItem.titleView = customTitleView
 
+    }
+    
+    func showChangeFileNameAlert() {
+        let alertController = UIAlertController(title: "Change file name", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addTextFieldWithConfigurationHandler { (name:UITextField) -> Void in
+            name.text = self.customTitleView?.title
+        }
+        let saveAction = UIAlertAction(title: "Save", style: .Default) { (action:UIAlertAction) -> Void in
+            let fileName = alertController.textFields![0].text
+            self.customTitleView?.title = fileName
+            FileManager.sharedInstance.changeRecordFileName(self.recordFileIndex, name: fileName!)
+            
+            
+            //TODO: save the file
+        }
+        let deleteAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action:UIAlertAction) -> Void in
+            
+        }
+        alertController.addAction(saveAction)
+        alertController.addAction(deleteAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+
+    
+    
+    func didTapTitle(gesture: UIGestureRecognizer) {
+        showChangeFileNameAlert()
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,6 +107,7 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RecordTableViewCell", forIndexPath: indexPath) as! RecordTableViewCell
+        cell.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
         cell.emotionLabel.text = emotionData[indexPath.row].emotion
         cell.descriptionLabel.text = emotionData[indexPath.row].emotionDescription

@@ -111,7 +111,10 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if indexPath.row == 0 && !isRecording {
                 //Initial cell
                 let cell = tableView.dequeueReusableCellWithIdentifier("InitialTableViewCell", forIndexPath: indexPath) as! InitialTableViewCell
+                cell.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
                 cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
+            
+            
                 return cell
         }
         
@@ -121,12 +124,14 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
             cell.emotionLabel.text = datas[datas.count-1-indexPath.row].emotion
             cell.descriptionLabel.text = datas[datas.count-1-indexPath.row].emotionDescription
+            cell.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
             return cell
         } else {
             //Recording and Analyzing cell
             let cell = tableView.dequeueReusableCellWithIdentifier("AnalyzingTableViewCell", forIndexPath: indexPath) as! AnalyzingTableViewCell
             cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
             cell.progressStart(datas[datas.count-1-indexPath.row].startTime!)
+            cell.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
             return cell
         }
         

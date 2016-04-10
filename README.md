@@ -15,8 +15,9 @@ The following **required** functionality is completed:
 The following **optional** features are implemented:
 
 - [x] User can choose which part of audio to run emotion analystics
-- [x] User can play all past cached audio recording
+- [x] User can play all past saved audio recording
 - [x] User can see the emotion analytics as well
+- [x] User can edit the file name of the saved audio recording
 - [ ] User can use this for app-app call
 - [ ] User can use this for app-phone call
 
