@@ -33,7 +33,7 @@ class AnalyzingTableViewCell: UITableViewCell {
         cardView.layer.cornerRadius = 5
         cardView.layer.masksToBounds = true
         
-        infoLabel.text = "Recording"
+        infoLabel.text = " Recording  "
         
         progressBar.type = .Flat
 //        progressBar.indicatorTextLabel.text = "0s"
@@ -48,7 +48,7 @@ class AnalyzingTableViewCell: UITableViewCell {
         if timeIncrease > CGFloat(timeSpan) {
             progressPerc = 1
             progressBar.progress = progressPerc!
-            infoLabel.text = "Analyzing"
+            infoLabel.text = " Analyzing  "
         } else {
             progressPerc = timeIncrease * CGFloat(1.03/timeSpan)
             progressBar.progress = progressPerc!
@@ -70,9 +70,9 @@ class AnalyzingTableViewCell: UITableViewCell {
         if progressPerc < 1 {
             progressPerc = timeIncrease * CGFloat(1.03/timeSpan)
             progressBar.progress = progressPerc!
-            infoLabel.text = "Recording"
+            infoLabel.text = " RECORDING  "
         } else {
-            infoLabel.text = "Analyzing"
+            infoLabel.text = " ANALYZING  "
         }
         
     }

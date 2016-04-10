@@ -20,6 +20,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var recordButton: UIButton!
     
+    @IBOutlet weak var fileNameLabel: UILabel!
 
     
     var datas:[EmotionData] = [EmotionData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)]
@@ -302,6 +303,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let fileName = alertController.textFields![0].text
             print("save file: \(fileName!)")
             self.fileManager.insertRecordFileToStorage(fileName!,recordLength: recordLength)
+            self.fileNameLabel.text = fileName!
             self.timer?.invalidate()
             //TODO: save the file
         }
