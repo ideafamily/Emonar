@@ -20,6 +20,12 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
         let backButton = UIBarButtonItem()
         backButton.title = ""
         navigationItem.backBarButtonItem = backButton
+//        navigationItem.titleView
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            NSForegroundColorAttributeName: UIColor.whiteColor()
+        ]
+        navigationController!.navigationBar.barTintColor = UIColor.blackColor()
+
         
     }
 
@@ -34,9 +40,10 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ArchiveTableViewCell", forIndexPath: indexPath) as! ArchiveTableViewCell
-        cell.recordNameLabel.text = self.dataArray[indexPath.row].name
-        cell.timeLengthLabel.text = self.dataArray[indexPath.row].recordLength
-        cell.dateLabel.text = self.dataArray[indexPath.row].currentDate
+        let index = dataArray.count - indexPath.row - 1
+        cell.recordNameLabel.text = self.dataArray[index].name
+        cell.timeLengthLabel.text = self.dataArray[index].recordLength
+        cell.dateLabel.text = self.dataArray[index].currentDate
         return cell
     }
 
@@ -46,15 +53,18 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
         return true
     }
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        let index = dataArray.count - indexPath.row - 1
         if editingStyle == .Delete {
             // Delete the row from the data source
             dataArray.removeAtIndex(indexPath.row)
-            FileManager.sharedInstance.deleteRecordFileFromStorage(indexPath.row)
+            FileManager.sharedInstance.deleteRecordFileFromStorage(index)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         }
     }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.recordFileIndex = indexPath.row
+        let index = dataArray.count - indexPath.row - 1
+        self.recordFileIndex = index
         self.performSegueWithIdentifier("goToReplay", sender: self)
     }
     
@@ -72,7 +82,8 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
         // Pass the selected object to the new view controller.
         if segue.identifier == "goToReplay" {
             let destination = segue.destinationViewController as! ArchiveReplayViewController
-            let index = archiveTableView.indexPathForSelectedRow!.row
+            let indexPath = archiveTableView.indexPathForSelectedRow!.row
+            let index = dataArray.count - indexPath - 1
             destination.audioName = dataArray[index].name
             destination.recordFileIndex = self.recordFileIndex
 //            print("indexpath is \(archiveTableView.indexPathForSelectedRow!.row)")

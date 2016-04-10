@@ -43,7 +43,7 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         self.player = EZAudioPlayer(delegate: self)
-//        self.navigationController.
+        self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
         
         recordTableView.delegate = self
         recordTableView.dataSource = self
@@ -60,6 +60,7 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
 
 
         customTitleView = LDONavigationSubtitleView(frame: CGRectMake(0, 0, 300, 44))
+        customTitleView?.titleColor = UIColor.whiteColor()
         customTitleView!.subtitle = "00:00"
         customTitleView!.title = "\(audioName)"
         navigationItem.titleView = customTitleView
