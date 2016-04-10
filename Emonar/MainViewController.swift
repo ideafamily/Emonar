@@ -34,12 +34,14 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        if Tool.isConnectedToNetwork() {
+            Tool.showProgressHUD("Log in")
+            APIWrapper.sharedInstance.loginWithCallback({
+                Tool.dismissHUD()
+            })
+        }
         
-        Tool.showProgressHUD("Log in")
-        APIWrapper.sharedInstance.loginWithCallback({
-            Tool.dismissHUD()
-        })
+        
         
         // Do any additional setup after loading the view.
     }
