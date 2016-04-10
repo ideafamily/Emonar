@@ -28,6 +28,11 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
 
         
     }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        archiveTableView.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
