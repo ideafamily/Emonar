@@ -34,6 +34,7 @@
 		C05B43471C9340380048F91E /* EZRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = C05B43361C9340380048F91E /* EZRecorder.m */; };
 		C05B43481C9340380048F91E /* TPCircularBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = C05B43371C9340380048F91E /* TPCircularBuffer.c */; };
 		C05B434B1C9340D90048F91E /* RecordingTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05B434A1C9340D90048F91E /* RecordingTestViewController.swift */; };
+		C0C879CF1CBAF9090068AF02 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0C879CE1CBAF9090068AF02 /* SystemConfiguration.framework */; };
 		C0CCFF851CA1E07C0076D5A4 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CCFF841CA1E07C0076D5A4 /* FileManager.swift */; };
 		C0E913131CADBF81001E1F2F /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E913121CADBF81001E1F2F /* Tool.swift */; };
 		C0E913161CADE71A001E1F2F /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E913151CADE71A001E1F2F /* StringExtension.swift */; };
@@ -119,6 +120,7 @@
 		C05B43371C9340380048F91E /* TPCircularBuffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = TPCircularBuffer.c; sourceTree = "<group>"; };
 		C05B43381C9340380048F91E /* TPCircularBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCircularBuffer.h; sourceTree = "<group>"; };
 		C05B434A1C9340D90048F91E /* RecordingTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingTestViewController.swift; sourceTree = "<group>"; };
+		C0C879CE1CBAF9090068AF02 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C0CCFF841CA1E07C0076D5A4 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		C0E913121CADBF81001E1F2F /* Tool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
 		C0E913151CADE71A001E1F2F /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0C879CF1CBAF9090068AF02 /* SystemConfiguration.framework in Frameworks */,
 				84596A151CB9C88600A4C9F6 /* Pods_Emonar.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -158,6 +161,7 @@
 		76164C9B8C480B3CB47B42B0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C0C879CE1CBAF9090068AF02 /* SystemConfiguration.framework */,
 				06680E6FB543DEC9D62E7AEC /* Pods_Emonar.framework */,
 			);
 			name = Frameworks;
@@ -634,6 +638,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Emonar/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PurdueIdeaFamily.Emonar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -652,6 +657,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Emonar/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = PurdueIdeaFamily.Emonar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
