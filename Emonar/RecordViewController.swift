@@ -23,7 +23,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var fileNameLabel: UILabel!
 
     
-    var datas:[EmotionData] = [EmotionData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)]
+    var datas:[EmotionData] = [EmotionData(emotion: "Analyzing", emotionDescription: "Sorry, Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)]
     var datasIndex = 0
     
     var timer:NSTimer?
@@ -199,7 +199,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
             if datas.count > 1 {
                 datas.removeAll()
-                let currentData = EmotionData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)
+                let currentData = EmotionData(emotion: "Analyzing", emotionDescription: "Sorry, Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil)
                 datas.append(currentData)
                 
                 
@@ -255,7 +255,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 let modifiedDescription = description.substringFromIndex(description.startIndex.advancedBy(1))
                 self.updateData(localIndex, content: object!.analysis.Mood.Composite.Primary.Phrase, description: modifiedDescription)
             } else {
-                self.updateData(localIndex, content: "No Result", description: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low.")
+                self.updateData(localIndex, content: "No Result", description: "Sorry, Emonar doesn't understand your current emotion.Maybe input voice is too low.")
             }
             
         })
@@ -292,7 +292,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         datas.removeAll()
         
         //2. initial data
-        datas.append(EmotionData(emotion: "Analyzing", emotionDescription: "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil))
+        datas.append(EmotionData(emotion: "Analyzing", emotionDescription: "Sorry, Emonar doesn't understand your current emotion.Maybe input voice is too low", analyzed: false, startTime: nil))
         datasIndex = 0
         
         //3. reload data
