@@ -71,6 +71,16 @@ public class FileManager: NSObject {
         self.sharedEmotionDataArray.append(data)
     }
     
+    func changeRecordFileName(index:Int, name: String){
+        readRecordFileDictionaryFromStorage()
+        let numberOfFile = getNumberOfRecordFile()
+        if index >= numberOfFile || index < 0 {
+            return
+        }
+        let recordFile = sharedRecordFileArray[index]
+        recordFile.name = name
+        syncRecordFileDictionaryToStorage()
+    }
     
     
     func deleteRecordFileFromStorage(index:Int){
