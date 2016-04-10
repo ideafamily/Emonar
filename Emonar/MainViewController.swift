@@ -19,7 +19,9 @@ class MainViewController: UIViewController {
         self.performSegueWithIdentifier("toRecord", sender: self)
     }
     @IBAction func phonePressed(sender: AnyObject) {
-        
+        let alertController = UIAlertController(title: "Real-Time Phone call analysis will avaliable in the next release", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.Cancel, handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
         
     }
     
