@@ -154,11 +154,19 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     
     @IBAction func cancelPressed(sender: UIButton) {
-        if recordButton.selected {
+        if isRecording {
+            self.microphone.stopFetchingAudio()
+            
+            if (self.recorder != nil) {
+                self.recorder.closeAudioFile()
+            }
             recordButton.selected = false
             timer?.invalidate()
             let elapsedTime = NSDate().timeIntervalSinceDate(self.beginTime)
+            isRecording = false
+            self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
             showSaveAlert(Tool.stringFromTimeInterval(elapsedTime))
+            
         } else {
             self.dismissViewControllerAnimated(true, completion: nil)
         
@@ -310,6 +318,7 @@ class RecordViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let deleteAction = UIAlertAction(title: "Delete", style: .Default) { (action:UIAlertAction) -> Void in
             //TODO: delete the file
             self.timer?.invalidate()
+            
 //            serlf.resetAllData()
         }
         alertController.addAction(saveAction)
