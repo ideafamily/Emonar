@@ -43,6 +43,7 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         self.player = EZAudioPlayer(delegate: self)
+        player.pause()
         self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
         
         recordTableView.delegate = self
@@ -90,6 +91,22 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cardSize
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var preIndex = playingIndex
+        if playingIndex == cardSize {
+            preIndex = cardSize - 1
+        }
+        playingIndex = indexPath.row
+        recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: preIndex, inSection: 0)], withRowAnimation: .Automatic)
+        recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: playingIndex, inSection: 0)], withRowAnimation: .Automatic)
+        if isPaused {
+            isPaused = false
+        }
+        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
+        playButton.selected = true
+        playFile()
     }
 
     func playFile()->Bool{
