@@ -66,6 +66,7 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
         let index = dataArray.count - indexPath.row - 1
         self.recordFileIndex = index
         self.performSegueWithIdentifier("goToReplay", sender: self)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     @IBAction func mainPressed(sender: UIBarButtonItem) {
