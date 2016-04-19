@@ -1,8 +1,8 @@
 # Group Project  - *Emonar*
 
-**Emonar** is a audio emotion analystics app that understands decodes speakers emotion while one is speaking [Beyond Verbal API](http://www.beyondverbal.com/emotions-analytics-api/).
+**Emonar** is a audio emotion analystics app that understands decodes speakers emotion while one is speaking [Beyond Verbal API](http://www.beyondverbal.com/emotions-analytics-api/). Video demo at [here](https://www.youtube.com/watch?v=NuxLhTl4MD8)
 
-Time spent: **X** hours spent in total
+Time spent: A lot of hours spent in total
 
 ## User Stories
 
