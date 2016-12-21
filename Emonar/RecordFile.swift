@@ -18,25 +18,25 @@ class RecordFile : NSObject,NSCoding {
         self.name = name
         self.sharedAduioArray = audioArray
         self.sharedEmotionDataArray = emotionDataArray
-        self.currentDate = NSDate().shortDate
+        self.currentDate = Date().shortDate
         self.recordLength = recordLength
     }
     required init?(coder aDecoder: NSCoder) {
-        self.name = aDecoder.decodeObjectForKey("name") as! String
-        self.sharedAduioArray = aDecoder.decodeObjectForKey("sharedAduioArray") as! [String]
-        self.sharedEmotionDataArray = aDecoder.decodeObjectForKey("sharedEmotionDataArray") as! [EmotionData]
-        self.currentDate = aDecoder.decodeObjectForKey("currentDate") as! String
-        self.recordLength = aDecoder.decodeObjectForKey("recordLength") as! String
+        self.name = aDecoder.decodeObject(forKey: "name") as! String
+        self.sharedAduioArray = aDecoder.decodeObject(forKey: "sharedAduioArray") as! [String]
+        self.sharedEmotionDataArray = aDecoder.decodeObject(forKey: "sharedEmotionDataArray") as! [EmotionData]
+        self.currentDate = aDecoder.decodeObject(forKey: "currentDate") as! String
+        self.recordLength = aDecoder.decodeObject(forKey: "recordLength") as! String
     }
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.name, forKey: "name")
-        aCoder.encodeObject(self.sharedAduioArray, forKey: "sharedAduioArray")
-        aCoder.encodeObject(self.sharedEmotionDataArray, forKey: "sharedEmotionDataArray")
-        aCoder.encodeObject(self.currentDate, forKey: "currentDate")
-        aCoder.encodeObject(self.recordLength, forKey: "recordLength")
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.name, forKey: "name")
+        aCoder.encode(self.sharedAduioArray, forKey: "sharedAduioArray")
+        aCoder.encode(self.sharedEmotionDataArray, forKey: "sharedEmotionDataArray")
+        aCoder.encode(self.currentDate, forKey: "currentDate")
+        aCoder.encode(self.recordLength, forKey: "recordLength")
     }
-    func audioArrayToNSURLArray()->[NSURL]{
-        var result:[NSURL] = []
+    func audioArrayToNSURLArray()->[URL]{
+        var result:[URL] = []
         for string in self.sharedAduioArray {
             result.append(FileManager.sharedInstance.stringToURL(string))
         }

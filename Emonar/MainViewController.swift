@@ -15,20 +15,20 @@ class MainViewController: UIViewController {
     
     
     @IBOutlet weak var phoneCallButton: UIButton!
-    @IBAction func gotoRecord(sender: AnyObject) {
-        self.performSegueWithIdentifier("toRecord", sender: self)
+    @IBAction func gotoRecord(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: "toRecord", sender: self)
     }
-    @IBAction func phonePressed(sender: AnyObject) {
-        let alertController = UIAlertController(title: "Real-Time Phone call analysis will avaliable in the next release", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.Cancel, handler: nil))
-        self.presentViewController(alertController, animated: true, completion: nil)
+    @IBAction func phonePressed(_ sender: AnyObject) {
+        let alertController = UIAlertController(title: "Real-Time Phone call analysis will avaliable in the next release", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Got it", style: UIAlertActionStyle.cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
         
     }
     
     
     
-    @IBAction func gotoArchive(sender: AnyObject) {
-        self.performSegueWithIdentifier("gotoArchive", sender: self)
+    @IBAction func gotoArchive(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: "gotoArchive", sender: self)
     }
     
     override func viewDidLoad() {
@@ -45,7 +45,7 @@ class MainViewController: UIViewController {
         
         // Do any additional setup after loading the view.
     }
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 //        
 
     }

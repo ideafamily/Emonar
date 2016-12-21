@@ -12,28 +12,28 @@ class EmotionData : NSObject,NSCoding {
     var emotion = "Analyzing"
     var emotionDescription = "Sorry,Emonar doesn't understand your current emotion.Maybe input voice is too low."
     var analyzed = false
-    var startTime:NSDate?
-    init (emotion:String,emotionDescription:String,analyzed:Bool,startTime:NSDate?) {
+    var startTime:Date?
+    init (emotion:String,emotionDescription:String,analyzed:Bool,startTime:Date?) {
         self.emotion = emotion
         self.emotionDescription = emotionDescription
         self.analyzed = analyzed
         self.startTime = startTime
     }
     required init?(coder aDecoder: NSCoder) {
-        self.emotion = aDecoder.decodeObjectForKey("emotion") as! String
-        self.emotionDescription = aDecoder.decodeObjectForKey("emotionDescription") as! String
-        self.analyzed = aDecoder.decodeObjectForKey("analyzed") as! Bool
-        if let time = aDecoder.decodeObjectForKey("startTime") as? NSDate {
+        self.emotion = aDecoder.decodeObject(forKey: "emotion") as! String
+        self.emotionDescription = aDecoder.decodeObject(forKey: "emotionDescription") as! String
+        self.analyzed = aDecoder.decodeObject(forKey: "analyzed") as! Bool
+        if let time = aDecoder.decodeObject(forKey: "startTime") as? Date {
             self.startTime = time
         }
         
     }
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.emotion, forKey: "emotion")
-        aCoder.encodeObject(self.emotionDescription, forKey: "emotionDescription")
-        aCoder.encodeObject(self.analyzed, forKey: "analyzed")
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.emotion, forKey: "emotion")
+        aCoder.encode(self.emotionDescription, forKey: "emotionDescription")
+        aCoder.encode(self.analyzed, forKey: "analyzed")
         if self.startTime != nil {
-           aCoder.encodeObject(self.startTime, forKey: "startTime")
+           aCoder.encode(self.startTime, forKey: "startTime")
         }
         
     }

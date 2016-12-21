@@ -22,15 +22,15 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
         navigationItem.backBarButtonItem = backButton
 //        navigationItem.titleView
         self.navigationController?.navigationBar.titleTextAttributes = [
-            NSForegroundColorAttributeName: UIColor.whiteColor()
+            NSForegroundColorAttributeName: UIColor.white
         ]
-        navigationController!.navigationBar.barTintColor = UIColor.blackColor()
+        navigationController!.navigationBar.barTintColor = UIColor.black
 
         
     }
     
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         archiveTableView.reloadData()
     }
 
@@ -39,12 +39,12 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataArray.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ArchiveTableViewCell", forIndexPath: indexPath) as! ArchiveTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ArchiveTableViewCell", for: indexPath) as! ArchiveTableViewCell
         let index = dataArray.count - indexPath.row - 1
         cell.recordNameLabel.text = self.dataArray[index].name
         cell.timeLengthLabel.text = self.dataArray[index].recordLength
@@ -54,28 +54,28 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
 
     
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         let index = dataArray.count - indexPath.row - 1
-        if editingStyle == .Delete {
+        if editingStyle == .delete {
             // Delete the row from the data source
-            dataArray.removeAtIndex(indexPath.row)
+            dataArray.remove(at: indexPath.row)
             FileManager.sharedInstance.deleteRecordFileFromStorage(index)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let index = dataArray.count - indexPath.row - 1
         self.recordFileIndex = index
-        self.performSegueWithIdentifier("goToReplay", sender: self)
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        self.performSegue(withIdentifier: "goToReplay", sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    @IBAction func mainPressed(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func mainPressed(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
     
 
@@ -83,11 +83,11 @@ class ArchiveViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "goToReplay" {
-            let destination = segue.destinationViewController as! ArchiveReplayViewController
+            let destination = segue.destination as! ArchiveReplayViewController
             let indexPath = archiveTableView.indexPathForSelectedRow!.row
             let index = dataArray.count - indexPath - 1
             destination.audioName = dataArray[index].name

@@ -7,20 +7,20 @@
 //
 
 import Foundation
-extension NSDateFormatter {
+extension DateFormatter {
     convenience init(dateFormat: String) {
         self.init()
         self.dateFormat = dateFormat
     }
 }
 
-extension NSDate {
+extension Date {
     struct CurrentDate {
-        static let formatterShortDate = NSDateFormatter(dateFormat: "yyyy-MM-dd")
+        static let formatterShortDate = DateFormatter(dateFormat: "yyyy-MM-dd")
     }
     
     var shortDate: String {
-        return CurrentDate.formatterShortDate.stringFromDate(self)
+        return CurrentDate.formatterShortDate.string(from: self)
     }
     
     

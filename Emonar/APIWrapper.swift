@@ -19,26 +19,26 @@ final public class APIWrapper : NSObject{
         
     }
     func hasLoggedin()->Bool{
-        return NSUserDefaults.standardUserDefaults().objectForKey("access-token") != nil
+        return UserDefaults.standard.object(forKey: "access-token") != nil
     }
-    func loginWithCallback(completion: () -> Void){
-        ApiManager.sharedManager().getAccessTokenSuccess { (data:NSData!) in
+    func loginWithCallback(_ completion: @escaping () -> Void){
+        ApiManager.shared().getAccessTokenSuccess { (data:Data?) in
             completion()
         }
     }
     
-    func startAnSessionAndSendAFile(filePath:String,completion: (object:Analysis_result_analysisSegments?) -> Void){
-        ApiManager.sharedManager().startSessionSuccess { (data:NSData!) in
+    func startAnSessionAndSendAFile(_ filePath:String,completion: @escaping (_ object:Analysis_result_analysisSegments?) -> Void){
+        ApiManager.shared().startSessionSuccess { (data:Data?) in
             self.fileBeingSent = true
-            ApiManager.sharedManager().sendAudioFile(filePath, success: { (response:[NSObject : AnyObject]!) in
+            ApiManager.shared().sendAudioFile(filePath, success: { (response:[AnyHashable: Any]?) in
                 self.fileBeingSent = false
 //                print(response)
-                let analysis = Analysis.mj_objectWithKeyValues(response)
-                if let analysisArray = analysis.result.analysisSegments {
-                    let elementObject = Analysis_result_analysisSegments.mj_objectWithKeyValues(analysisArray[0])
-                    completion(object: elementObject)
+                let analysis = Analysis.mj_object(withKeyValues: response)
+                if let analysisArray = analysis?.result.analysisSegments {
+                    let elementObject = Analysis_result_analysisSegments.mj_object(withKeyValues: analysisArray[0])
+                    completion(elementObject)
                 } else {
-                    completion(object: nil)
+                    completion(nil)
                 }
             })
         }

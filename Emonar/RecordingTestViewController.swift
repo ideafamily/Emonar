@@ -10,7 +10,7 @@ import UIKit
 
 class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicrophoneDelegate,EZRecorderDelegate {
     
-    @IBAction func playFile(sender: AnyObject) {
+    @IBAction func playFile(_ sender: AnyObject) {
         //
         // Update microphone state
         //
@@ -20,21 +20,21 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
         //
         self.isRecording = false
         self.recordingStatusLabel.text = "Not Recording"
-        self.recordSwitch.on = false
+        self.recordSwitch.isOn = false
         //
         // Close the audio file
         //
         if (self.recorder != nil) {
             self.recorder.closeAudioFile()
         }
-        let audioFile: EZAudioFile = EZAudioFile(URL:self.testFilePathURL())
+        let audioFile: EZAudioFile = EZAudioFile(url:self.testFilePathURL())
         self.player.playAudioFile(audioFile)
         
     }
     @IBOutlet weak var playingStateLabel: UILabel!
-    @IBAction func toggleMicrophone(sender: AnyObject) {
+    @IBAction func toggleMicrophone(_ sender: AnyObject) {
         self.player.pause()
-        let isOn: Bool = (sender as! UISwitch).on
+        let isOn: Bool = (sender as! UISwitch).isOn
         if !isOn {
             self.microphone.stopFetchingAudio()
         }
@@ -43,19 +43,19 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
         }
         
     }
-    @IBAction func toggleRecoding(sender: AnyObject) {
+    @IBAction func toggleRecoding(_ sender: AnyObject) {
         self.player.pause()
-        if (sender as! UISwitch).on {
+        if (sender as! UISwitch).isOn {
             //
             // Create the recorder
             //
             self.recordingAudioPlot.clear()
             self.microphone.startFetchingAudio()
             
-            self.recorder = EZRecorder(URL: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
-            self.playButton.enabled = true
+            self.recorder = EZRecorder(url: self.testFilePathURL(), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
+            self.playButton.isEnabled = true
         }
-        self.isRecording = sender.on
+        self.isRecording = sender.isOn
         self.recordingStatusLabel.text = self.isRecording ? "Recording" : "Not Recording"
         
     }
@@ -98,14 +98,14 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
         //
         self.recordingAudioPlot.backgroundColor = UIColor(red: 0.984, green: 0.71, blue: 0.365, alpha: 1)
         self.recordingAudioPlot.color = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        self.recordingAudioPlot.plotType = EZPlotType.Rolling
+        self.recordingAudioPlot.plotType = EZPlotType.rolling
         self.recordingAudioPlot.shouldFill = true
         self.recordingAudioPlot.shouldMirror = true
         //
         // Customizing the audio plot that'll show the playback
         //
-        self.playingAudioPlot.color = UIColor.whiteColor()
-        self.playingAudioPlot.plotType = EZPlotType.Rolling
+        self.playingAudioPlot.color = UIColor.white
+        self.playingAudioPlot.plotType = EZPlotType.rolling
         self.playingAudioPlot.shouldFill = true
         self.playingAudioPlot.shouldMirror = true
         self.playingAudioPlot.gain = 2.5
@@ -115,7 +115,7 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
         //
         // Override the output to the speaker. Do this after creating the EZAudioPlayer
         do {
-            try session.overrideOutputAudioPort(AVAudioSessionPortOverride.Speaker)
+            try session.overrideOutputAudioPort(AVAudioSessionPortOverride.speaker)
         } catch {
             NSLog("Error overriding output to the speaker")
         }
@@ -125,7 +125,7 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
         self.microphoneStateLabel.text = "Microphone On"
         self.recordingStatusLabel.text = "Not Recording"
         self.playingStateLabel.text = "Not Playing"
-        self.playButton.enabled = false
+        self.playButton.isEnabled = false
         //
         // Setup notifications
         //
@@ -133,7 +133,8 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
         //
         // Log out where the file is being written to within the app's documents directory
         //
-        NSLog("File written to application sandbox's documents directory: %@", self.testFilePathURL())
+        
+        print("File written to application sandbox's documents directory: %@", self.testFilePathURL())
         //
         // Start the microphone
         //
@@ -144,39 +145,39 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
     }
     
     
-    func microphone(microphone: EZMicrophone!, changedPlayingState isPlaying: Bool) {
+    func microphone(_ microphone: EZMicrophone!, changedPlayingState isPlaying: Bool) {
         self.microphoneStateLabel.text = isPlaying ? "Microphone On" : "Microphone Off"
-        self.microphoneSwitch.on = isPlaying
+        self.microphoneSwitch.isOn = isPlaying
         
     }
-    func recorderDidClose(recorder: EZRecorder!) {
+    func recorderDidClose(_ recorder: EZRecorder!) {
         recorder.delegate = nil
     }
-    func recorderUpdatedCurrentTime(recorder: EZRecorder!) {
+    func recorderUpdatedCurrentTime(_ recorder: EZRecorder!) {
         weak var weakSelf = self
         let formattedCurrentTime: String = recorder.formattedCurrentTime
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+        DispatchQueue.main.async(execute: {() -> Void in
             weakSelf!.currentTimeLbael.text = formattedCurrentTime
         })
         
     }
-    func audioPlayer(audioPlayer: EZAudioPlayer!, playedAudio buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32, inAudioFile audioFile: EZAudioFile!) {
+    @nonobjc func audioPlayer(_ audioPlayer: EZAudioPlayer!, playedAudio buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32, in audioFile: EZAudioFile!) {
         weak var weakSelf = self
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+        DispatchQueue.main.async(execute: {() -> Void in
             weakSelf!.playingAudioPlot.updateBuffer(buffer[0], withBufferSize: bufferSize)
         })
         
     }
-    func audioPlayer(audioPlayer: EZAudioPlayer!, updatedPosition framePosition: Int64, inAudioFile audioFile: EZAudioFile!) {
+    func audioPlayer(_ audioPlayer: EZAudioPlayer!, updatedPosition framePosition: Int64, in audioFile: EZAudioFile!) {
         weak var weakSelf = self
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+        DispatchQueue.main.async(execute: {() -> Void in
             weakSelf!.currentTimeLbael.text = audioPlayer.formattedCurrentTime
         })
         
     }
-    func microphone(microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
+    @nonobjc func microphone(_ microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
         weak var weakSelf = self
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+        DispatchQueue.main.async(execute: {() -> Void in
             //
             // All the audio plot needs is the buffer data (float*) and the size.
             // Internally the audio plot will handle all the drawing related code,
@@ -187,9 +188,9 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
         })
         
     }
-    func microphone(microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
+    func microphone(_ microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
         if self.isRecording {
-            self.recorder.appendDataFromBufferList(bufferList, withBufferSize: bufferSize)
+            self.recorder.appendData(from: bufferList, withBufferSize: bufferSize)
         }
         
     }
@@ -197,15 +198,15 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
     //------------------------------------------------------------------------------
     
     func applicationDocuments() -> [AnyObject] {
-        let nsDocumentDirectory = NSSearchPathDirectory.DocumentDirectory
-        let nsUserDomainMask = NSSearchPathDomainMask.UserDomainMask
-        return NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
+        let nsDocumentDirectory = Foundation.FileManager.SearchPathDirectory.documentDirectory
+        let nsUserDomainMask = Foundation.FileManager.SearchPathDomainMask.userDomainMask
+        return NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true) as [AnyObject]
         
     }
     //------------------------------------------------------------------------------
     
     func applicationDocumentsDirectory() -> String? {
-        let paths: [AnyObject] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let paths: [AnyObject] = NSSearchPathForDirectoriesInDomains(Foundation.FileManager.SearchPathDirectory.documentDirectory, Foundation.FileManager.SearchPathDomainMask.userDomainMask, true) as [AnyObject]
         if  paths.count > 0 {
             return paths[0] as? String
         }
@@ -213,30 +214,30 @@ class RecordingTestViewController: UIViewController,EZAudioPlayerDelegate,EZMicr
     }
     //------------------------------------------------------------------------------
     
-    func testFilePathURL() -> NSURL {
+    func testFilePathURL() -> URL {
         let content = "\(self.applicationDocumentsDirectory()!)/\(kAudioFilePath)"
         print("content :\(content)")
-        return NSURL.fileURLWithPath(content)
+        return URL(fileURLWithPath: content)
     }
     func setupNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RecordingTestViewController.playerDidChangePlayState(_:)), name: EZAudioPlayerDidChangePlayStateNotification, object: self.player)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RecordingTestViewController.playerDidReachEndOfFile(_:)), name: EZAudioPlayerDidReachEndOfFileNotification, object: self.player)
+        NotificationCenter.default.addObserver(self, selector: #selector(RecordingTestViewController.playerDidChangePlayState(_:)), name: NSNotification.Name.EZAudioPlayerDidChangePlayState, object: self.player)
+        NotificationCenter.default.addObserver(self, selector: #selector(RecordingTestViewController.playerDidReachEndOfFile(_:)), name: NSNotification.Name.EZAudioPlayerDidReachEndOfFile, object: self.player)
     }
-    func playerDidChangePlayState(notification: NSNotification) {
+    func playerDidChangePlayState(_ notification: Notification) {
         weak var weakSelf = self
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+        DispatchQueue.main.async(execute: {() -> Void in
             let player: EZAudioPlayer = notification.object as! EZAudioPlayer
             let isPlaying: Bool = player.isPlaying
             if isPlaying {
                 weakSelf!.recorder.delegate = nil
             }
             weakSelf!.playingStateLabel.text = isPlaying ? "Playing" : "Not Playing"
-            weakSelf!.playingAudioPlot.hidden = !isPlaying
+            weakSelf!.playingAudioPlot.isHidden = !isPlaying
         })
     }
-    func playerDidReachEndOfFile(notification: NSNotification) {
+    func playerDidReachEndOfFile(_ notification: Notification) {
         weak var weakSelf = self
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+        DispatchQueue.main.async(execute: {() -> Void in
             weakSelf!.playingAudioPlot.clear()
         })
     }

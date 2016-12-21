@@ -21,10 +21,10 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
     
     var playingIndex:Int = 0
     var player:EZAudioPlayer!
-    var timer:NSTimer?
+    var timer:Timer?
     
     var recordFiles : [RecordFile]!
-    var audioData: [NSURL]!
+    var audioData: [URL]!
     var emotionData : [EmotionData]!
     
     var cardSize:Int!
@@ -44,41 +44,41 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
         super.viewDidLoad()
         self.player = EZAudioPlayer(delegate: self)
         player.pause()
-        self.navigationController!.navigationBar.barTintColor = UIColor.blackColor()
+        self.navigationController!.navigationBar.barTintColor = UIColor.black
         
         recordTableView.delegate = self
         recordTableView.dataSource = self
-        recordTableView.transform = CGAffineTransformMakeRotation(CGFloat(-M_PI))
+        recordTableView.transform = CGAffineTransform(rotationAngle: CGFloat(-M_PI))
         
         playingIndex = 0
 
         self.playingAudioPlot.backgroundColor = UIColor(red: 0.984, green: 0.71, blue: 0.365, alpha: 1)
         self.playingAudioPlot.color = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        self.playingAudioPlot.plotType = EZPlotType.Rolling
+        self.playingAudioPlot.plotType = EZPlotType.rolling
         self.playingAudioPlot.shouldFill = true
         self.playingAudioPlot.shouldMirror = true
         self.playingAudioPlot.gain = 5
 
 
-        customTitleView = LDONavigationSubtitleView(frame: CGRectMake(0, 0, 300, 44))
-        customTitleView?.titleColor = UIColor.whiteColor()
+        customTitleView = LDONavigationSubtitleView(frame: CGRect(x: 0, y: 0, width: 300, height: 44))
+        customTitleView?.titleColor = UIColor.white
         customTitleView!.subtitle = "00:00"
         customTitleView!.title = "\(audioName)"
         
         
         let gRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapTitle(_:)))
         customTitleView?.addGestureRecognizer(gRecognizer)
-        customTitleView?.userInteractionEnabled = true
+        customTitleView?.isUserInteractionEnabled = true
         navigationItem.titleView = customTitleView
 
     }
     
     func showChangeFileNameAlert() {
-        let alertController = UIAlertController(title: "Change file name", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addTextFieldWithConfigurationHandler { (name:UITextField) -> Void in
+        let alertController = UIAlertController(title: "Change file name", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addTextField { (name:UITextField) -> Void in
             name.text = self.customTitleView?.title
         }
-        let saveAction = UIAlertAction(title: "Save", style: .Default) { (action:UIAlertAction) -> Void in
+        let saveAction = UIAlertAction(title: "Save", style: .default) { (action:UIAlertAction) -> Void in
             let fileName = alertController.textFields![0].text
             self.customTitleView?.title = fileName
             FileManager.sharedInstance.changeRecordFileName(self.recordFileIndex, name: fileName!)
@@ -86,17 +86,17 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
             
             //TODO: save the file
         }
-        let deleteAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action:UIAlertAction) -> Void in
+        let deleteAction = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction) -> Void in
             
         }
         alertController.addAction(saveAction)
         alertController.addAction(deleteAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
 
     
     
-    func didTapTitle(gesture: UIGestureRecognizer) {
+    func didTapTitle(_ gesture: UIGestureRecognizer) {
         showChangeFileNameAlert()
     }
 
@@ -105,64 +105,64 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("RecordTableViewCell", forIndexPath: indexPath) as! RecordTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RecordTableViewCell", for: indexPath) as! RecordTableViewCell
         cell.backgroundColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
-        cell.transform = CGAffineTransformMakeRotation(CGFloat(M_PI));
+        cell.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI));
         cell.emotionLabel.text = emotionData[indexPath.row].emotion
         cell.descriptionLabel.text = emotionData[indexPath.row].emotionDescription
         if indexPath.row == playingIndex {
             //MARK: cell is playing
-            cell.cardView.backgroundColor = UIColor.whiteColor()
+            cell.cardView.backgroundColor = UIColor.white
         } else {
             //MARK: cell is not playing
-            cell.cardView.backgroundColor = UIColor.lightGrayColor()
+            cell.cardView.backgroundColor = UIColor.lightGray
         }
         
         return cell
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cardSize
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var preIndex = playingIndex
         if playingIndex == cardSize {
             preIndex = cardSize - 1
         }
         playingIndex = indexPath.row
-        recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: preIndex, inSection: 0)], withRowAnimation: .Automatic)
-        recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: playingIndex, inSection: 0)], withRowAnimation: .Automatic)
+        recordTableView.reloadRows(at: [IndexPath(row: preIndex, section: 0)], with: .automatic)
+        recordTableView.reloadRows(at: [IndexPath(row: playingIndex, section: 0)], with: .automatic)
         if isPaused {
             isPaused = false
         }
-        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
-        playButton.selected = true
-        playFile()
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
+        playButton.isSelected = true
+        _ = playFile()
     }
 
     func playFile()->Bool{
         if audioData.count != 0 && playingIndex != cardSize {
-            let audioFile: EZAudioFile = EZAudioFile(URL:audioData[playingIndex])
+            let audioFile: EZAudioFile = EZAudioFile(url:audioData[playingIndex])
             self.player.playAudioFile(audioFile)
             return true
         }
         return false
     }
     
-    func audioPlayer(audioPlayer: EZAudioPlayer!, reachedEndOfAudioFile audioFile: EZAudioFile!) {
+    func audioPlayer(_ audioPlayer: EZAudioPlayer!, reachedEndOf audioFile: EZAudioFile!) {
         print("end of file at index \(self.playingIndex)")
         self.playingIndex += 1
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             if self.playFile() {
                 //Go to the next indexpath
-                self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.playingIndex, inSection: 0)], withRowAnimation: .Automatic)
-                self.recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: self.playingIndex - 1, inSection: 0)], withRowAnimation: .Automatic)
-                self.recordTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.playingIndex, inSection: 0), atScrollPosition: .Middle, animated: true)
+                self.recordTableView.reloadRows(at: [IndexPath(row: self.playingIndex, section: 0)], with: .automatic)
+                self.recordTableView.reloadRows(at: [IndexPath(row: self.playingIndex - 1, section: 0)], with: .automatic)
+                self.recordTableView.scrollToRow(at: IndexPath(row: self.playingIndex, section: 0), at: .middle, animated: true)
             } else {
                 //Audio ends
-                self.playButton.selected = false
+                self.playButton.isSelected = false
                 self.isPaused = false
                 self.timer?.invalidate()
             }
@@ -170,34 +170,34 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
         }
         
     }
-    func audioPlayer(audioPlayer: EZAudioPlayer!, playedAudio buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32, inAudioFile audioFile: EZAudioFile!) {
+    @nonobjc func audioPlayer(_ audioPlayer: EZAudioPlayer!, playedAudio buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32, in audioFile: EZAudioFile!) {
         weak var weakSelf = self
-        dispatch_async(dispatch_get_main_queue(), {() -> Void in
+        DispatchQueue.main.async(execute: {() -> Void in
             weakSelf!.playingAudioPlot.updateBuffer(buffer[0], withBufferSize: bufferSize)
         })
         
     }
     
-    func updateTime(timer:NSTimer) {
-        let currentTime = Tool.stringFromTimeInterval(player.currentTime.advancedBy(1 + Double(playingIndex) * timeSpan))
+    func updateTime(_ timer:Timer) {
+        let currentTime = Tool.stringFromTimeInterval(player.currentTime.advanced(by: 1 + Double(playingIndex) * timeSpan))
         customTitleView?.subtitle = "\(currentTime)"
     }
     
     
     
-    @IBAction func playButtonPressed(sender: UIButton) {
-        if playButton.selected {
+    @IBAction func playButtonPressed(_ sender: UIButton) {
+        if playButton.isSelected {
             //MARK: Pause playing
             player.pause()
-            playButton.selected = false
+            playButton.isSelected = false
             isPaused = true
             timer?.invalidate()
             
         } else {
             //MARK: Start playing
-            let currentTime = Tool.stringFromTimeInterval(player.currentTime.advancedBy(1 + Double(playingIndex) * timeSpan))
+            let currentTime = Tool.stringFromTimeInterval(player.currentTime.advanced(by: 1 + Double(playingIndex) * timeSpan))
             customTitleView?.subtitle = "\(currentTime)"
-            timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTime(_:)), userInfo: nil, repeats: true)
             if isPaused {
                 
                 isPaused = false
@@ -208,20 +208,20 @@ class ArchiveReplayViewController: UIViewController, UITableViewDataSource, UITa
                     //when audio has been played to end
                     customTitleView?.subtitle = "00:00"
                     playingIndex = 0
-                    recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: cardSize - 1, inSection: 0)], withRowAnimation: .Automatic)
-                    recordTableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: .Automatic)
-                    recordTableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Bottom, animated: true)
+                    recordTableView.reloadRows(at: [IndexPath(row: cardSize - 1, section: 0)], with: .automatic)
+                    recordTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                    recordTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
                 }
-                playFile()
+                _ = playFile()
                 
             }
             
             
-            playButton.selected = true
+            playButton.isSelected = true
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         timer?.invalidate()
         player.pause()

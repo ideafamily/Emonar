@@ -21,22 +21,22 @@ class Tool:NSObject
     }
     
     
-    class func showProgressHUD(text:String)
+    class func showProgressHUD(_ text:String)
     {
         ProgressHUD.show(text)
     }
     
-    class func showSuccessHUD(text:String)
+    class func showSuccessHUD(_ text:String)
     {
         ProgressHUD.showSuccess(text)
     }
     
-    class func showErrorHUD(text:String)
+    class func showErrorHUD(_ text:String)
     {
         ProgressHUD.showError(text)
     }
     
-    class func stringFromTimeInterval(interval: NSTimeInterval) -> String {
+    class func stringFromTimeInterval(_ interval: TimeInterval) -> String {
         let interval = Int(interval)
         let seconds = interval % 60
         let minutes = (interval / 60) % 60
@@ -50,10 +50,12 @@ class Tool:NSObject
     
     class func isConnectedToNetwork() -> Bool {
         var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
         zeroAddress.sin_family = sa_family_t(AF_INET)
-        let defaultRouteReachability = withUnsafePointer(&zeroAddress) {
-            SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
         }
         var flags = SCNetworkReachabilityFlags()
         if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {

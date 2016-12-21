@@ -10,29 +10,29 @@ import Foundation
 
 
 private let _sharedInstance = FileManager()
-public class FileManager: NSObject {
-    class public var sharedInstance:FileManager {
+open class FileManager: NSObject {
+    class open var sharedInstance:FileManager {
         return _sharedInstance
     }
-    private let userDefault = NSUserDefaults.standardUserDefaults()
+    fileprivate let userDefault = UserDefaults.standard
     
-    private var sharedAduioArray : [String] = []
-    private var currentAudioIndex : Int!
-    private let audioIndexKey = "AudioIndexKey"
-    private var sharedEmotionDataArray: [EmotionData] = []
-    private var currentEmotionDataIndex : Int = 0
+    fileprivate var sharedAduioArray : [String] = []
+    fileprivate var currentAudioIndex : Int!
+    fileprivate let audioIndexKey = "AudioIndexKey"
+    fileprivate var sharedEmotionDataArray: [EmotionData] = []
+    fileprivate var currentEmotionDataIndex : Int = 0
     
-    private let recordFileStorageKey = "recordFileStorageKey"
-    private var sharedRecordFileArray: [RecordFile] = []
-    private let recordFileIndexKey = "recordFileIndexKey"
-    private var currentRecordIndex : Int!
-    private var fileManager : NSFileManager!
+    fileprivate let recordFileStorageKey = "recordFileStorageKey"
+    fileprivate var sharedRecordFileArray: [RecordFile] = []
+    fileprivate let recordFileIndexKey = "recordFileIndexKey"
+    fileprivate var currentRecordIndex : Int!
+    fileprivate var fileManager : Foundation.FileManager!
     
     
     
     func getAudioIndex()->Int{
         if currentAudioIndex == nil {
-            currentAudioIndex = userDefault.integerForKey(audioIndexKey)
+            currentAudioIndex = userDefault.integer(forKey: audioIndexKey)
         }
         return currentAudioIndex
     }
@@ -41,20 +41,20 @@ public class FileManager: NSObject {
     
     func getNumberOfRecordFile()->Int {
         if currentRecordIndex == nil {
-            currentRecordIndex = userDefault.integerForKey(recordFileIndexKey)
+            currentRecordIndex = userDefault.integer(forKey: recordFileIndexKey)
         }
         return currentRecordIndex
 
     }
     
-    func insertAudioToStorage(filePath:String){
+    func insertAudioToStorage(_ filePath:String){
         var numberOfFile = getAudioIndex()
         sharedAduioArray.append(filePath)
         numberOfFile += 1
         setCurrentAudioIndex(numberOfFile)
     }
     
-    func insertRecordFileToStorage(name:String,recordLength:String) {
+    func insertRecordFileToStorage(_ name:String,recordLength:String) {
         readRecordFileDictionaryFromStorage()
         let recordFile = RecordFile(name:name, audioArray: self.sharedAduioArray, emotionDataArray: self.sharedEmotionDataArray,recordLength:recordLength)
         
@@ -67,11 +67,11 @@ public class FileManager: NSObject {
     }
     
     
-    func insertEmotionDataToStorage(data:EmotionData){
+    func insertEmotionDataToStorage(_ data:EmotionData){
         self.sharedEmotionDataArray.append(data)
     }
     
-    func changeRecordFileName(index:Int, name: String){
+    func changeRecordFileName(_ index:Int, name: String){
         readRecordFileDictionaryFromStorage()
         let numberOfFile = getNumberOfRecordFile()
         if index >= numberOfFile || index < 0 {
@@ -83,7 +83,7 @@ public class FileManager: NSObject {
     }
     
     
-    func deleteRecordFileFromStorage(index:Int){
+    func deleteRecordFileFromStorage(_ index:Int){
         readRecordFileDictionaryFromStorage()
         var numberOfFile = getNumberOfRecordFile()
         if index >= numberOfFile || index < 0 {
@@ -91,20 +91,20 @@ public class FileManager: NSObject {
         }
         let recordFile = sharedRecordFileArray[index]
         if fileManager == nil {
-            fileManager = NSFileManager.defaultManager()
+            fileManager = Foundation.FileManager.default
         }
         
         for recording in recordFile.sharedAduioArray {
             let actualPath = filePath(recording)
             do {
-                try fileManager.removeItemAtPath(actualPath)
+                try fileManager.removeItem(atPath: actualPath)
             }
             catch let error as NSError {
                 print("Ooops! Something went wrong: \(error)")
             }
         }
         
-        sharedRecordFileArray.removeAtIndex(index)
+        sharedRecordFileArray.remove(at: index)
         numberOfFile -= 1
         setCurrentRecordIndex(numberOfFile)
         syncRecordFileDictionaryToStorage()
@@ -116,44 +116,44 @@ public class FileManager: NSObject {
         return self.sharedRecordFileArray
     }
     
-    func stringToURL(path:String)->NSURL{
-        return NSURL.fileURLWithPath(filePath(path))
+    func stringToURL(_ path:String)->URL{
+        return URL(fileURLWithPath: filePath(path))
     }
     
-    private func cleanupDataInMemory(){
+    fileprivate func cleanupDataInMemory(){
         self.sharedEmotionDataArray = []
         self.sharedAduioArray = []
     }
     
-    private func applicationDocumentsDirectory() -> String? {
-        let paths: [AnyObject] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+    fileprivate func applicationDocumentsDirectory() -> String? {
+        let paths: [AnyObject] = NSSearchPathForDirectoriesInDomains(Foundation.FileManager.SearchPathDirectory.documentDirectory, Foundation.FileManager.SearchPathDomainMask.userDomainMask, true) as [AnyObject]
         if  paths.count > 0 {
             return paths[0] as? String
         }
         return nil
     }
-    private func filePath(localPath:String)->String{
+    fileprivate func filePath(_ localPath:String)->String{
         return "\(applicationDocumentsDirectory()!)" + localPath
     }
     
-    private func setCurrentRecordIndex(index:Int){
+    fileprivate func setCurrentRecordIndex(_ index:Int){
         self.currentRecordIndex = index
-        userDefault.setInteger(index, forKey: recordFileIndexKey)
+        userDefault.set(index, forKey: recordFileIndexKey)
     }
     
-    private func setCurrentAudioIndex(index:Int){
+    fileprivate func setCurrentAudioIndex(_ index:Int){
         self.currentAudioIndex = index
-        userDefault.setInteger(index, forKey: audioIndexKey)
+        userDefault.set(index, forKey: audioIndexKey)
     }
     
-    private func readRecordFileDictionaryFromStorage(){
+    fileprivate func readRecordFileDictionaryFromStorage(){
         if sharedRecordFileArray.count == 0 {
-            if let data = userDefault.objectForKey(recordFileStorageKey) as? NSData {
-                self.sharedRecordFileArray = (NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [RecordFile])!
+            if let data = userDefault.object(forKey: recordFileStorageKey) as? Data {
+                self.sharedRecordFileArray = (NSKeyedUnarchiver.unarchiveObject(with: data) as? [RecordFile])!
             }
         }
     }
-    private func syncRecordFileDictionaryToStorage(){
+    fileprivate func syncRecordFileDictionaryToStorage(){
         print("syncRecordFileDictionaryToStorage:\(self.sharedRecordFileArray)\n")
         print(self.sharedRecordFileArray.count)
         for elemnt in self.sharedRecordFileArray {
@@ -166,7 +166,7 @@ public class FileManager: NSObject {
             }
             print("--------end---------")
         }
-        userDefault.setObject(NSKeyedArchiver.archivedDataWithRootObject(self.sharedRecordFileArray), forKey: recordFileStorageKey)
+        userDefault.set(NSKeyedArchiver.archivedData(withRootObject: self.sharedRecordFileArray), forKey: recordFileStorageKey)
     }
     
     

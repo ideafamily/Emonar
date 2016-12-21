@@ -9,7 +9,7 @@
 import Foundation
 public extension String {
     
-    public static func trimString(str: String) -> String {
+    public static func trimString(_ str: String) -> String {
         var new = ""
         for char in str.characters{
             if char == "," || char == "." { break }
@@ -18,7 +18,7 @@ public extension String {
         return new
     }
     
-    public static func addString(str: [String]) -> String {
+    public static func addString(_ str: [String]) -> String {
         var new = ""
         for string in str{
             new = "\(new) \(string)"
