@@ -22,7 +22,7 @@ class EmotionData : NSObject,NSCoding {
     required init?(coder aDecoder: NSCoder) {
         self.emotion = aDecoder.decodeObject(forKey: "emotion") as! String
         self.emotionDescription = aDecoder.decodeObject(forKey: "emotionDescription") as! String
-        self.analyzed = aDecoder.decodeObject(forKey: "analyzed") as! Bool
+        //self.analyzed = aDecoder.decodeObject(forKey: "analyzed") as! Bool
         if let time = aDecoder.decodeObject(forKey: "startTime") as? Date {
             self.startTime = time
         }
